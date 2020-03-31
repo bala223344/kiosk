@@ -1,0 +1,161 @@
+<!-- START PAGE-CONTAINER -->
+<div class="page-container">
+  <!-- START PAGE HEADER WRAPPER -->
+  <!-- START HEADER -->
+  <div class="header  hidden-xs">
+    <div class=" pull-left sm-table">
+      <div class="header-inner">
+
+      <h2 class="pull-left p-l-30"><strong>PayNow.io</strong></h2>
+      <div class="pull-right hidden-lg hidden-md p-t-10">
+       <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
+
+        </div>
+
+
+
+
+        <div class="brand inline">
+          <!--
+<img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+
+-->
+        </div>
+
+      </div>
+    </div>
+    <div class=" pull-right">
+      <!-- START User Info-->
+      <div class="visible-lg visible-md m-t-10">
+        <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
+          <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
+        </div>
+
+        <div class="dropdown pull-right"><button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                       <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar_small2x.jpg" }) %>
+
+
+        </span>
+
+          </button>
+
+          <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
+
+
+      </div>
+      <!-- END User Info-->
+    </div>
+  <!-- END HEADER -->
+</div>
+<!-- Modal -->
+
+
+
+<!-- START PAGE CONTENT WRAPPER -->
+  <div class="page-content-wrapper">
+    <!-- START PAGE CONTENT -->
+
+
+      <!-- START CONTAINER FLUID -->
+      <div class="container-fluid container-fixed-lg bg-white">
+
+
+
+
+
+        <!-- START PANEL -->
+        <div class="panel panel-transparent">
+          <div class="panel-heading">
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-10">
+                <h3>Merchant Account</h3>
+                <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into American Savings Bank Merchant Services and CardConnect who offers a wide variety of options, this way you do not have to pay for gateway software such as Authorize.net or PayPal.com. The easiest way is to call (310) 878-2967 for a dedicated rep, or you can simply fill out your contact information below and they will gladly reach out and complete the forms for you right over the phone.
+
+                </p>
+                <br>
+
+
+                <%= form_for :activation ,html: {class: "form-horizontal" } , url: activations_path  do |ff| %>
+
+                  <% if @activation.errors.any? %>
+                      <div id="error_explanation">
+                        <h2>
+                          <%= pluralize(@activation.errors.count, "error") %> prohibited
+                          this form being sent:
+                        </h2>
+                        <ul>
+                          <% @activation.errors.full_messages.each do |msg| %>
+                            <li><%= msg %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+
+
+                <div class="form-group">
+                    <label for="fname" class="col-sm-3 control-label">Name of Organization</label>
+                  <div class="col-sm-9">
+                    <%= ff.text_field :title, :placeholder => "", :class => "form-control", :maxlength => 200, :required => true%>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="fname" class="col-sm-3 control-label">Contact Name</label>
+                  <div class="col-sm-9">
+                    <%= ff.text_field :name, :placeholder => "Who are we calling?", :class => "form-control", :maxlength => 150, :required => true%>
+                  </div>
+                </div>
+
+                  <div class="form-group">
+                    <label for="fname" class="col-sm-3 control-label">Phone</label>
+                    <div class="col-sm-9">
+                      <%= ff.text_field :phone, :placeholder => "Example: 818-555-9282", :class => "form-control", :maxlength => 20, :required => true%>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="fname" class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
+                      <%= ff.text_field :email, :placeholder => "Example: psmith@gmail.com", :class => "form-control", :maxlength => 150, :required => true%>
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="row col-sm-12">
+                    <div class="col-sm-6">
+                    <%= ff.submit "Send", :class => "btn btn-success" %>
+
+                  </div>
+                  </div>
+
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PANEL -->
+      </div>
+      <!-- END CONTAINER FLUID -->
+    </div>
+    <!-- END PAGE CONTENT -->
+
+
+
+
+<div id="product-modal" class="modal fade">
+
+</div>
+
+    <!-- START FOOTER -->
+  <%= render "layouts/footer" %>
+
+    <!-- END FOOTER -->
+  </div>
+  <!-- END PAGE CONTENT WRAPPER -->
+</div>
+<!-- END PAGE CONTAINER -->

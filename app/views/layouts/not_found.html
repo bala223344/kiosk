@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Kiosk" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Kiosk" %>">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <%= csrf_meta_tags %>
+      <%= yield(:header) %>
+   </head>
+  <body class="">
+    <br />
+       <div class="container">
+     <div class="jumbotron">
+       <h1>Error</h1>
+       <p>Not Found!</p>
+     </div>
+   </div>
+
+      <%= yield %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  </body>
+</html>

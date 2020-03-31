@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title><%= content_for?(:title) ? yield(:title) : "Paynow.io" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Kiosk" %>">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <%= csrf_meta_tags %>
+      <%= yield(:header) %>
+   </head>
+  <body class="">
+
+
+      <%= render 'layouts/messages' %>
+      <%= yield %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  </body>
+</html>

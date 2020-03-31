@@ -1,0 +1,11 @@
+$("#ajx-loader").addClass("hide")
+<% if @response['errors'] != nil %>
+  $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
+  $('#rootwizard').find('.pager .previous').show();
+<% elsif @response['status'] != nil %>
+  $("#tab3").html('<p class="small">Thank you very much for your payment. It will be processed on your credit card in 1-3 days. This form will automatically reset for your protection in 10 seconds.</p> ');
+  $("#pager-cont").hide()
+  $(".payment-info").html("Approved!").removeClass("hide")
+  setTimeout(function(){  location.reload(); },10000);
+
+<% end%>

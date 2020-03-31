@@ -1,0 +1,276 @@
+<!-- START PAGE-CONTAINER -->
+    <div class="page-container">
+      <!-- START PAGE HEADER WRAPPER -->
+      <!-- START HEADER -->
+      <div class="header  hidden-xs">
+        <div class=" pull-left sm-table">
+          <div class="header-inner">
+
+          <div class="pull-right hidden-lg hidden-md p-t-10">
+            <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
+            </div>
+          <h3 class="pull-left p-l-30"><strong><%= @kiosk.title %></strong></h3>
+
+            <div class="brand inline">
+              <!--
+<img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+
+-->
+            </div>
+
+          </div>
+        </div>
+        <div class=" pull-right">
+          <!-- START User Info-->
+          <div class="visible-lg visible-md hidden-sm m-t-10">
+            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
+              <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
+            </div>
+            <div class="dropdown pull-right">
+              <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
+            </span>
+              </button>
+            </div>
+          </div>
+          <!-- END User Info-->
+        </div>
+      <!-- END HEADER -->
+    </div>
+
+
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container pull-left">
+
+        <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put  },:id => 'donation_form', :remote => true) do |f| %>
+      	<%= f.fields_for :donations, Donation.new  do |d| %>
+
+           <!-- START PAGE CONTENT WRAPPER -->
+<!--       <div class="page-content-wrapper"> -->
+        <!-- START PAGE CONTENT -->
+        <div class="content">
+          <!-- START CONTAINER FLUID -->
+          <div class="container-fluid container-fixed-lg">
+            <div id="rootwizard">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator ">
+                <li class="active">
+                  <a data-toggle="tab" href="#tab1"><i class="fa fa-shopping-cart tab-icon"></i> <span>Home</span></a>
+                </li>
+                <li class="">
+                  <a data-toggle="tab" href="#tab2"><i class="fa fa-credit-card tab-icon"></i> <span>Card</span></a>
+                </li>
+                <li class="">
+                  <a data-toggle="tab" href="#tab3"><i class="fa fa-check tab-icon"></i> <span>Done</span></a>
+                </li>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div class="tab-pane active slide-left" id="tab1">
+                  <div class="row row-same-height">
+                    <div class="col-md-12">
+                      <div class="padding-30">
+
+                        <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span>  payment page.</strong></h5>
+                        <div class="row">
+                          <div class="col-lg-10 col-md-6">
+                            <p class="no-margin">Please complete the following information and we will send the payment to <%= @kiosk.title %></p>
+
+                          </div>
+
+                          <div class="form-group form-group-default required m-t-25">
+                            <label>Amount</label>
+
+                            <%= d.text_field :amount, :placeholder =>"40.00", :class => "form-control payment-amt", :required => true%>
+
+                          </div>
+
+                          <div class="form-group form-group-default m-t-25">
+                            <label>Invoice Number</label>
+
+                            <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
+
+                          </div>
+
+                          <div class="form-group form-group-default m-t-25">
+                            <label>Invoice Description</label>
+
+                            <%= d.text_field :inv_desc, :placeholder => "", :class => "form-control"%>
+
+                          </div>
+
+                        </div>
+
+                  </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="tab-pane slide-left padding-20" id="tab2">
+                  <div class="row row-same-height">
+
+                    <div class="col-md-12">
+                      <div class="padding-0">
+
+                          <div class="b-rad-lg">
+
+                            <h3 class="pull-left no-margin">$<span id="display_amt">5.00</span> charge to your card.</h3><br>
+                            <small class="pull-left no-margin hint-text"></small>
+                            <ul class="list-unstyled pull-right list-inline no-margin">
+                              <li>
+                                <%= image_tag("cards.png", :alt => "", :class => "brand hidden-xs", :size => "274x30",  data: { src: "cards.png", src_retina: "cards.png" }) %>
+
+                              </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                            <%= d.hidden_field :amount, :id => "amount", :value => 5.00 %>
+
+                            <div class="form-group form-group-default required m-t-25">
+                              <label>Card holder's name</label>
+
+                              <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true, :value => @name%>
+
+                            </div>
+                            <div class="form-group form-group-default required">
+                              <label>Card number</label>
+                              <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required>
+                            </div>
+
+                           <div class="form-group form-group-default required">
+                           <label>CVC</label>
+
+						      <input type="text" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>" data-stripe="cvc"/>
+  							</div>
+
+                            <div class="row">
+                             <div class="form-group">
+
+                              <div class="col-md-4">
+                                <label>Expiration Date</label>
+                                <br>
+                                <select id="exp_mn" name="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
+                                  <option value="01" selected>Jan (01)</option>
+                                  <option value="02">Feb (02)</option>
+                                  <option value="03">Mar (03)</option>
+                                  <option value="04">Apr (04)</option>
+                                  <option value="05">May (05)</option>
+                                  <option value="06">Jun (06)</option>
+                                  <option value="07">Jul (07)</option>
+                                  <option value="08">Aug (08)</option>
+                                  <option value="09">Sep (09)</option>
+                                  <option value="10">Oct (10)</option>
+                                  <option value="11">Nov (11)</option>
+                                  <option value="12">Dec (12)</option>
+                                </select>
+                                <select id="exp_yr" name="exp_yr" class="cs-select cs-skin-slide" data-init-plugin="cs-select" data-stripe="exp-year">
+                                  <option value="16">2016</option>
+                                  <option value="17">2017</option>
+                                  <option value="18" selected>2018</option>
+                                  <option value="19">2019</option>
+                                  <option value="20">2020</option>
+                                  <option value="21">2021</option>
+                                  <option value="22">2022</option>
+                                  <option value="23">2023</option>
+                                  <option value="24">2024</option>
+                                  <option value="25">2025</option>
+                                  <option value="26">2026</option>
+                                  <option value="27">2027</option>
+                                  <option value="28">2028</option>
+                                  <option value="29">2029</option>
+                                  <option value="30">2030</option>
+                                  <option value="31">2031</option>
+                                  <option value="32">2032</option>
+                                </select>
+                              </div>
+                              <div class="col-md-8 required">
+                                  <label>Email Address</label>
+                                   <%= d.email_field :email,  :placeholder => "Email Receipt?", :class => "form-control rec_email", :value => @email %>
+                              </div>
+                             </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane slide-left padding-20" id="tab3">
+
+
+
+
+
+
+				</div>
+                </div>
+
+
+                <div class="payment-errors alert alert-error hide">
+                </div>
+
+                <div class="payment-info alert alert-info hide text-center">
+                </div>
+                <div id="ajx-loader"  class="hide text-center">
+                  <%= image_tag("ajax-loader.gif")%>
+                  Your card will be charged now. Please wait.
+              </div>
+
+                <div id ="pager-cont" class="padding-20 bg-white">
+                  <ul class="pager wizard">
+                    <li class="next">
+                      <button class="btn btn-primary btn-cons pull-right" type="button">
+                        <span>Next </span>
+
+                      </button>
+                    </li>
+                    <li class="previous first hidden">
+                      <button class="btn btn-default btn-cons pull-right" type="button">
+                        <span>First</span>
+                      </button>
+                    </li>
+                       <li class="next finish">
+                       <% if (@user.merchid) %>
+
+
+                      	<%	else %>
+
+                      			<b id="merchid_warning" class="alert alert-warning">Test preview. Merchant integration not done yet.</b>
+                      	<%
+                      		end
+                      			%>
+                    </li>
+                    <li class="previous">
+                      <button class="btn btn-default btn-cons pull-right" type="button">
+                        <span>Previous</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+           <% end %>
+      <% end %>
+          <!-- END CONTAINER FLUID -->
+<!--         </div> -->
+        <!-- END PAGE CONTENT -->
+
+
+
+        <!-- START FOOTER -->
+  <%= render "layouts/footer0" %>
+        <!-- END FOOTER -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->

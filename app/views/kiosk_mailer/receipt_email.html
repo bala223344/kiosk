@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hello <%= @charge["name"] %>
+    <p>
+      Payment has been successfully made for the amount of <b> USD <%= number_to_currency(@charge["amount"]) %> </b> to <b><%= @charge["kiosk_title"] %></b>
+    </p>
+    <p>
+      Your payment reference id is : <b><%= @charge["retref"] %></b>
+    </p>
+    <p>
+      <% if (@charge["inv_num"] != "" ) %>
+      Invoice Number  : <%= @charge["inv_num"] %>
+      <% end %>
+      </p>
+      <p>
+      <% if (@charge["inv_desc"] != "" ) %>
+      Invoice Description  : <%= @charge["inv_desc"] %>
+      <% end %>
+    </p>
+    <p>Thank you for the payment.</p>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hello <%= @charge.source.name %>
+    <p>
+      Payment has been successfully made for the amount of <b> USD <%= number_to_currency(@charge.amount/100.0) %> </b>
+    </p>
+    <p>
+      Your Stripe reference id is : <b><%= @charge.id %></b>
+    </p>
+    <p>Thank you for the donation.</p>
+  </body>
+</html>

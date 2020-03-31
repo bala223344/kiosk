@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hello. Great news,
+    <p>
+      <b><%= @charge["kiosk_name"] %></b> received a payment from <b><%= @charge["name"] %></b> for the amount of <b> <%= number_to_currency(@charge["amount"]) %> </b>.
+    </p>
+    <p>
+      Deposits are done daily and will reflect on your bank account in 1-3 business days.
+    </p>
+    <p>
+      <% if (@charge["inv_num"] != "" ) %>
+      Invoice Number  : <%= @charge["inv_num"] %>
+      <% end %>
+      </p>
+      <p>
+      <% if (@charge["inv_desc"] != "" ) %>
+      Invoice Description  : <%= @charge["inv_desc"] %>
+      <% end %>
+    </p>
+    <p>Thank you so much! - PayNow.io</p>
+  </body>
+</html>
