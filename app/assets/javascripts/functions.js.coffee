@@ -16,9 +16,16 @@ $ ->
   $(".payment-amt").bind 'blur', ->
     $amt = parseFloat($(this).val())
     $amt += 0.00
+    $amtandfee =  $amt * 1.035
+    $fee = $amtandfee - $amt
     $amt = $amt.toFixed(2)
-    $('#amount').val($amt)
-    $('#display_amt').html($amt)
+    $amtandfee = $amtandfee.toFixed(2)
+    $fee = $fee.toFixed(2)
+    $('#amount').val($amtandfee)
+
+    $('#actual_amt').html($amt)
+    $('#display_amt').html($amtandfee)
+    $('#fee').html($fee)
 #    alert($amt)
 
   $('.wysihtml5').each ->
