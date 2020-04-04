@@ -101,7 +101,8 @@ end
             #  end
 
               rescue Exception => msg
-                 @response = {"errors" => "Error in connection / Merchant id wrong"}
+
+                 @response = {"errors" => msg}
               end
 
             #respstat is not 'A'
@@ -112,7 +113,7 @@ end
           end
 
        rescue Exception => msg
-           @response = {"errors" => "Error in connection / Merchant id wrong"}
+           @response = {"errors" => msg}
        end
 
 
