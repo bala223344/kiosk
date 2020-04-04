@@ -84,20 +84,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
- config.action_mailer.default_url_options = { host: '104.236.135.39' }
- config.action_mailer.delivery_method = :smtp
-# config.action_mailer.smtp_settings = { :address => "smtp.mandrillapp.com", :port => 587, :domain => "startgroup.org" , :user_name => "mandrill.com@startgroup.org", :password => "OktA2P_3JHJrjk-bP83z4Q" }
-# config.action_mailer.smtp_settings = {
-#     user_name: 'SMTP_Injection',
-#     password: '318c09923d87c9db120a6ea0e49b5c14b9f9ea3d',
-#     address: 'smtp.sparkpostmail.com',
-#     port: 587,
-#     enable_starttls_auto: true,
-#     format: :html,
-#     from: 'info@easygivekiosk.com'
-# }
+ #config.action_mailer.default_url_options = { host: '104.236.135.39' }
+ #config.action_mailer.delivery_method = :smtp
+ config.action_mailer.delivery_method = :sparkpost
 
-config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+#config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
 
 

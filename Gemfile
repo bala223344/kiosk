@@ -46,6 +46,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'bootstrap-wysihtml5-rails'
 
 gem 'cardconnect'
+gem 'sparkpost_rails'
 
 gem 'gaffe'
 
