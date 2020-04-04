@@ -14,6 +14,9 @@ $ ->
 
 
   $(".payment-amt").bind 'blur', ->
+    formatter = new (Intl.NumberFormat)('en-US',
+    style: 'currency'
+    currency: 'USD')
     $amt = parseFloat($(this).val())
     $amt += 0.00
     $amtandfee =  $amt * 1.035
@@ -23,9 +26,9 @@ $ ->
     $fee = $fee.toFixed(2)
     $('#amount').val($amtandfee)
 
-    $('#actual_amt').html($amt)
-    $('#display_amt').html($amtandfee)
-    $('#fee').html($fee)
+    $('#actual_amt').html(formatter.format($amt))
+    $('#display_amt').html(formatter.format($amtandfee))
+    $('#fee').html(formatter.format($fee))
 #    alert($amt)
 
   $('.wysihtml5').each ->
