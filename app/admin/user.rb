@@ -8,7 +8,7 @@ ActiveAdmin.register User do
 # or
 #
  permit_params do
-   permitted = [:merchid]
+   permitted = [:merchid,:merchant_username,:merchant_password]
 #   permitted << :other if resource.something?
 #   permitted
  end

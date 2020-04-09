@@ -123,6 +123,25 @@
 
 						<% if (f.object.merchid)%>
 						<b class="alert alert-success"> Merchant account provided</b>
+            <br /><br />
+
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <i>click to reveal details</i>
+            </a>
+
+
+            <div class="collapse" id="collapseExample">
+              <div class="">
+               Merchant Id : <%= f.object.merchid%> <br /><br />
+               Username : <%= f.object.merchant_username%> <br /><br />
+               Password : <%= f.object.merchant_password%> <br /><br />
+
+              </div>
+            </div>
+
+
+            <div class="hide"></div>
+
             <% else %>
               <p>In order to accept payments by any credit card, you will need a merchant account. A merchant account is what deposits into your bank account, think of it like a bridge. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
                 <div class="row">
