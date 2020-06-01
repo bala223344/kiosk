@@ -57,4 +57,3 @@ group :development do
   gem 'rails_layout'
 end
 
-gem "byebug", "~> 11.0", :groups => [:development, :test]
