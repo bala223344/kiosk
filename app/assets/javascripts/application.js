@@ -12,7 +12,7 @@
 //
 
 //= require pace
-//= require jquery2
+//= require jquery
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-sprockets
