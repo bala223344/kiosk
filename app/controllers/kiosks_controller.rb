@@ -55,6 +55,8 @@ end
       service = CardConnect::Service::Authorization.new
       service.build_request(pay_params)
 
+  p "serrve"
+      p service.inspect
 
       begin
         amount = amount.to_f
@@ -126,7 +128,7 @@ end
 
 
       p "w-------"
-      p @response
+      p @response.inspect
 
      respond_to do |format|
            format.js  {}
