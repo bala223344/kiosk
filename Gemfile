@@ -45,7 +45,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 
 gem 'bootstrap-wysihtml5-rails'
 
-gem 'cardconnect'
+gem 'cardconnect', '~> 1.0.0'
 gem 'sparkpost_rails'
 
 gem 'gaffe'
@@ -56,3 +56,5 @@ gem 'gaffe'
 group :development do
   gem 'rails_layout'
 end
+
+gem "byebug", "~> 11.0", :groups => [:development, :test]
