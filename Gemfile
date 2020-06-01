@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0'
+gem 'rails', '4.2.11'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -32,6 +32,7 @@ gem 'spring',        group: :development
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'activeadmin'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
@@ -39,13 +40,12 @@ gem 'devise'
 
 gem 'therubyracer'
 gem 'execjs'
-gem 'pg'
+gem 'pg', '~> 0.20'
 gem "bootstrap-sass"
-gem 'activeadmin', github: 'gregbell/active_admin'
 
 gem 'bootstrap-wysihtml5-rails'
 
-gem 'cardconnect', '~> 1.0.0'
+gem 'cardconnect', '~> 2.3.0'
 gem 'sparkpost_rails'
 
 gem 'gaffe'
