@@ -45,7 +45,7 @@ gem "bootstrap-sass"
 
 gem 'bootstrap-wysihtml5-rails'
 
-gem 'cardconnect', '~> 1.0.0'
+gem 'cardconnect', '~> 2.3.0'
 gem 'sparkpost_rails'
 
 gem 'gaffe'

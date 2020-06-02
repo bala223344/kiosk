@@ -37,6 +37,7 @@ Rails.application.configure do
 # config.action_mailer.delivery_method = :sendmail
  #config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
+  config.log_level = :info
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

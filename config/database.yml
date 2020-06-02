@@ -19,7 +19,7 @@ development:
   port: 5432
   schema_search_path: myapp,sharedapp,public
   username: postgres
-  password: password
+  password: ezoJdc9wmY
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
