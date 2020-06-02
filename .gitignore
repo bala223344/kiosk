@@ -28,5 +28,5 @@ yarn-debug.log*
 .yarn-integrity
 .byebug_history
 .vscode
-database.yml
-shared
+config/database.yml
+shared/
