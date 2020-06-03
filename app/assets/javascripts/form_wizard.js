@@ -30,10 +30,6 @@
 				},
             onTabShow: function(tab, navigation, index) {
 
-
-
-
-
               //form validtion
 
               if (index == 1  ) {
@@ -113,6 +109,10 @@
                     btnNext.addClass(nextIconClass + ' btn-animated from-left fa');
 
                     var prevIcon = li.prev().find('.fa');
+
+                    console.log(prevIcon);
+                    
+
                     var prevIconClass = prevIcon.attr('class').match(/fa-[\w-]*/).join();
 
                     removeIcons(btnPrev);
