@@ -45,16 +45,17 @@ gem "bootstrap-sass"
 
 gem 'bootstrap-wysihtml5-rails'
 
-gem 'cardconnect', '~> 2.3.0'
+#gem 'cardconnect', '~> 2.3.0'
 gem 'sparkpost_rails'
 
 gem 'gaffe'
 gem 'bigdecimal', '1.4.2'
 
-#gem 'rest-client'
+gem 'rest-client'
 #gem 'openssl'
 
 group :development do
   gem 'rails_layout'
+  gem 'byebug'
 end
 
