@@ -104,7 +104,7 @@ end
 
            #respstat is not 'A'
          else
-           @response = {"errors" => "Request Declined! "+response.errors.join(",")}
+           @response = {"errors" => "Request Declined! "+response["resptext"]}
            end
          #amount is not < '0'
          end
