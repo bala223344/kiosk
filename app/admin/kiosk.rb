@@ -7,11 +7,13 @@ ActiveAdmin.register Kiosk do
 #
 # or
 #
-# permit_params do
+ permit_params do
+
+    permitted = [:title, :user_id]
 #   permitted = [:permitted, :attributes]
 #   permitted << :other if resource.something?
 #   permitted
-# end
+ end
 
 
 end

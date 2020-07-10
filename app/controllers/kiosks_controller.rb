@@ -66,10 +66,9 @@ end
 
 
              begin
-
-
                   #workgin
-                  cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture",  {"merchid" => kiosk.user.merchid, "retref" => response["retref"], "items" => [{"description" => "Donation for "+kiosk.title + string_email}]}.to_json,  {"Authorization" => "Basic "+ Base64::strict_encode64(cred_combo), :content_type=> 'application/json' })
+                  title = "Kiosk" if kiosk.title.nil? 
+                  cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture",  {"merchid" => kiosk.user.merchid, "retref" => response["retref"], "items" => [{"description" => "Donation for "+ title + string_email}]}.to_json,  {"Authorization" => "Basic "+ Base64::strict_encode64(cred_combo), :content_type=> 'application/json' })
                   
 
                   
@@ -98,7 +97,6 @@ end
 
 
              rescue Exception => msg
-
                 @response = {"errors" => msg}
              end
 
