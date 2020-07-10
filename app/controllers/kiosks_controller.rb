@@ -82,11 +82,11 @@ end
                      if kiosk.update(donation_params)
 
                        if !email.blank? && email != ""
-                           charge = {"email" => email, "name" => name,"amount" => amount, "retref" => cresponse["retref"], "kiosk_title" =>  kiosk.title, "inv_num" => inv_num, "inv_desc" => inv_desc}
+                           charge = {"email" => email, "name" => name,"amount" => amount, "retref" => cresponse["retref"], "kiosk_title" =>  title, "inv_num" => inv_num, "inv_desc" => inv_desc}
                            KioskMailer.receipt_email(charge).deliver
                        end
 
-                       charge = {"email" => kiosk.user.email, "name" => name, "amount" => amount,"kiosk_name" => kiosk.title, "inv_num" => inv_num, "inv_desc" => inv_desc}
+                       charge = {"email" => kiosk.user.email, "name" => name, "amount" => amount,"kiosk_name" => title, "inv_num" => inv_num, "inv_desc" => inv_desc}
                        KioskMailer.owner_email(charge).deliver
                      end
                      #is Rejected
