@@ -11,6 +11,10 @@ class User < ApplicationRecord
               case_sensitive: false
             }
 
+
+ 
+
+
   has_one :kiosk
   accepts_nested_attributes_for(:kiosk, update_only: true)
   def self.find_for_database_authentication(warden_conditions)
