@@ -5,6 +5,5 @@ class AddExtraToUsers < ActiveRecord::Migration
     add_column :users, :donation_form_title, :string
     add_column :users, :stripe_pub_key, :string
     add_column :users, :secret_key, :string
-
   end
 end

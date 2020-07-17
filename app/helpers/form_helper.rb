@@ -4,8 +4,7 @@ module FormHelper
     user
   end
 
-
   def preview_link(instance)
-      link_to kiosk_url(instance.kiosk),  kiosk_path(instance.kiosk),  :class => "" ,  :target => '_blank', :role => "button"
+    link_to kiosk_url(instance.kiosk), kiosk_path(instance.kiosk), class: '', target: '_blank', role: 'button'
   end
 end
