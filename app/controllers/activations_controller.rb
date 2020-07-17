@@ -11,7 +11,7 @@ class ActivationsController < ApplicationController
   def create
      @activation = Activation.new(activation_params)
      if @activation.save
-       ActivationMailer.activation_email(@activation)
+       ActivationMailer.activation_email(@activation).deliver
 
        render "success"
      end

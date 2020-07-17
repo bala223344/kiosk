@@ -14,4 +14,29 @@ ActiveAdmin.register User do
  end
 
 
+
+ 
+
+
+
+ controller do
+
+  def update_resource object, attributes
+    attributes.each do |attr|
+      if attr[:merchant_password].blank?
+        attr.delete :merchant_password
+      end
+    end
+  
+    object.send :update_attributes, *attributes
+  end
+
+
+
+
+end  
+
+
+
+
 end
