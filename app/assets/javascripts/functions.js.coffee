@@ -24,10 +24,12 @@ $ ->
     $amt = $amt.toFixed(2)
     $amtandfee = $amtandfee.toFixed(2)
     $fee = $fee.toFixed(2)
-    $('#amount').val($amtandfee)
+    $('#amount').val($amt)
+    $('#fee_amt').val($fee)
 
     $('#actual_amt').html(formatter.format($amt))
     $('#display_amt').html(formatter.format($amtandfee))
+
     $('#fee').html(formatter.format($fee))
 #    alert($amt)
 

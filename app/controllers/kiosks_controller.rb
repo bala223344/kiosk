@@ -17,38 +17,42 @@ class KiosksController < ApplicationController
     exp_mn = params[:exp_mn].to_s
     exp_yr = params[:exp_yr].to_s
     amount = params[:kiosk][:donations_attributes]['0'][:amount]
+    fee = params[:kiosk][:donations_attributes]['0'][:fee_amt]
 
     inv_num = params[:kiosk][:donations_attributes]['0'][:inv_num]
     inv_desc = params[:kiosk][:donations_attributes]['0'][:inv_desc]
     name = params[:kiosk][:donations_attributes]['0'][:name]
     email = params[:kiosk][:donations_attributes]['0'][:email]
 
-    #  CardConnect.configuration.api_username = kiosk.user.merchant_username
-    #  CardConnect.configuration.api_password = kiosk.user.merchant_password
-    #  if kiosk.user.merchant_end_point.nil?
-    #   CardConnect.configuration.endpoint = 'https://fts.cardconnect.com:6443'
-
-    #  else
-    #   CardConnect.configuration.endpoint = kiosk.user.merchant_end_point
-
-    #  end
 
     begin
-      amount = amount.to_f
+        #if model is surcharge no fee debit card..determin if it is not a CC
+       if kiosk.user.cmodel == 'surcharge'
+        first8dig = number.to_s[0..7]
+        ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
+        ccbody = JSON.parse(ccres.body)
+
+        if ccbody["type"] != "credit"
+          fee = 0
+        end 
+      end 
+      amount = amount.to_f + fee.to_f
+
       if amount < 0
         @response = { 'errors' => 'Invalid amount' }
       else
         cparams = { 'merchid' => kiosk.user.merchid, 'amount' => amount, 'expiry' => exp_mn + exp_yr, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc }
 
-        #          params = {"merchid" => '800000000843', "amount" => '0.01', "expiry" => '0224', "account" => '4000000000000077'}
         cred_combo = "#{kiosk.user.merchant_username}:#{kiosk.user.merchant_password}"
-
-        # working
-        # res = RestClient.post("https://fts-uat.cardconnect.com/cardconnect/rest/auth",  {"merchid" => '800000000843', "amount" => '0.01', "expiry" => '0224', "account" => '4000000000000077'}.to_json,  {"Authorization" => "Basic "+ Base64::strict_encode64(cred_combo), :content_type=> 'application/json' })
-
+        #just AUTH  
         res = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/auth", cparams.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+
+
+
         response = JSON.parse(res.body)
 
+        
+       
         if response['respstat'] == 'A'
           string_email = ''
           string_email = 'from ' + email if !email.blank? && email != ''
@@ -57,10 +61,13 @@ class KiosksController < ApplicationController
             # workgin
             title = kiosk.title.nil? ? 'Kiosk' : kiosk.title
 
+           
+
+            #CAPTURE
             cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture", { 'merchid' => kiosk.user.merchid, 'retref' => response['retref'], 'items' => [{ 'description' => 'Donation for ' + title + string_email }] }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
             cresponse = JSON.parse(cres.body)
-            @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'] }
+            @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'],  'amount' => amount , 'title' => title }
 
             if cresponse['setlstat'] != 'Rejected'
 
@@ -97,8 +104,6 @@ class KiosksController < ApplicationController
       @response = { 'errors' => e }
     end
 
-    p 'w-------'
-    p @response.inspect
 
     respond_to do |format|
       format.js {}

@@ -3,9 +3,9 @@ $("#ajx-loader").addClass("hide")
   $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
   $('#rootwizard').find('.pager .previous').show();
 <% elsif @response['status'] != nil %>
-  $("#tab3").html('<p class="small">Thank you very much for your payment. It will be processed on your credit card in 1-3 days. This form will automatically reset for your protection in 10 seconds.</p> ');
+  $("#tab3").html('Thank you. Payment has been successfully made for the amount of USD <%= @response['amount']%> to <%= @response['title']%>.');
   $("#pager-cont").hide()
-  $(".payment-info").html("Approved!").removeClass("hide")
+  $(".payment-info").html("Your payment reference id is : <%= @response['retref']%>").removeClass("hide")
   setTimeout(function(){  location.reload(); },10000);
 
 <% end%>
