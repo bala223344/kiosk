@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-
-
-  devise_for :users, controllers: {registrations: 'users/registrations'}
-  #, omniauth_callbacks: 'omniauth_callbacks'
-  #devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+  # , omniauth_callbacks: 'omniauth_callbacks'
+  # devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -65,24 +62,17 @@ Rails.application.routes.draw do
   #   end
 
   devise_scope :user do
-
- root to: "devise/registrations#edit"
-
+    root to: 'devise/registrations#edit'
   end
 
   resource :user, only: [:edit] do
-  collection do
-    patch 'update_password'
-
+    collection do
+      patch 'update_password'
+    end
   end
 
-  end
-
-#kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
-resources :kiosks , :path => :secure
-resources :activations
-resources :terms , only: [:index]
-
-
-
+  # kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
+  resources :kiosks, path: :secure
+  resources :activations
+  resources :terms, only: [:index]
 end

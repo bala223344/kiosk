@@ -32,10 +32,9 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-
- config.action_mailer.default_url_options = { host: '104.236.135.39' }
-# config.action_mailer.delivery_method = :sendmail
- #config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+  config.action_mailer.default_url_options = { host: '104.236.135.39' }
+  # config.action_mailer.delivery_method = :sendmail
+  # config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
   config.log_level = :info
 

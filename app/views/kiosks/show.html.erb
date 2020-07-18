@@ -75,7 +75,7 @@
                         <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span>  payment page.</strong></h5>
                         <div class="row">
                           <div class="col-lg-10 col-md-6">
-                            <p class="no-margin">Please complete the following information and we will send the payment to <%= @kiosk.title %></p>
+                            <p class="no-margin">Please complete the following information to process your payment for <%= @kiosk.title %></p>
 
                           </div>
 
@@ -119,7 +119,16 @@
 
                             <h3 class="pull-left no-margin"><span id="display_amt">5.00</span> charge to your card.</h3><br>
                             
-                            <small class="pull-left no-margin hint-text"><span id="actual_amt"></span>  + Gateway Fees of <span id="fee"></span> </small>
+                            <% if @user.cmodel == 'surcharge' %>
+
+                            <small class="pull-left no-margin hint-text"><span id="actual_amt"></span>  + Gateway Fees of <span id="fee"></span> (Gateway fees are waived if paying with a debit card) 
+                            
+                                                         </small>
+                             <% else  %>                       
+                              <small class="pull-left no-margin hint-text"><span id="actual_amt"></span>  + Gateway Fees of <span id="fee"></span> 
+                            
+                                                         </small>
+                             <% end  %>                            
                             <ul class="list-unstyled pull-right list-inline no-margin">
                               <li>
                                 <%= image_tag("cards.png", :alt => "", :class => "brand hidden-xs", :size => "274x30",  data: { src: "cards.png", src_retina: "cards.png" }) %>
@@ -128,7 +137,8 @@
 
                             </ul>
                             <div class="clearfix"></div>
-                            <%= d.hidden_field :amount, :id => "amount", :value => 5.00 %>
+                            <%= d.hidden_field :amount, :id => "amount", :value => 1.00 %>
+                            <%= d.hidden_field :fee_amt, :id => "fee_amt", :value => 0 %>
 
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
@@ -190,7 +200,7 @@
                                   
                                 </select>
                               </div>
-                              <div class="col-md-8 required">
+                              <div class="col-md-8 form-group-default required">
                                   <label>Email Address</label>
                                    <%= d.email_field :email,  :placeholder => "Email Receipt?", :class => "form-control rec_email", :value => @email %>
                               </div>

@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-# before_filter :configure_sign_up_params, only: [:create]
-# before_filter :configure_account_update_params, only: [:update]
- prepend_before_filter :authenticate_scope!, :only => [:change_password]
+  # before_filter :configure_sign_up_params, only: [:create]
+  # before_filter :configure_account_update_params, only: [:update]
+  prepend_before_filter :authenticate_scope!, only: [:change_password]
 
   # GET /resource/sign_up
   # def new
@@ -14,9 +14,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-#  def edit
- #    super
-     
+  #  def edit
+  #    super
+
   # end
 
   # PUT /resource
@@ -60,13 +60,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
-
-protected
+  protected
 
   def update_resource(resource, params)
-  
     resource.update_without_password(params)
   end
-
-
 end

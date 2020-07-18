@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
 require 'sprockets/railtie'
@@ -21,8 +21,7 @@ module EasyGiveKiosk
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.force_ssl = true
-	
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
   end
 end

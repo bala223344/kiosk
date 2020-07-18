@@ -1,5 +1,4 @@
 Rails.application.configure do
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -24,7 +23,7 @@ Rails.application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
-  #config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -41,7 +40,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-   config.force_ssl = false
+  config.force_ssl = false
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -64,12 +63,11 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
-
 
   config.assets.debug = true
   # Send deprecation notices to registered listeners.
@@ -84,13 +82,13 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
- config.action_mailer.default_url_options = { host: 'https://paynow.io' }
- #config.action_mailer.delivery_method = :smtp
- config.action_mailer.delivery_method = :sparkpost
+  config.action_mailer.default_url_options = { host: 'https://paynow.io' }
 
-#config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+  #config.action_mailer.delivery_method = :sparkpost
 
+   config.action_mailer.delivery_method = :smtp
 
+   config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
