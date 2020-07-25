@@ -3,7 +3,7 @@ $("#ajx-loader").addClass("hide")
   $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
   $('#rootwizard').find('.pager .previous').show();
 <% elsif @response['status'] != nil %>
-  $("#tab3").html('Thank you. Payment has been successfully made for the amount of USD <%= @response['amount']%> to <%= @response['title']%>.');
+  $("#tab3").html('Thank you. Payment has been successfully made for the amount of USD <%= number_to_currency(@response['amount'])%> to <%= @response['title']%>. <br /> Your receipt has been sent. This page will automatically reset in 10 seconds for your security.');
   $("#pager-cont").hide()
   $(".payment-info").html("Your payment reference id is : <%= @response['retref']%>").removeClass("hide")
   setTimeout(function(){  location.reload(); },10000);
