@@ -26,12 +26,12 @@ class KiosksController < ApplicationController
 
 
     begin
-        #if model is surcharge no fee debit card..determin if it is not a CC
+        #if model is surcharge fee is only for credit card..determin if it is not a CC
        if kiosk.user.cmodel == 'surcharge'
         first8dig = number.to_s[0..7]
         ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
         ccbody = JSON.parse(ccres.body)
-
+        #no CC..no fee
         if ccbody["type"] != "credit"
           fee = 0
         end 
@@ -80,17 +80,24 @@ class KiosksController < ApplicationController
                   KioskMailer.receipt_email(charge).deliver
                 end
 
-                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
+                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
                 KioskMailer.owner_email(charge).deliver
+
               end
               # is Rejected
             else
               @response = { 'errors' => 'Request Declined! ' + response.setlstat }
             end
           rescue Exception => e
-            p e.backtrace.join("\n")
+            #error from mailer..should be considered success
+            if e.message.include? " recipient is required"
 
-            @response = { 'errors' => e }
+              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+              KioskMailer.owner_email(charge).deliver
+              #do nothgin..we already have @response..just send ownder mail
+            else  
+              @response = { 'errors' => e }
+            end  
           end
 
         # respstat is not 'A'
@@ -106,6 +113,7 @@ class KiosksController < ApplicationController
 
 
     respond_to do |format|
+      p "success mana"
       format.js {}
     end
   end

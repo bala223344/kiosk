@@ -7,7 +7,7 @@ ActiveAdmin.register User do
   # or
   #
   permit_params do
-    permitted = %i[merchid merchant_username merchant_password merchant_end_point cmodel]
+    permitted = %i[merchid merchant_username merchant_password merchant_end_point cmodel scharge_percent]
     #   permitted << :other if resource.something?
     #   permitted
   end
@@ -29,9 +29,9 @@ ActiveAdmin.register User do
         f.input :merchant_username
         f.input :merchant_password
         f.input :merchant_end_point
+        f.input :password
+        f.input :scharge_percent, :label => "Fee %"
         f.input :cmodel,  :as => :select, :collection => [['Surcharge Model','surcharge'],['Gateway Model','gateway']] , :label => "Fee Recovery Model"
-
-            
       end
       f.actions
     end

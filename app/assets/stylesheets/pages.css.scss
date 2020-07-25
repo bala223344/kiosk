@@ -2737,6 +2737,14 @@ fieldset[disabled] .btn-warning.active {
   color: #f8d053;
   background-color: #ffffff;
 }
+
+.btn-grey,
+.btn-grey:focus {
+  color: #5e5e5e;
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
 .btn-danger,
 .btn-danger:focus {
   color: #ffffff;
@@ -6917,6 +6925,7 @@ div.cs-skin-slide::before {
 .cs-select {
   background-color: transparent;
   height: 30px;
+  width:200px;
   border : 1px solid rgba(0, 0, 0, 0.07);
 }
 .cs-select span {

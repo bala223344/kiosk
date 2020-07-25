@@ -2,13 +2,11 @@
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
       <!-- START HEADER -->
-      <div class="header  hidden-xs">
+      <div class="header ">
         <div class=" pull-left sm-table">
           <div class="header-inner">
 
-          <div class="pull-right hidden-lg hidden-md p-t-10">
-            <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
-            </div>
+        
           <h3 class="pull-left p-l-30"><strong><%= @kiosk.title %></strong></h3>
 
             <div class="brand inline">
@@ -22,7 +20,7 @@
         </div>
         <div class=" pull-right">
           <!-- START User Info-->
-          <div class="visible-lg visible-md hidden-sm m-t-10">
+          <div class="visible-lg visible-md  m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
               <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
             </div>
@@ -139,6 +137,7 @@
                             <div class="clearfix"></div>
                             <%= d.hidden_field :amount, :id => "amount", :value => 1.00 %>
                             <%= d.hidden_field :fee_amt, :id => "fee_amt", :value => 0 %>
+                            <%= d.hidden_field :scharge_percent, :id => "scharge_percent", :value => @user.scharge_percent %>
 
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
@@ -151,16 +150,13 @@
                               <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required>
                             </div>
 
-                           <div class="form-group form-group-default required">
-                           <label>CVC</label>
-
-						      <input type="text" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>" data-stripe="cvc"/>
-  							</div>
+                       
 
                             <div class="row">
-                             <div class="form-group">
+                            
 
-                              <div class="col-md-4">
+                              <div class="col-md-6">
+                               <div class="form-group">
                                 <label>Expiration Date</label>
                                 <br>
                                 <select id="exp_mn" name="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
@@ -199,13 +195,27 @@
                                   <option value="38">2038</option>
                                   
                                 </select>
+                                </div>
                               </div>
-                              <div class="col-md-8 form-group-default required">
-                                  <label>Email Address</label>
-                                   <%= d.email_field :email,  :placeholder => "Email Receipt?", :class => "form-control rec_email", :value => @email %>
-                              </div>
-                             </div>
+                                <div class="col-md-6">
+                                  <div class="form-group form-group-default required">
+                           <label>CVV</label>
+
+						      <input type="text" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>" data-stripe="cvc"/>
+  							</div>
+                	</div>
+
+
+                                 
+                             
                             </div>
+
+                              <div class="form-group form-group-default required">
+
+                             <label>Email Address</label>
+                                   <%= d.email_field :email,  :placeholder => "Email Receipt?", :class => "form-control rec_email", :value => @email %>
+                                                                 </div>
+
                           </div>
                       </div>
                     </div>

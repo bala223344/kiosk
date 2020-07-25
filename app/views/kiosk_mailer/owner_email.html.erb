@@ -8,6 +8,11 @@
     <p>
       <b><%= @charge["kiosk_name"] %></b> received a payment from <b><%= @charge["name"] %></b> for the amount of <b> <%= number_to_currency(@charge["amount"]) %> </b>.
     </p>
+
+   <p>
+      Payment reference id is : <b><%= @charge["retref"] %></b>
+    </p>
+
     <p>
       Deposits are done daily and will reflect on your bank account in 1-3 business days.
     </p>
