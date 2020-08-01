@@ -39,6 +39,9 @@
 
                     $('#rootwizard').bootstrapWizard('show',0);
                   $valid = false
+                }else {
+                  populate_amt()
+
                 }
 
               }

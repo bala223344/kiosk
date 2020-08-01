@@ -80,21 +80,41 @@
                           <div class="form-group form-group-default required m-t-25">
                             <label>Amount</label>
 
-                            <%= d.text_field :amount, :placeholder =>"40.00", :class => "form-control payment-amt", :required => true%>
+                            <% if params[:amount] %>
+                              <%= d.text_field :amount, :readonly =>true, :class => "form-control payment-amt", :value =>  '%.2f' % params[:amount].to_d,   :required => true%>
+  <% else %>                          
+  
+      <%= d.text_field :amount, :placeholder =>"40.00", :class => "form-control payment-amt", :required => true%>
 
+  <% end %>
+
+                            
                           </div>
 
                           <div class="form-group form-group-default m-t-25">
                             <label>Invoice Number</label>
 
-                            <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
+
+ <% if params[:inv_num] %>
+                              <%= d.text_field :inv_num, :readonly =>true, :class => "form-control payment-amt", :value => params[:inv_num],   :required => true%>
+
+  <% else %>    
+ <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
+    <% end %>
+                           
 
                           </div>
 
                           <div class="form-group form-group-default m-t-25">
                             <label>Invoice Description</label>
 
+ <% if params[:inv_desc] %>
+                              <%= d.text_field :inv_desc, :readonly =>true, :class => "form-control payment-amt", :value => params[:inv_desc],   :required => true%>
+
+  <% else %>  
+
                             <%= d.text_field :inv_desc, :placeholder => "Optional", :class => "form-control"%>
+                               <% end %>
 
                           </div>
 

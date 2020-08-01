@@ -2,10 +2,14 @@ class KiosksController < ApplicationController
   def show
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
+
+   
+
   end
 
   def new
     @kiosk = Project.new
+
   end
 
   def update

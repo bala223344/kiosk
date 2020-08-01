@@ -48,6 +48,8 @@ gem 'sparkpost_rails'
 
 gem 'bigdecimal', '1.4.2'
 gem 'gaffe'
+gem 'rqrcode'
+
 
 gem 'rest-client'
 # gem 'openssl'
