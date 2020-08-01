@@ -18,7 +18,7 @@
 
           </div>
         </div>
-        <div class=" pull-right">
+        <div class=" pull-right hidden-xs hidden-sm hidden-md">
           <!-- START User Info-->
           <div class="visible-lg visible-md m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
@@ -68,11 +68,15 @@
 
 
                 <div class="tab-pane slide-left padding-20" id="tab3">
-						<h2>We will get back to you  the sooner we can.</h2>
+						<h2>We will reach out to you shortly.</h2>
                     <br />
                     
 <br />
 				</div>
+ <div class="col-sm-6">
+
+                        <%= link_to('Done', destroy_user_session_path, :method => :delete, :class => "btn btn-success" ) %></div>
+
                 </div>
 
 
@@ -107,7 +111,6 @@
           <!-- END CONTAINER FLUID -->
 <!--         </div> -->
         <!-- END PAGE CONTENT -->
-
 
 
   <%= render "layouts/footer" %>

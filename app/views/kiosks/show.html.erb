@@ -18,7 +18,7 @@
 
           </div>
         </div>
-        <div class=" pull-right">
+        <div class=" pull-right hidden-xs hidden-sm hidden-md">
           <!-- START User Info-->
           <div class="visible-lg visible-md  m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
@@ -84,14 +84,14 @@
 
                           </div>
 
-                          <div class="form-group form-group-default m-t-25">
+                          <div class="form-group form-group-default">
                             <label>Invoice Number</label>
 
                             <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
 
                           </div>
 
-                          <div class="form-group form-group-default m-t-25">
+                          <div class="form-group form-group-default">
                             <label>Invoice Description</label>
 
                             <%= d.text_field :inv_desc, :placeholder => "Optional", :class => "form-control"%>
@@ -244,7 +244,13 @@
 
                 <div id ="pager-cont" class="padding-20 bg-white">
                   <ul class="pager wizard">
-                    <li class="next">
+                   <!--  <li class="qr">
+                      <button class="btn btn-success pull-left" type="button">
+                        <span><i class="fa fa-qrcode" aria-hidden="true"></i></span> QR-->
+
+                      </button>
+                    </li>
+		    <li class="next">
                       <button class="btn btn-primary btn-cons pull-right" type="button">
                         <span>Next </span>
 

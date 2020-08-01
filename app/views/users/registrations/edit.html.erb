@@ -2,7 +2,7 @@
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
       <!-- START HEADER -->
-      <div class="header ">
+      <div class="header hidden-xs hidden-sm hidden-md">
         <div class=" pull-left sm-table">
           <div class="header-inner">
 
@@ -20,9 +20,9 @@
 
           </div>
         </div>
-        <div class=" pull-right">
+        <div class=" pull-right hidden-xs hidden-sm hidden-md">
           <!-- START User Info-->
-          <div class="visible-lg visible-md m-t-10">
+          <div class=" m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
               <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
             </div>
@@ -36,7 +36,8 @@
 
               </button>
 
-              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
+		<!-- <%= link_to('Logout', destroy_user_session_path, :method => :delete)  %> sl -->
+              </div>
 
 
           </div>
@@ -56,10 +57,7 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
           <!-- START CONTAINER FLUID -->
-          <div class="container-fluid container-fixed-lg bg-white">
-
-
-
+          <div class="container-fluid container-fixed-lg bg-white ">
 
 
             <!-- START PANEL -->
@@ -69,42 +67,31 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-sm-10">
-                    <h3>Setup</h3>
-                    <p>Welcome to PayNow.io. The ONLY hosted payment page service for merchant accounts with no monthly fees. Before you begin to use your new payment page, we must know how to title it and you must have a compatible merchant account.
-                       <p class="small hint-text pull-right">
-                        <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
-
-
-                          </p>
+                    <h3>Admin</h3> 
+                    <p>Welcome to your admin page. If you need any help, please kindly reach out to your merchant rep. <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
                     </p>
                     <br>
 					<%= devise_error_messages! %>
 
                     <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
 
-
-
-
-
-
-
                     <div class="form-group">
                       <label for="fname" class="col-sm-3 control-label">Name of Business</label>
                       <div class="col-sm-9">
                       <%= f.fields_for :kiosk do |ff| %>
                         <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 250, :required => true%>
-
-
                       <% end %>
                       </div>
                     </div>
 
 
                       <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Your new website</label>
+                        <label for="fname" class="col-sm-3 control-label">Your payment link</label>
                         <div class="col-sm-9">
-                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p>
+                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p> 
+
                            <%= preview_link(resource) %>
+
 
 
                         </div>
@@ -115,33 +102,68 @@
                         <label class="col-sm-3 control-label">Payments</label>
                         <div class="col-sm-9">
 
-                          <p class="m-t-10">
 
 						<% if (f.object.merchid)%>
-						<b class="alert alert-success "> Merchant account provided</b>
-            <br /><br />
 
-            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              <i>click to reveal details</i>
-            </a>
+
+
+
+<!-- sl pay buttons
+
+
+<button class="btn btn-default"><i class="fa fa-qrcode"></i>  Request Payment</button>
+
+<a class="btn btn-info" role="button" aria-expanded="false" aria-controls="">
+              <i class="fa fa-qrcode"></i>
+            </a> 
+<a class="btn btn-warning" role="button" aria-expanded="false" aria-controls="">
+              <i class="fa fa-envelope-o"></i>
+            </a> 
+
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseQr" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <i>Manually Request Payment</i>
+            </a> 
+
+            <div class="collapse" id="collapseQr">
+              <div class="">
+               
+	       Enter Amount : ______ <br />
+               Invoice # : ______ <br />
+               Invoice Description : ______ <br />
+
+              </div>
+            </div>
+-->
+
+
+
+
+
+	<b class="alert alert-success "> Merchant account provided</b> 
+            
+
+            <a class="btn btn-outline-gray" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <i>Show Details</i>
+            </a> 
 
 
             <div class="collapse" id="collapseExample">
               <div class="">
-               Merchant Id : <%= f.object.merchid%> <br /><br />
-               Username : <%= f.object.merchant_username%> <br /><br />
+               Merchant Id : <%= f.object.merchid%> <br />
+               Username : <%= f.object.merchant_username%> <br />
                Password : ***** <br /><br />
 
               </div>
             </div>
 
-
             <div class="hide"></div>
 
             <% else %>
-              <p>In order to accept payments by any credit card, you will need a merchant account. A merchant account is what deposits into your bank account, think of it like a bridge. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
+              <p> </p>
                 <div class="row">
-                     <div class="col-sm-9">
+                     <div class="col-sm-9"> <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into many different processors. If you do not have a processor, no problem, we will help get one setup for you.
+
+</p>
                        <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
                        <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
 
@@ -158,12 +180,14 @@
 
                       <br>
                       <div class="row col-sm-12">
-                        <div class="col-sm-6">
                         <%= f.submit "Save", :class => "btn btn-success" %>
 
-                        <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-grey" ) %></div>
+                        <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-grey" ) %>
 
-
+<!-- sl temp hide 
+<p class="small hint-text pull-right">
+                        <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
+                          </p> -->
 
 	                    </div>
                       </div>

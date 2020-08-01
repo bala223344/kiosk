@@ -30,3 +30,4 @@ yarn-debug.log*
 .vscode
 config/database.yml
 shared/
+shared/log/*

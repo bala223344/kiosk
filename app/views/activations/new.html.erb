@@ -2,7 +2,7 @@
 <div class="page-container">
   <!-- START PAGE HEADER WRAPPER -->
   <!-- START HEADER -->
-  <div class="header ">
+  <div class="header hidden-xs hidden-sm hidden-md">
     <div class=" pull-left sm-table">
       <div class="header-inner">
 
@@ -68,7 +68,7 @@
             <div class="row">
               <div class="col-sm-10">
                 <h3>Merchant Account</h3>
-                <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into American Savings Bank Merchant Services and CardConnect who offers a wide variety of options, this way you do not have to pay for gateway software such as Authorize.net or PayPal.com. The easiest way is to call (310) 878-2967 for a dedicated rep, or you can simply fill out your contact information below and they will gladly reach out and complete the forms for you right over the phone.
+                <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into many different processors. Please complete your information below, we will help you get integrated right away. If you do not have a processor, no problem, we will help get one setup for you.
 
                 </p>
                 <br>
@@ -91,15 +91,15 @@
                     <% end %>
 
 
-                <div class="form-group">
+                <div class="form-group m-t-0">
                     <label for="fname" class="col-sm-3 control-label">Name of Organization</label>
                   <div class="col-sm-9">
-                    <%= ff.text_field :title, :placeholder => "", :class => "form-control", :maxlength => 200, :required => true%>
+                    <%= ff.text_field :title, :placeholder => "What is the business name that you want listed on customer receipts.", :class => "form-control", :maxlength => 200, :required => true%>
                   </div>
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group ">
                   <label for="fname" class="col-sm-3 control-label">Contact Name</label>
                   <div class="col-sm-9">
                     <%= ff.text_field :name, :placeholder => "Who are we calling?", :class => "form-control", :maxlength => 150, :required => true%>
