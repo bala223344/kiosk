@@ -68,6 +68,7 @@ GEM
       railties (>= 3.0)
     builder (3.2.4)
     byebug (11.1.3)
+    chunky_png (1.3.11)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -190,6 +191,10 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rqrcode (1.1.2)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 0.1)
+    rqrcode_core (0.1.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -251,6 +256,7 @@ DEPENDENCIES
   rails (= 5.0.1)
   rails_layout
   rest-client
+  rqrcode
   sass-rails
   sparkpost_rails
   therubyracer
