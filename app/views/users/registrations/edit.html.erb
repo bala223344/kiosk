@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-    <!-- START PAGE-CONTAINER -->
-    <div class="page-container">
-      <!-- START PAGE HEADER WRAPPER -->
-      <!-- START HEADER -->
-      <div class="header hidden-xs hidden-sm hidden-md">
-        <div class=" pull-left sm-table">
-          <div class="header-inner">
-=======
+
 <!-- START PAGE-CONTAINER -->
 <div class="page-container">
   <!-- START PAGE HEADER WRAPPER -->
@@ -14,7 +6,6 @@
   <div class="header ">
     <div class=" pull-left sm-table">
       <div class="header-inner">
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
 
         <h2 class="pull-left p-l-30"><strong>PayNow.io</strong></h2>
 
@@ -30,21 +21,16 @@
 
       </div>
     </div>
-    <div class=" pull-right">
       <!-- START User Info-->
-      <div class="visible-lg visible-md m-t-10">
-        <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-          <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
-        </div>
-<<<<<<< HEAD
-        <div class=" pull-right hidden-xs hidden-sm hidden-md">
+      <div class=" m-t-10">
+       
+        <div class=" pull-right">
           <!-- START User Info-->
           <div class=" m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
               <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
             </div>
-=======
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
+
 
         <div class="dropdown pull-right"><button class="profile-dropdown-toggle" type="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -55,13 +41,8 @@
             </span>
 
           </button>
-
-<<<<<<< HEAD
-		<!-- <%= link_to('Logout', destroy_user_session_path, :method => :delete)  %> sl -->
               </div>
-=======
-          <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
+
 
 
       </div>
@@ -70,7 +51,7 @@
     <!-- END HEADER -->
   </div>
   <!-- Modal -->
-
+  </div>
 
 
   <!-- START PAGE CONTENT WRAPPER -->
@@ -79,11 +60,7 @@
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-<<<<<<< HEAD
-  <% end %>
-          <!-- START CONTAINER FLUID -->
-          <div class="container-fluid container-fixed-lg bg-white ">
-=======
+
     <% end %>
     <!-- START CONTAINER FLUID -->
     <div class="container-fluid container-fixed-lg bg-white">
@@ -99,68 +76,32 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-10">
-              <h3>Setup</h3>
-              <p>Welcome to PayNow.io. The ONLY hosted payment page service for merchant accounts with no monthly fees.
-                Before you begin to use your new payment page, we must know how to title it and you must have a
-                compatible merchant account.
-              <p class="small hint-text pull-right">
-                <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to
-                change your password.
-
-
-              </p>
-              </p>
+               <h3>Admin</h3> 
+                    <p>Welcome to your admin page. If you need any help, please kindly reach out to your merchant rep. <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
+                    </p>
               <br>
               <%= devise_error_messages! %>
 
               <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
-
-
-
-
-
-
-
 
 
               <%= f.fields_for :kiosk do |ff| %>
-              <div class="form-group">
-                <label for="fname" class="col-sm-3 control-label">Name of Business</label>
-                <div class="col-sm-9">
-                  <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 250, :required => true%>
-                </div>
+       
+      
 
-              </div>
-<<<<<<< HEAD
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-sm-10">
-                    <h3>Admin</h3> 
-                    <p>Welcome to your admin page. If you need any help, please kindly reach out to your merchant rep. <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
-                    </p>
-                    <br>
-					<%= devise_error_messages! %>
-=======
-               <div class="form-group">
-
-                <label for="amount" class="control-label col-sm-3">Generate a QR code and share</label>
-
-              <% if (f.object.merchid)%>
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
-
-             
-
-<<<<<<< HEAD
                     <div class="form-group">
                       <label for="fname" class="col-sm-3 control-label">Name of Business</label>
                       <div class="col-sm-9">
-                      <%= f.fields_for :kiosk do |ff| %>
-                        <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 250, :required => true%>
-                      <% end %>
+                        <%= ff.text_field :title, :placeholder => "Example: First Church Title", :class => "form-control", :maxlength => 250, :required => true%>
                       </div>
                     </div>
-=======
+
+
+       <div class="form-group">
+
+                <label for="amount" class="control-label col-sm-3">Generate a QR code and share</label>
+
+                    <% if (f.object.merchid)%>
 
                 <div class="col-sm-6 ">
 
@@ -182,7 +123,6 @@
                   </p>
 
 
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
 
                 </div>
                 <div class="col-sm-3 ">
@@ -190,32 +130,15 @@
 
                  <%= @qr.html_safe if @qr %>
 
-<<<<<<< HEAD
-                      <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Your payment link</label>
-                        <div class="col-sm-9">
-                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p> 
-
-                           <%= preview_link(resource) %>
-=======
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
-
-                 <% if @share_url  %>
+                         <% if @share_url  %>
                   <br />
                   <a id="copy-button"   class="btn" data-clipboard-text="<%=@share_url%>">
                       <img width="13" src="assets/clippy.svg" alt="Copy share link to clipboard">
                       Copy share link 
                   </a>
                   <% end %>
-
-                  </div>
-
-<<<<<<< HEAD
-
-                        </div>
                       </div>
-=======
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
+
 
               <% else %>
 
@@ -226,11 +149,22 @@
               <% end %>
               </div>
 
-<<<<<<< HEAD
-
-						<% if (f.object.merchid)%>
 
 
+    <div class="form-group">
+                        <label for="fname" class="col-sm-3 control-label">Your payment link</label>
+                        <div class="col-sm-9">
+                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p> 
+
+                           <%= preview_link(resource) %>
+
+
+          
+
+                  </div>
+
+
+                        </div>
 
 
 <!-- sl pay buttons
@@ -264,55 +198,13 @@
 
 
 
-	<b class="alert alert-success "> Merchant account provided</b> 
-            
-
-            <a class="btn btn-outline-gray" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              <i>Show Details</i>
-            </a> 
-
-
-            <div class="collapse" id="collapseExample">
-              <div class="">
-               Merchant Id : <%= f.object.merchid%> <br />
-               Username : <%= f.object.merchant_username%> <br />
-               Password : ***** <br /><br />
-=======
-              <% end %>
 
 
 
 
-              <div class="form-group">
-                <label for="fname" class="col-sm-3 control-label">Your new website</label>
-                <div class="col-sm-9">
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
-
-
-                  <p class="hint-text small">You can share the link, post it on your email or even display on your own
-                    website.</p>
-                  <%= preview_link(resource) %>
-
-
-                </div>
-              </div>
-
-<<<<<<< HEAD
             <div class="hide"></div>
 
-            <% else %>
-              <p> </p>
-                <div class="row">
-                     <div class="col-sm-9"> <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into many different processors. If you do not have a processor, no problem, we will help get one setup for you.
-
-</p>
-                       <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
-                       <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
-=======
-
-
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
-
+          
 
 
 
@@ -321,25 +213,19 @@
                 <label class="col-sm-3 control-label">Payments</label>
                 <div class="col-sm-9">
 
-                  <p class="m-t-10">
 
                     <% if (f.object.merchid)%>
+                    <br />
                     <b class="alert alert-success "> Merchant account provided</b>
                     <br /><br />
 
                     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
                       aria-expanded="false" aria-controls="collapseExample">
-                      <i>click to reveal details</i>
+              <i>Show Details</i>
                     </a>
 
-<<<<<<< HEAD
                       <br>
-                      <div class="row col-sm-12">
-                        <%= f.submit "Save", :class => "btn btn-success" %>
-
-                        <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-grey" ) %>
-=======
-
+                      
                   <div class="collapse" id="collapseExample">
                     <div class="">
                       Merchant Id : <%= f.object.merchid%> <br /><br />
@@ -348,34 +234,30 @@
 
                     </div>
                   </div>
->>>>>>> d745c4a29a8f84f343af33605aa06403d717550a
 
-<!-- sl temp hide 
-<p class="small hint-text pull-right">
-                        <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
-                          </p> -->
 
                   <div class="hide"></div>
+                <% else %>
 
-                  <% else %>
-                  <p>In order to accept payments by any credit card, you will need a merchant account. A merchant
-                    account is what deposits into your bank account, think of it like a bridge. Getting a merchant
-                    account for most businesses, including non-profits is easy. If you need help, feel free to call
-                    (310) 878-2967 for assistance. </p>
+                  <p> </p>
                   <div class="row">
                     <div class="col-sm-9">
+                    <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into many different processors. If you do not have a processor, no problem, we will help get one setup for you.
+
+</p>
+
                       <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
                       <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
 
                     </div>
                   </div>
                   <% end %>
-                  </p>
 
 
 
 
                 </div>
+                  <% end %>
               </div>
 
               <br>
