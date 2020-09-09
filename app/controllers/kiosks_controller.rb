@@ -12,6 +12,28 @@ class KiosksController < ApplicationController
 
   end
 
+  def genqr
+
+    
+    p params
+    if params[:amount] && params[:amount].to_i > 0 && params[:id].to_i > 0
+      share_url = URI.escape("https://paynow.io/secure/#{params[:id]}?amount=#{params[:amount]}&inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}")
+      require 'rqrcode'
+      qrcode = RQRCode::QRCode.new(share_url,  level: :l)
+      qr = qrcode.as_svg(
+        offset: 0,
+        color: '000',
+        shape_rendering: 'crispEdges',
+        module_size: 6,
+        standalone: true
+      )
+      render json: {qr: qr, url: share_url}
+    else 
+      render json: {error: 'something wrong'},  status: 403
+    end  
+
+  end
+
   def update
     id = params[:id]
     kiosk = Kiosk.find(id)

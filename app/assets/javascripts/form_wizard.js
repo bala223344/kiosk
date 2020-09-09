@@ -6,6 +6,15 @@
 (function($) {
     $(document).ready(function() {
 
+        $.get("/genqr/?amount=1.5&id=999")
+        .done(function(data) {
+          $("#qr-container").html(data.qr)
+          $("#share-url").html(data.url)
+        })
+        .fail(function() {
+          alert( "error" );
+        })
+
         function submitToCC() {
 
           $(".payment-errors").addClass("hide")

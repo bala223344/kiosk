@@ -17,7 +17,6 @@ window.populate_amt = ->
 
   $('#actual_amt').html(formatter.format($amt))
   $('#display_amt').html(formatter.format($amtandfee))
-
   $('#fee').html(formatter.format($fee))
   return
 $ ->

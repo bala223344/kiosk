@@ -75,4 +75,6 @@ Rails.application.routes.draw do
   resources :kiosks, path: :secure
   resources :activations
   resources :terms, only: [:index]
+  get 'genqr' => 'kiosks#genqr'
+
 end
