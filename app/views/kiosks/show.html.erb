@@ -73,7 +73,7 @@
                         <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span>  payment page.</strong></h5>
                         <div class="row">
                           <div class="col-lg-10 col-md-6">
-                            <p class="no-margin">Please complete the following information to process your payment for <%= @kiosk.title %></p>
+                            <p class="no-margin">Please complete the following information to process your payment for <%= @kiosk.title %>.</p>
 
                           </div>
 
@@ -264,12 +264,23 @@
 
                 <div id ="pager-cont" class="padding-20 bg-white">
                   <ul class="pager wizard">
-                   <!--  <li class="qr">
+
+		<!-- QR SL  -->
+		<!-- 
+                    <li class="qr">
                       <button class="btn btn-success pull-left" type="button">
-                        <span><i class="fa fa-qrcode" aria-hidden="true"></i></span> QR-->
+                        <span><i class="fa fa-qrcode" aria-hidden="true"></i></span>
 
                       </button>
-                    </li>
+			</li>
+		-->
+			<!-- temp hidden
+                       <% if (@user.merchid) %>
+                      	<% else %>
+                      <b id="merchid_warning" class="alert alert-warning pull-left">Preview</b>
+                      	<% end %> -->
+
+
 		    <li class="next">
                       <button class="btn btn-primary btn-cons pull-right" type="button">
                         <span>Next </span>
@@ -282,15 +293,6 @@
                       </button>
                     </li>
                        <li class="next finish">
-                       <% if (@user.merchid) %>
-
-
-                      	<%	else %>
-
-                      			<b id="merchid_warning" class="alert alert-warning">Test preview. Merchant integration not done yet.</b>
-                      	<%
-                      		end
-                      			%>
                     </li>
                     <li class="previous">
                       <button class="btn btn-default btn-cons pull-right" type="button">

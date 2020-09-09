@@ -3,7 +3,7 @@
 <div class="page-container">
   <!-- START PAGE HEADER WRAPPER -->
   <!-- START HEADER -->
-  <div class="header ">
+  <div class="header hidden-xs">
     <div class=" pull-left sm-table">
       <div class="header-inner">
 
@@ -24,7 +24,7 @@
       <!-- START User Info-->
       <div class=" m-t-10">
        
-        <div class=" pull-right">
+        <div class=" pull-right hidden-sm">
           <!-- START User Info-->
           <div class=" m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
@@ -99,10 +99,14 @@
 
        <div class="form-group">
 
-                <label for="amount" class="control-label col-sm-3">Generate a QR code and share</label>
+
+                <label for="amount" class="col-sm-3 control-label" >Quick Pay</label> 
+
+
+
+
 
                     <% if (f.object.merchid)%>
-
                 <div class="col-sm-6 ">
 
                   <p class="hint-text small"></p>
@@ -122,34 +126,34 @@
                     <%= ff.text_field :inv_desc, :placeholder => "Invoice description", :class => "form-control"%>
                   </p>
 
-
+                  <%= f.submit "Update QR Code", :class => "btn btn-complete" %>
+                         <% if @share_url  %>
+                  <a id="copy-button"   class="btn btn-white" data-clipboard-text="<%=@share_url%>">
+                     <!-- Temp Hide <img width="13" src="assets/clippy.svg" alt="Copy share link to clipboard"> -->
+                      Copy Quick Pay Link
+                  </a>
 
                 </div>
-                <div class="col-sm-3 ">
+                <div class="col-sm-3 m-t-10">
                  
 
                  <%= @qr.html_safe if @qr %>
 
-                         <% if @share_url  %>
-                  <br />
-                  <a id="copy-button"   class="btn" data-clipboard-text="<%=@share_url%>">
-                      <img width="13" src="assets/clippy.svg" alt="Copy share link to clipboard">
-                      Copy share link 
-                  </a>
+
                   <% end %>
                       </div>
 
 
               <% else %>
 
-                              <div class="col-sm-9 alert-warning ">
-                              Merchant details were not provided to generate share link. Please activate card processing.
+                              <div class="col-sm-9 hint-text small">
+                              Please activate your merchant account to use Quick Pay.
                                </div>
 
+              
+
               <% end %>
-              </div>
-
-
+</div> 
 
     <div class="form-group">
                         <label for="fname" class="col-sm-3 control-label">Your payment link</label>
@@ -210,21 +214,15 @@
 
 
               <div class="form-group">
-                <label class="col-sm-3 control-label">Payments</label>
-                <div class="col-sm-9">
+                <label class="col-sm-3 control-label">Merchant Account</label>
+                <div class="col-sm-9 m-t-10">
 
 
                     <% if (f.object.merchid)%>
-                    <br />
-                    <b class="alert alert-success "> Merchant account provided</b>
-                    <br /><br />
-
-                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                      aria-expanded="false" aria-controls="collapseExample">
-              <i>Show Details</i>
-                    </a>
-
-                      <br>
+                    <b class="alert alert-success " data-toggle="collapse" href="#collapseExample" role="button"
+                      aria-expanded="false" aria-controls="collapseExample"> Connected</b>
+                   <br />
+                      <br />
                       
                   <div class="collapse" id="collapseExample">
                     <div class="">

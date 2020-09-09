@@ -5415,7 +5415,7 @@ form legend {
 .form-control[readonly],
 fieldset[disabled] .form-control {
   background: #f8f8f8;
-  color: rgba(98, 98, 98, 0.23);
+  color: rgba(0, 0, 0, 1); /* Was SL(98, 98, 98, 0.23) */
 }
 /* Input Sizes
 --------------------------------------------------
