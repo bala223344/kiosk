@@ -1,9 +1,23 @@
 class KiosksController < ApplicationController
   def show
+    
+
+    # require 'signalwire/sdk'
+
+
+    # @client = Signalwire::REST::Client.new '3fe73725-f958-4c16-ad94-be32579bed82', 'PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5', signalwire_space_url: "startgroup.signalwire.com"
+
+
+
+    # message = @client.messages.create(
+    #   from: '+14158140047',
+    #   body: "wat good",
+    #   to: '+917418414091'
+    # )
+
+
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
-
-   
 
   end
 
@@ -30,6 +44,8 @@ class KiosksController < ApplicationController
 
 
     begin
+
+        
         #if model is surcharge fee is only for credit card..determin if it is not a CC
        if kiosk.user.cmodel == 'surcharge'
         first8dig = number.to_s[0..7]
@@ -37,6 +53,7 @@ class KiosksController < ApplicationController
         ccbody = JSON.parse(ccres.body)
         #no CC..no fee
         if ccbody["type"] != "credit"
+
           fee = 0
         end 
       end 
@@ -87,6 +104,33 @@ class KiosksController < ApplicationController
                 charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
                 KioskMailer.owner_email(charge).deliver
 
+
+
+               if kiosk.sms_number.length > 6
+                require 'signalwire/sdk'
+
+
+                  @client = Signalwire::REST::Client.new '3fe73725-f958-4c16-ad94-be32579bed82', 'PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5', signalwire_space_url: "startgroup.signalwire.com"
+
+                  collected = 'was'
+                  if fee == 0
+                    collected = 'was not'
+
+                  end
+                  
+
+
+                  body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(amount)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
+                  message = @client.messages.create(
+                    from: '+14158140047',
+                    body: body,
+                    to: '+1'+kiosk.sms_number
+                  )
+
+                end
+
+
+
               end
               # is Rejected
             else
@@ -117,7 +161,6 @@ class KiosksController < ApplicationController
 
 
     respond_to do |format|
-      p "success mana"
       format.js {}
     end
   end
