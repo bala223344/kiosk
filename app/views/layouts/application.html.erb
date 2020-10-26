@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0, user-scalable=no">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title><%= content_for?(:title) ? yield(:title) : "devPaynow.io" %></title>
@@ -18,10 +18,41 @@
     <%= csrf_meta_tags %>
       <%= yield(:header) %>
    </head>
-  <body class="">
+  <body class="nk-body bg-lighter npc-general has-sidebar ui-shady">
 
-      <%= render 'layouts/messages' %>
+<div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+        <%= render 'layouts/sidebar' %>
+      
+        <!-- wrap @s -->
+            <div class="nk-wrap ">
+              <%= render 'layouts/header' %>
+             
+
+         <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+
+
       <%= yield %>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+
+
+  <%= render "layouts/footer0" %>
+
+
+    </div>
+      </div>
+      </div>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
   </body>

@@ -1,57 +1,297 @@
 
+      <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">Hosted Payment Page</h3>
+                                            <div class="nk-block-des text-soft">
+                                                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content">
+                                            <div class="toggle-wrap nk-block-tools-toggle">
+                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                <div class="toggle-expand-content" data-content="pageMenu">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li class="nk-block-tools-opt"><a href="https://paynow.io/secure/1000" class="btn btn-warning"><em class="icon ni ni-mobile"></em><span>Launch HPP</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+
+
+
+  <div class="nk-block">
+
+   <%= devise_error_messages! %>
+
+              <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
+
+
+              <%= f.fields_for :kiosk do |ff| %>
+       
+                                    <div class="row g-gs">
+                                        <div class="col-xxl-6">
+                                            <div class="row g-gs">
+                                                <div class="col-lg-6 col-xxl-12">
+                                                    <div class="card card-bordered">
+                                                        <div class="card-inner">
+                                                            <div class="card-title-group align-start mb-2">
+                                                                <div class="card-title">
+                                                                    <h6 class="title">Sales Revenue</h6>
+                                                                    <p>In last 30 days</p>
+                                                                </div>
+                                                                <div class="card-tools">
+                                                                    <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Revenue from subscription"></em>
+                                                                </div>
+                                                            </div>
+                                                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                                                <div class="nk-sale-data-group flex-md-nowrap g-4">
+                                                                    <div class="nk-sale-data">
+                                                                        <span class="amount">$14,299.59 <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>16.93%</span></span>
+                                                                        <span class="sub-title">This Month</span>
+                                                                    </div>
+                                                                    <div class="nk-sale-data">
+                                                                        <span class="amount">$7,299.59 <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>4.26%</span></span>
+                                                                        <span class="sub-title">This Week</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="nk-sales-ck sales-revenue">
+                                                                    <canvas class="sales-bar-chart" id="salesRevenue"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .col -->
+                                                <div class="col-lg-6 col-xxl-12">
+                                                    <div class="row g-gs">
+                                                        <div class="col-sm-6 col-lg-12 col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-inner">
+                                                                    
+                                                                    <div class="flex-sm-wrap g-4 flex-md-nowrap">
+                                                                        <div class="nk-sale-data">
+
+
+
+                    <div class="form-group">
+                      <label for="fname" class="form-label control-label">Name of Business</label>
+                      <div class="form-control-wrap">
+                        <%= ff.text_field :title, :placeholder => "Example: First Church Title", :class => "form-control", :required => true%>
+                      </div>
+                    </div>
+                          <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+
+                                                                            
+                                                                            
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- .card -->
+                                                        </div><!-- .col -->
+                                                        <div class="col-sm-6 col-lg-12 col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-inner">
+                                                                    <div class="card-title-group align-start mb-2">
+                                                                        <div class="card-title">
+                                                                            <h6 class="title">Avg Transaction</h6>
+                                                                        </div>
+                                                                        <div class="card-tools">
+                                                                            <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Average sale amount"></em>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                                        <div class="nk-sale-data">
+                                                                            <span class="amount">$346.20</span>
+                                                                            <span class="sub-title"><span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>2.45%</span>since last week</span>
+                                                                        </div>
+                                                                        <div class="nk-sales-ck">
+                                                                            <canvas class="sales-bar-chart" id="totalSubscription"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- .card -->
+                                                        </div><!-- .col -->
+                                                    </div><!-- .row -->
+                                                </div><!-- .col -->
+                                            </div><!-- .row -->
+                                        </div><!-- .col -->
+                                        <div class="col-xxl-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start gx-3 mb-3">
+                                                        <div class="card-title">
+                                                            <h6 class="title">Sales Overview</h6>
+                                                            <p>Year to Date <a href="#">See Details</a></p>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-primary btn-dim d-none d-sm-inline-flex" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em><span><span class="d-none d-md-inline">View</span> Report</span></a>
+                                                                <a href="#" class="btn btn-icon btn-primary btn-dim d-sm-none" data-toggle="dropdown"><em class="icon ni ni-download-cloud"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>Download Mini Version</span></a></li>
+                                                                        <li><a href="#"><span>Download Full Version</span></a></li>
+                                                                        <li class="divider"></li>
+                                                                        <li><a href="#"><em class="icon ni ni-opt-alt"></em><span>More Options</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sale-data-group align-center justify-between gy-3 gx-5">
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount">$82,944.60</span>
+                                                        </div>
+                                                        <div class="nk-sale-data">
+                                                            <span class="amount sm text-teal">$9,059.22 <small>Total Lifetime Savings</small></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nk-sales-ck large pt-4">
+                                                        <canvas class="sales-overview-chart" id="salesOverview"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                        <div class="col-xxl-12">
+                                            <div class="card card-bordered card-full">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group">
+                                                        <div class="card-title">
+                                                            <h6 class="title"><span class="mr-2">Recent Transactions</span> <a href="#" class="link d-none d-sm-inline">See History</a></h6>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <ul class="card-tools-nav">
+                                                              <li><a href="#"><span>Credit</span></a></li>
+                                                              <li><a href="#"><span>Debit</span></a></li>
+                                                                <li><a href="#"><span>Refunds</span></a></li>
+                                                                <li class="active"><a href="#"><span>All</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-inner p-0 border-top">
+                                                    <div class="nk-tb-list nk-tb-orders">
+                                                        <div class="nk-tb-item nk-tb-head">
+                                                            <div class="nk-tb-col"><span>Transaction ID</span></div>
+                                                            <div class="nk-tb-col tb-col-sm"><span>Date</span></div>
+                                                            <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
+                                                            <div class="nk-tb-col tb-col-lg"><span>Subtotal</span></div>
+                                                            <div class="nk-tb-col"><span>Type</span></div>
+                                                            <div class="nk-tb-col"><span>Fee</span></div>
+                                                            <div class="nk-tb-col"><span class="d-none d-sm-inline">Status</span></div>
+                                                        </div>
+                                                       
+                                                        <!-- Row Start -->
+                                                        <div class="nk-tb-item">
+                                                            <div class="nk-tb-col">
+                                                                <span class="tb-sub">#95949</span>
+                                                            </div>
+                                                            <div class="nk-tb-col tb-col-md">
+                                                                <span class="tb-sub">10/07/2020</span>
+                                                            </div>
+                                                            <div class="nk-tb-col tb-col-sm">
+                                                                <span class="tb-sub">Robin Williams</span>
+                                                            </div>
+                                                            <div class="nk-tb-col tb-col-lg">
+                                                                <span class="tb-sub">-$50.49</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="tb-sub">Credit</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="tb-sub">Returned</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="badge badge-dot badge-dot-xs badge-warning">Refunded</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row End -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-inner-sm border-top text-center d-sm-none">
+                                                    <a href="#" class="btn btn-link btn-block">See History</a>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+
+      <% end #ff for %>
+      <% end #form %>
+
+                                </div><!-- .nk-block -->
+
+
+            
+
+                       <div class="nk-block">
+                                    <div class="card card-bordered">
+                                        <div class="nk-refwg">
+                                            <div class="nk-refwg-invite card-inner">
+                                                <div class="nk-refwg-head g-3">
+                                                    <div class="nk-refwg-title">
+                                                        <h5 class="title">Your Secure Page</h5>
+                                                        <div class="title-sub">Use the bellow link to securely collect payments.</div>
+                                                    </div>
+                                                    <div class="nk-refwg-action">
+                                                        <a href="https://paynow.io/secure/1000" target="_blank" class="btn btn-primary">Send Payment Request</a>
+                                                    </div>
+                                                </div>
+                                                <div class="nk-refwg-url">
+                                                    <div class="form-control-wrap">
+                                                        <div class="form-clip clipboard-init" data-clipboard-target="#refUrl" data-success="Copied" data-text="Copy Link"><em class="clipboard-icon icon ni ni-copy"></em> <span class="clipboard-text">Copy Link</span></div>
+                                                        <div class="form-icon">
+                                                            <em class="icon ni ni-link-alt"></em>
+                                                        </div>
+                                                        <input type="text" class="form-control copy-text" id="refUrl" value="https://paynow.io/secure/1000">
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-refwg-invite -->
+                                         
+                                        </div><!-- .nk-refwg -->
+                                    </div><!-- .card -->
+                                    </div>
+
+
+
+       <p>
+                                  <hr/>
+                                </p>
+
+
+ <div class="row g-gs">
+
+                                         <div class="col-xxl-12">
+                                            <div class="card  card-full">
+                                                
+                                                <div class="card-inner p-0 border-top">
+                                                    <div class="nk-tb-list nk-tb-orders">
+                                                       
+
+
+                                                </div>
+                                                <div class="card-inner-sm border-top text-center d-sm-none">
+                                                    <a href="#" class="btn btn-link btn-block">See History</a>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+
+  </div>
+
+
+                                </div>
+
+
+
+
+
 <!-- START PAGE-CONTAINER -->
 <div class="page-container">
   <!-- START PAGE HEADER WRAPPER -->
   <!-- START HEADER -->
-  <div class="header hidden-xs">
-    <div class=" pull-left sm-table">
-      <div class="header-inner">
 
-        <h2 class="pull-left p-l-30"><strong>PayNow.io</strong></h2>
-
-
-
-
-        <div class="brand inline">
-          <!--
-<img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
-
--->
-        </div>
-
-      </div>
-    </div>
-      <!-- START User Info-->
-      <div class=" m-t-10">
-       
-        <div class=" pull-right hidden-sm">
-          <!-- START User Info-->
-          <div class=" m-t-10">
-            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-              <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
-            </div>
-
-
-        <div class="dropdown pull-right"><button class="profile-dropdown-toggle" type="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <span class="thumbnail-wrapper d32 circular inline m-t-5">
-              <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar_small2x.jpg" }) %>
-
-
-            </span>
-
-          </button>
-              </div>
-
-
-
-      </div>
-      <!-- END User Info-->
-    </div>
-    <!-- END HEADER -->
-  </div>
-  <!-- Modal -->
-  </div>
 
 
   <!-- START PAGE CONTENT WRAPPER -->
@@ -76,7 +316,6 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-10">
-               <h3>Admin</h3> 
                     <p>Welcome to your admin page. If you need any help, please kindly reach out to your merchant rep. <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
                     </p>
               <br>
@@ -89,20 +328,12 @@
        
       
 
-                    <div class="form-group">
-                      <label for="fname" class="col-sm-3 control-label">Name of Business</label>
-                      <div class="col-sm-9">
-                        <%= ff.text_field :title, :placeholder => "Example: First Church Title", :class => "form-control", :maxlength => 250, :required => true%>
-                      </div>
-                    </div>
 
 
        <div class="form-group">
 
 
                 <label for="amount" class="col-sm-3 control-label" >Quick Pay</label> 
-
-
 
 
 
@@ -155,50 +386,7 @@
               <% end %>
 </div> 
 
-    <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Your payment link</label>
-                        <div class="col-sm-9">
-                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p> 
-
-                           <%= preview_link(resource) %>
-
-
-          
-
-                  </div>
-
-
-                        </div>
-
-
-<!-- sl pay buttons
-
-
-<button class="btn btn-default"><i class="fa fa-qrcode"></i>  Request Payment</button>
-
-<a class="btn btn-info" role="button" aria-expanded="false" aria-controls="">
-              <i class="fa fa-qrcode"></i>
-            </a> 
-<a class="btn btn-warning" role="button" aria-expanded="false" aria-controls="">
-              <i class="fa fa-envelope-o"></i>
-            </a> 
-
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseQr" role="button" aria-expanded="false" aria-controls="collapseExample">
-              <i>Manually Request Payment</i>
-            </a> 
-
-            <div class="collapse" id="collapseQr">
-              <div class="">
-               
-	       Enter Amount : ______ <br />
-               Invoice # : ______ <br />
-               Invoice Description : ______ <br />
-
-              </div>
-            </div>
--->
-
-
+   
 
 
 
@@ -290,7 +478,6 @@
 </div>
 
 <!-- START FOOTER -->
-  <%= render "layouts/footer0" %>
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
 
 <!-- END FOOTER -->
