@@ -1,5 +1,7 @@
 class KiosksController < ApplicationController
+  layout "wizard", only: [:show]
   def show
+    
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
 

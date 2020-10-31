@@ -1,71 +1,119 @@
-<div class="register-container full-height sm-p-t-30">
+<div class="card card-bordered">
+  <div class="card-inner card-inner-lg">
+    <div class="nk-block-head">
+      <div class="nk-block-head-content">
+
+        <h4 class="nk-block-title">Sign-In</h4>
+        <div class="nk-block-des">
+          <p>Build a quick and easy payment page in 55 seconds. We utilize a compliant surcharging system or an optional
+            a gateway fee model to eliminate most of your costs . <a target="blank" href="/secure/1000">Click here to
+              see a working demo.</a></p>
 
 
-      <div class="container-sm-height full-height">
-        <div class="row row-sm-height">
-          <div class="col-sm-12 col-sm-height col-middle">
-<!--             <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22"> -->
-            <h3>Signup</h3>
-            <p>
-
-                Welcome to PayNow.io! Merchant account is required.
-
-
-            </p>
-            <% if @user.errors.any? %>
-
-
-    <% @user.errors.full_messages.each do |msg| %>
-      <div class="alert alert-danger" role="alert"><%= msg %></div>
-    <% end %>
-
-<% end %>
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>
-
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group form-group-default">
-                    <label>Username</label>
-                    <%= f.text_field :username, :placeholder => "mychurch123", :class => "form-control", :required => true%>
-
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group form-group-default">
-                    <label>Password</label>
-                    <%= f.password_field :password, :placeholder => "6 characters minimum", :class => "form-control", :required => true%>
-
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group form-group-default">
-                    <label>Email</label>
-                    <%= f.email_field :email, :placeholder => "We'll send login details and notifications here", :class => "form-control", :required => true%></p>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-              <div class="col-md-12">
-                <div class="checkbox ">
-                   <%= f.check_box :terms, id:"checkbox1" %>
-                  <label for="checkbox1">I agree to <a href="/terms" target="_new">terms</a>.</label>
-
-                </div>
-
-              </div>
-
-            </div>
-             <%= f.submit "Create a new account", :class => "btn btn-primary btn-cons m-t-10" %>
-
-            <% end %>
-            
-          </div>
         </div>
       </div>
     </div>
-    
-    <%= render "layouts/chat" %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>
+    <div class="form-group">
+
+
+
+      <div class="form-label-group">
+
+        <label class="form-label" for="default-01">Email or Username</label>
+      </div>
+
+      <%= f.text_field :username, :placeholder => "mychurch123", :class => "form-control form-control-lg", :required => true%>
+
+
+
+
+
+    </div>
+    <div class="form-group">
+      <div class="form-label-group">
+        <label class="form-label" for="password">Password</label>
+        <%= link_to "Forgot password?", new_password_path(resource_name),  :class => "link link-primary link-sm" %>
+
+      </div>
+      <div class="form-control-wrap">
+        <a href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
+          <em class="passcode-icon icon-show icon ni ni-eye"></em>
+          <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+        </a>
+
+        <%= f.password_field :password, :placeholder => "6 characters minimum", :class => "form-control", :required => true%>
+
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+
+
+      <div class="form-label-group">
+        <label class="form-label" for="password">Email or Username</label>
+
+
+      </div>
+
+
+
+
+
+      <%= f.email_field :email, :placeholder => "We'll send login details and notifications here", :class => "form-control form-control-lg", :required => true%>
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="form-group">
+
+
+
+      <div class="custom-control custom-checkbox">
+        <%= f.check_box :terms, :class => "custom-control-input",  id:"customCheck1" %>
+        <label class="custom-control-label" for="customCheck1">Keep Me Signed in</label>
+      </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+    <div class="form-group">
+      <%= f.submit "Sign up", :class => "btn btn-lg btn-primary btn-block" %>
+
+    </div>
+
+    <% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) && !msg.blank? %>
+    <%= content_tag :div, msg, :class => "alert  alert-danger flash_#{name}" %>
+    <% end %>
+    <% end %>
+
+
+  <% end %>
+
+
+  </div>
+</div>

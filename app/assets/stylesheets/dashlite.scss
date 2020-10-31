@@ -74,3 +74,29 @@ $rtl: false;
 
 /*! END @iO */
 ////////////////////////// END STYLESHEET ////////////////////////////
+
+.nk-refwg .nk-refwg-stats { width: 45%; } 
+
+  .nk-refwg { display: flex; flex-wrap: wrap; }
+
+  .nk-refwg-invite, .nk-refwg-stats { width: 100%; }
+  
+  .nk-refwg-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; }
+  
+  .nk-refwg-group { position: relative; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; padding-right: 30px; }
+  
+  .nk-refwg-name .title { font-size: 13px; color: #0971fe; }
+  
+  .nk-refwg-name .title .icon { color: #8094ae; font-size: 0.75rem; margin-left: 0.125rem; }
+  
+  .nk-refwg-info { flex-grow: 1; text-align: center; display: flex; justify-content: space-around; }
+  
+  .nk-refwg-info .title { font-size: 1.125rem; font-weight: 500; }
+  
+  .nk-refwg-more { position: absolute; right: -4px; top: -2px; }
+  
+  .nk-refwg .nk-refwg-invite { border-bottom: 1px solid #dbdfea; }
+  
+
+@media (min-width: 768px) { .nk-refwg .nk-refwg-invite {border-bottom: none; border-right: 1px solid #dbdfea; }
+}

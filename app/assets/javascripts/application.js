@@ -11,12 +11,5 @@
 // about supported directives.
 //
 
-//= require pace
-//= require jquery
-//= require jquery_ujs
-//= require bootstrap
-//= require bootstrap-sprockets
-//= require functions
-//= require form_wizard
-//= require_tree .
-//= require bootstrap-wysihtml5
+//= require bundle
+//= require scripts
