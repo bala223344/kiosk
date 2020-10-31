@@ -20,7 +20,7 @@
 
       <div class="form-label-group">
 
-        <label class="form-label" for="default-01">Email or Username</label>
+        <label class="form-label" for="default-01">Username</label>
       </div>
 
       <%= f.text_field :username, :placeholder => "mychurch123", :class => "form-control form-control-lg", :required => true%>
@@ -58,7 +58,7 @@
 
 
       <div class="form-label-group">
-        <label class="form-label" for="password">Email or Username</label>
+        <label class="form-label" for="password">Email</label>
 
 
       </div>
@@ -85,7 +85,10 @@
 
       <div class="custom-control custom-checkbox">
         <%= f.check_box :terms, :class => "custom-control-input",  id:"customCheck1" %>
-        <label class="custom-control-label" for="customCheck1">Keep Me Signed in</label>
+        <label class="custom-control-label" for="customCheck1">
+          I agree to <a href="/terms" target="_new">terms</a>
+
+         </label>
       </div>
 
 
@@ -104,10 +107,11 @@
       <%= f.submit "Sign up", :class => "btn btn-lg btn-primary btn-block" %>
 
     </div>
+     <% if @user.errors.any? %>
 
-    <% flash.each do |name, msg| %>
-    <% if msg.is_a?(String) && !msg.blank? %>
-    <%= content_tag :div, msg, :class => "alert  alert-danger flash_#{name}" %>
+
+    <% @user.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger" role="alert"><%= msg %></div>
     <% end %>
     <% end %>
 
