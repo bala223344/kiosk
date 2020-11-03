@@ -124,7 +124,7 @@ class KiosksController < ApplicationController
                   message = @client.messages.create(
                     from: '+14158140047',
                     body: body,
-                    to: '+1'+kiosk.sms_number
+                    to: kiosk.sms_number
                   )
 
                 end
