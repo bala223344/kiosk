@@ -442,7 +442,10 @@
         return $wizard.valid();
       },
       onFinished: function onFinished(event, currentIndex) {
-        window.location.href = "#";
+        //alert('s')
+        submitToCC()
+        
+        
       }
     }).validate({
       errorElement: "span",

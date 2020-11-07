@@ -26,6 +26,17 @@ $ ->
   if typeof window.ClipboardJS != 'undefined'
     clipboard = new ClipboardJS('#copy-button')
 
+window.submitToCC = ->
+#  $(".payment-errors").addClass("hide")
+  $("#ajx-loader").removeClass("hide")
+  $form = $(".edit_kiosk")
+  $cvc = $("#cvc").val()
+  $exp_mn = $("#exp_mn").val()
+  $exp_yr = $("#exp_yr").val()
+  $number = $("#number").val()
+  $cust_name = $(".cust_name").val()
+  $form.submit()
+
 
 
 

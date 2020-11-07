@@ -44,7 +44,7 @@
     </div>
     <div class="card card-bordered">
         <div class="card-inner">
-            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter", :novalidate => "novalidate"  },:id => 'steps-uid-0', :remote => true, :role => "application" ) do |f| %>
+            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter edit_kiosk", :novalidate => "novalidate"  },:id => 'steps-uid-0', :remote => true, :role => "application" ) do |f| %>
             <%= f.fields_for :donations, Donation.new  do |d| %>
 
 
@@ -281,6 +281,10 @@
                     <h5 class="title">Transaction Info</h5>
                 </div>
                 <div class="row gy-3">
+                 <div id="ajx-loader"  class="hide text-center">
+                  <%= image_tag("ajax-loader.gif")%>
+                  Your card will be charged now. Please wait.
+              </div>
                 </div>
                 <div class="row gy-3">
                     <div class="col-6 col-sm-3">
