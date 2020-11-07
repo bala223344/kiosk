@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   layout :set_layout
   def set_layout
      if current_user
-       'application'
+       'dashboard'
      else
        'auth'
      end

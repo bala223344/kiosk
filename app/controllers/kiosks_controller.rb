@@ -1,11 +1,25 @@
-class KiosksController < ApplicationController
-  layout "wizard", only: [:show]
+class KiosksController < BaseController
+
+
+  def vt
+    if (current_user && current_user.kiosk && current_user.kiosk.id)
+      @kiosk = current_user.kiosk
+      @user = current_user
+    else
+      @kiosk = nil
+      @user = nil
+    end
+    render 'show'
+
+    #@kiosk = current_user.find(params[:id])
+    #render 'show'
+  end
   def show
     
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
 
-   
+    
 
   end
 
@@ -20,7 +34,7 @@ class KiosksController < ApplicationController
 
     number = params[:number]
     cvc = params[:cvc]
-    exp_mn = params[:exp_mn].to_s
+    exp_mn = params[:expiry].to_s
     exp_yr = params[:exp_yr].to_s
     amount = params[:kiosk][:donations_attributes]['0'][:amount]
     fee = params[:kiosk][:donations_attributes]['0'][:fee_amt]
@@ -98,7 +112,7 @@ class KiosksController < ApplicationController
             #error from mailer..should be considered success
             if e.message.include? " recipient is required"
 
-              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'donated_by' => current_user.id, 'gateway_fee' => fee, 'card_type' =>  ccbody["type"], 'tx_status' => cresponse['setlstat']}
               KioskMailer.owner_email(charge).deliver
               #do nothgin..we already have @response..just send ownder mail
             else  
@@ -119,7 +133,6 @@ class KiosksController < ApplicationController
 
 
     respond_to do |format|
-      p "success mana"
       format.js {}
     end
   end

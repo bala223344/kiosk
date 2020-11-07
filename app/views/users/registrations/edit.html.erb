@@ -20,7 +20,7 @@
                         class="icon ni ni-more-v"></em></a>
                 <div class="toggle-expand-content" data-content="pageMenu">
                     <ul class="nk-block-tools g-3">
-                        <li class="nk-block-tools-opt"><a href="https://paynow.io/secure/1000"
+                        <li class="nk-block-tools-opt"><a href="<%=kiosk_url(resource.kiosk) %>"
                                 class="btn btn-warning"><em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
                         </li>
                     </ul>
@@ -62,7 +62,7 @@
                                     <div class="title-sub">Use the bellow link to securely collect payments.</div>
                                 </div>
                                 <div class="nk-refwg-action">
-                                    <a href="https://paynow.io/secure/1000" target="_blank" class="btn btn-primary">Send
+                                    <a href="<%=kiosk_url(resource.kiosk) %>" target="_blank" class="btn btn-primary">Send
                                         Payment Request</a>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                         <em class="icon ni ni-link-alt"></em>
                                     </div>
                                     <input type="text" class="form-control copy-text" id="refUrl"
-                                        value="https://paynow.io/secure/1000">
+                                        value="<%=kiosk_url(resource.kiosk) %>">
                                 </div>
                             </div>
                         </div><!-- .nk-refwg-invite -->

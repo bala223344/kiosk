@@ -1,185 +1,160 @@
-<!-- START PAGE-CONTAINER -->
-    <div class="page-container">
-      <!-- START PAGE HEADER WRAPPER -->
-      <!-- START HEADER -->
-      <div class="header ">
-        <div class=" pull-left sm-table">
-          <div class="header-inner">
+<% if @kiosk %>
 
-        
-          <h3 class="pull-left p-l-30"><strong><%= @kiosk.title %></strong></h3>
 
-            <div class="brand inline">
-              <!--
-<img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
-
--->
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title"></h3>
+            <div class="nk-block-des text-soft">
+                <p></p>
             </div>
+        </div><!-- .nk-block-head-content -->
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
+                        class="icon ni ni-more-v"></em></a>
+                <div class="toggle-expand-content" data-content="pageMenu">
+                    <ul class="nk-block-tools g-3">
 
-          </div>
+
+                        <li class="nk-block-tools-opt"><a href="#" class="btn btn-warning"><em
+                                    class="icon ni ni-mobile"></em><span>Launch HPP</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- .nk-block-head-content -->
+    </div><!-- .nk-block-between -->
+</div>
+
+
+
+
+
+
+
+
+<div class="nk-block nk-block-lg">
+    <div class="nk-block-head">
+        <div class="nk-block-head-content">
+            <h4 class="title nk-block-title">Virtual Terminal for <%= @kiosk.title %></h4>
+            <div class="nk-block-des">
+                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+            </div>
         </div>
-        <div class=" pull-right hidden-xs hidden-sm hidden-md">
-          <!-- START User Info-->
-          <div class="visible-lg visible-md  m-t-10">
-            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-              <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
-            </div>
-            <div class="dropdown pull-right">
-              <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="thumbnail-wrapper d32 circular inline m-t-5">
-                <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
-            </span>
-              </button>
-            </div>
-          </div>
-          <!-- END User Info-->
-        </div>
-      <!-- END HEADER -->
     </div>
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter", :novalidate => "novalidate"  },:id => 'steps-uid-0', :remote => true, :role => "application" ) do |f| %>
+            <%= f.fields_for :donations, Donation.new  do |d| %>
 
 
-    <!-- START PAGE-CONTAINER -->
-    <div class="page-container pull-left">
 
-        <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put  },:id => 'donation_form', :remote => true) do |f| %>
-      	<%= f.fields_for :donations, Donation.new  do |d| %>
+            <div class="nk-wizard-head">
+                <h5>Amount</h5>
+            </div>
+            <div class="nk-wizard-content mt-5">
+                <div class="row g-4">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="form-label" for="amount">Amount to Charge</label>
+                            <div class="form-control-wrap">
 
-           <!-- START PAGE CONTENT WRAPPER -->
-<!--       <div class="page-content-wrapper"> -->
-        <!-- START PAGE CONTENT -->
-        <div class="content">
-          <!-- START CONTAINER FLUID -->
-          <div class="container-fluid container-fixed-lg">
-            <div id="rootwizard">
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator ">
-                <li class="active">
-                  <a data-toggle="tab" href="#tab1"><i class="fa fa-shopping-cart tab-icon"></i> <span>Home</span></a>
-                </li>
-                <li class="">
-                  <a data-toggle="tab" href="#tab2"><i class="fa fa-credit-card tab-icon"></i> <span>Card</span></a>
-                </li>
-                <li class="">
-                  <a data-toggle="tab" href="#tab3"><i class="fa fa-check tab-icon"></i> <span>Done</span></a>
-                </li>
-              </ul>
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div class="tab-pane active slide-left" id="tab1">
-                  <div class="row row-same-height">
-                    <div class="col-md-12">
-                      <div class="padding-30">
+                                <% if params[:amount] %>
 
-                        <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span>  payment page.</strong></h5>
-                        <div class="row">
-                          <div class="col-lg-10 col-md-6">
-                            <p class="no-margin">Please complete the following information to process your payment for <%= @kiosk.title %>.</p>
+                                <%= d.number_field :amount, :placeholder =>"Example: 199.50", :class => "form-control payment-amt", :id => "amount",  :required => true, :readonly=>true, :data => {:msg =>"Required"}, :inputmode => "decimal", :pattern => "[0-9]*", :value =>  '%.2f' % params[:amount].to_d %>
 
-                          </div>
+                                <% else %>
 
-                          <div class="form-group form-group-default required m-t-25">
-                            <label>Amount</label>
+                                <%= d.number_field :amount, :placeholder =>"Example: 199.50", :class => "form-control payment-amt", :id => "amount",  :required => true,  :data => {:msg =>"Required"}, :inputmode => "decimal", :pattern => "[0-9]*", :aria => {:describedby =>"amount-error"} %>
 
-                            <% if params[:amount] %>
-                              <%= d.text_field :amount, :readonly =>true, :class => "form-control payment-amt", :value =>  '%.2f' % params[:amount].to_d,   :required => true%>
-  <% else %>                          
-  
-      <%= d.text_field :amount, :placeholder =>"40.00", :class => "form-control payment-amt", :required => true%>
 
-  <% end %>
 
-                            
-                          </div>
+                                <% end %>
 
-                          <div class="form-group form-group-default">
-                            <label>Invoice Number</label>
 
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="form-label" for="phone-no-1">Invoice #</label>
+                            <div class="form-control-wrap">
 
  <% if params[:inv_num] %>
-                              <%= d.text_field :inv_num, :readonly =>true, :class => "form-control payment-amt", :value => params[:inv_num],   :required => true%>
+                              <%= d.text_field :inv_num, :readonly =>true, :class => "form-control", :value => params[:inv_num],   :required => true%>
 
   <% else %>    
  <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
     <% end %>
-                           
 
-                          </div>
 
-                          <div class="form-group form-group-default">
-                            <label>Invoice Description</label>
-
- <% if params[:inv_desc] %>
-                              <%= d.text_field :inv_desc, :readonly =>true, :class => "form-control payment-amt", :value => params[:inv_desc],   :required => true%>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <label class="form-label" for="pay-amount-1">Description</label>
+                            <div class="form-control-wrap">
+                             <% if params[:inv_desc] %>
+                              <%= d.text_field :inv_desc, :readonly =>true, :class => "form-control", :value => params[:inv_desc],   :required => true%>
 
   <% else %>  
 
                             <%= d.text_field :inv_desc, :placeholder => "Optional", :class => "form-control"%>
                                <% end %>
 
-                          </div>
-
+                               
+                            </div>
                         </div>
-
-                  </div>
                     </div>
-                  </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Service Fee</label>
+                            <div class="g">
+                                <div class="custom-control custom-control-lg custom-switch">
+                                    <input type="checkbox" checked class="custom-control-input" id="recovery">
+                                    <label class="custom-control-label" for="recovery"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+
+                    </div>
                 </div>
-
-
-
-                <div class="tab-pane slide-left padding-20" id="tab2">
-                  <div class="row row-same-height">
-
-                    <div class="col-md-12">
-                      <div class="padding-0">
-
-                          <div class="b-rad-lg">
-
-                            <h3 class="pull-left no-margin"><span id="display_amt">5.00</span> charge to your card.</h3><br>
+            </div>
+            <div class="nk-wizard-head">
+                <h5>Credit Card</h5>
+            </div>
+            <div class="nk-wizard-content mt-5">
+                <div class="row gy-3">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="card">Card Number</label>
+                            <div class="form-control-wrap">
                             
-                            <% if @user.cmodel == 'surcharge' %>
-
-                            <small class="pull-left no-margin hint-text"><span id="actual_amt"></span>  + Gateway Fees of <span id="fee"></span> (Gateway fees are waived if paying with a debit card) 
-                            
-                                                         </small>
-                             <% else  %>                       
-                              <small class="pull-left no-margin hint-text"><span id="actual_amt"></span>  + Gateway Fees of <span id="fee"></span> 
-                            
-                                                         </small>
-                             <% end  %>                            
-                            <ul class="list-unstyled pull-right list-inline no-margin">
-                              <li>
-                                <%= image_tag("cards.png", :alt => "", :class => "brand hidden-xs", :size => "274x30",  data: { src: "cards.png", src_retina: "cards.png" }) %>
-
-                              </li>
-
-                            </ul>
-                            <div class="clearfix"></div>
-                            <%= d.hidden_field :amount, :id => "amount", :value => 1.00 %>
+                                <%= d.hidden_field :amount, :id => "amount", :value => 1.00 %>
                             <%= d.hidden_field :fee_amt, :id => "fee_amt", :value => 0 %>
                             <%= d.hidden_field :scharge_percent, :id => "scharge_percent", :value => @user.scharge_percent %>
 
-                            <div class="form-group form-group-default required m-t-25">
-                              <label>Card holder's name</label>
+                                                                 <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required,  data-msg="Required" pattern="[0-9]*" >
 
-                              <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true, :value => @name%>
 
+
+
+                                
                             </div>
-                            <div class="form-group form-group-default required">
-                              <label>Card number</label>
-                              <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required>
-                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label" for="expiration">Expiration</label>
+                            <div class="form-control-wrap">
 
-                       
-
-                            <div class="row">
-                            
-
-                              <div class="col-md-6">
-                               <div class="form-group">
-                                <label>Expiration Date</label>
-                                <br>
-                                <select id="exp_mn" name="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
+ <select id="exp_mn" name="exp_mn" class="form-control"  data-stripe="exp-month">
                                   <option value="01" selected>Jan (01)</option>
                                   <option value="02">Feb (02)</option>
                                   <option value="03">Mar (03)</option>
@@ -193,7 +168,19 @@
                                   <option value="11">Nov (11)</option>
                                   <option value="12">Dec (12)</option>
                                 </select>
-                                <select id="exp_yr" name="exp_yr" class="cs-select cs-skin-slide" data-init-plugin="cs-select" data-stripe="exp-year">
+                         
+
+
+                     
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+
+ <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label" for="expiration">&nbsp;</label>
+                            <div class="form-control-wrap">
+       <select id="exp_yr" name="exp_yr" class="form-control"  data-stripe="exp-year">
                                   <option value="20">2020</option>
                                   <option value="21">2021</option>
                                   <option value="22" selected>2022</option>
@@ -215,111 +202,515 @@
                                   <option value="38">2038</option>
                                   
                                 </select>
-                                </div>
-                              </div>
-                                <div class="col-md-6">
-                                  <div class="form-group form-group-default required">
-                           <label>CVV</label>
 
-						      <input type="text" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>" data-stripe="cvc"/>
-  							</div>
-                	</div>
+                            </div></div></div>
 
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <div class="form-control-wrap">
+                            	<input type="number" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>"  data-msg="Required" required pattern="[0-9]*" data-stripe="cvc"/>
 
-                                 
-                             
+                               
                             </div>
-
-                              <div class="form-group form-group-default required">
-
-                             <label>Email Address</label>
-                                   <%= d.email_field :email,  :placeholder => "Email Receipt?", :class => "form-control rec_email", :value => @email %>
-                                                                 </div>
-
-                          </div>
-                      </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Zip Code</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" placeholder="55555" required id="zip" name="zip">
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="tab-pane slide-left padding-20" id="tab3">
+                </div><!-- .row -->
+                <div class="row gy-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Name on Card</label>
+                            <div class="form-control-wrap">
+
+                              <%= d.text_field :name, :placeholder => "Cardholder Name", :class => "form-control", :required => true, :value => @name%>
+
+                               
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" placeholder="Optional" id="company"
+                                    name="company">
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Receipt Email Address</label>
+                            <div class="form-control-wrap">
+                                <%= d.email_field :email,  :placeholder => "Optional", :class => "form-control", :value => @email %>
 
 
-
-
-
-
-				</div>
-                </div>
-
-
-                <div class="payment-errors alert alert-error hide">
-                </div>
-
-                <div class="payment-info alert alert-info hide text-center">
-                </div>
-                <div id="ajx-loader"  class="hide text-center">
-                  <%= image_tag("ajax-loader.gif")%>
-                  Your card will be charged now. Please wait.
-              </div>
-
-                <div id ="pager-cont" class="padding-20 bg-white">
-                  <ul class="pager wizard">
-
-		<!-- QR SL  -->
-		<!-- 
-                    <li class="qr">
-                      <button class="btn btn-success pull-left" type="button">
-                        <span><i class="fa fa-qrcode" aria-hidden="true"></i></span>
-
-                      </button>
-			</li>
-		-->
-			<!-- temp hidden
-                       <% if (@user.merchid) %>
-                      	<% else %>
-                      <b id="merchid_warning" class="alert alert-warning pull-left">Preview</b>
-                      	<% end %> -->
-
-
-		    <li class="next">
-                      <button class="btn btn-primary btn-cons pull-right" type="button">
-                        <span>Next </span>
-
-                      </button>
-                    </li>
-                    <li class="previous first hidden">
-                      <button class="btn btn-default btn-cons pull-right" type="button">
-                        <span>First</span>
-                      </button>
-                    </li>
-                       <li class="next finish">
-                    </li>
-                    <li class="previous">
-                      <button class="btn btn-default btn-cons pull-right" type="button">
-                        <span>Previous</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-
-              </div>
-
+                  
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .row -->
             </div>
+            <div class="nk-wizard-head">
+                <h5>Confirmation</h5>
+            </div>
+            <div class="nk-wizard-content">
+                <div class="nk-block-between flex-wrap g-3 mt-5">
+                    <div class="nk-tnx-type">
+                        <div class="nk-tnx-type-icon bg-warning text-white">
+                            <em class="icon ni ni-money"></em>
+                        </div>
+                        <div class="nk-tnx-type-text">
+                            <h5 class="title" id="display_amt">1.00</h5>
+                        </div>
+                    </div>
+                    <ul class="align-center flex-wrap gx-3">
+                        <li>
+                            <span class="badge badge-lg badge-success">Approved</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Info</h5>
+                </div>
+                <div class="row gy-3">
+                </div>
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Base Amount</span>
+                        <span class="caption-text" id="actual_amt"></span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Discount</span>
+                        <span class="caption-text">-$10.00</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Tax</span>
+                        <span class="caption-text">$4.50</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Gratuity</span>
+                        <span class="caption-text">$18.90</span>
+                    </div>
+                </div><!-- .row -->
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                   
 
-          </div>
+
+                        <span class="sub-text">Gateway Fee</span>
+                              
+                        <span class="caption-text" id="fee"></span>
+  <% if @user.cmodel == 'surcharge' %>
+                            <small class="sub-text tb-status text-warning"> (Gateway fees are waived if paying with a debit card) 
+
+                                                         </small>
+                             <% end  %>  
+
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">BIN Type</span>
+                        <span class="caption-text">Credit</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Fee Collected</span>
+                        <span class="caption-text">Success</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Brand</span>
+                        <span class="caption-text"><span class="badge badge-primary text-white">VISA</span></span>
+                    </div>
+                </div><!-- .row -->
+                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Details</h5>
+                </div>
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Token</span>
+                        <span class="caption-text">************4242</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Expiration</span>
+                        <span class="caption-text text-break">10/22</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Auth Code</span>
+                        <span class="caption-text">990642</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Reference ID</span>
+                        <span class="caption-text text-break">T557810</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Name on Card</span>
+                        <span class="caption-text">Sally Field</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Email Address</span>
+                        <span class="caption-text align-center">sally@fields.com</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Phone Number</span>
+                        <span class="caption-text text-break">(800) 555-1212</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">MID</span>
+                        <span class="caption-text text-break">7130229339283</span>
+                    </div>
+                </div>
+                <br /><br />
+
+            </div><!-- .row -->
 
 
-
-           <% end %>
-      <% end %>
-          <!-- END CONTAINER FLUID -->
-<!--         </div> -->
-        <!-- END PAGE CONTENT -->
+        </div>
 
 
+        <% end %>
 
-      </div>
-      <!-- END PAGE CONTENT WRAPPER -->
+        <% end %>
     </div>
-    <!-- END PAGE CONTAINER -->
+</div>
+</div><!-- .nk-block -->
+
+
+
+<div class="nk-block nk-block-lg">
+
+
+
+
+    <div class="card card-bordered card-full">
+        <div class="card-inner">
+            <div class="card-title-group">
+                <div class="card-title">
+                    <h6 class="title"><span class="mr-2">Recent Transactions</span> <a href="#"
+                            class="link d-none d-sm-inline">See History</a></h6>
+                </div>
+                <div class="card-tools">
+                    <ul class="card-tools-nav">
+                        <li><a href="#"><span>Credit</span></a></li>
+                        <li><a href="#"><span>Debit</span></a></li>
+                        <li><a href="#"><span>Refunds</span></a></li>
+                        <li class="active"><a href="#"><span>All</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-inner p-0 border-top">
+            <div class="nk-tb-list nk-tb-orders">
+                <div class="nk-tb-item nk-tb-head">
+                    <div class="nk-tb-col"><span>Transaction ID</span></div>
+                    <div class="nk-tb-col tb-col-sm"><span>Date</span></div>
+                    <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
+                    <div class="nk-tb-col tb-col-lg"><span>Subtotal</span></div>
+                    <div class="nk-tb-col"><span>Type</span></div>
+                    <div class="nk-tb-col"><span>Fee</span></div>
+                    <div class="nk-tb-col"><span>Status</span></div>
+                </div>
+                <!-- Row Start -->
+                <div class="nk-tb-item" href="#tranxDetails" data-toggle="modal">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95954</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/11/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">Sally Fields</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">$93.39</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Credit</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Collected</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+                <!-- Row Start -->
+                <div class="nk-tb-item">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95953</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/11/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">Frank Sinatra</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">$59.50</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Debit</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Not Collected</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+                <!-- Row Start -->
+                <div class="nk-tb-item">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95952</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/10/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">David Lee Roth</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">$14.00</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Cash</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Not Collected</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+                <!-- Row Start -->
+                <div class="nk-tb-item">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95951</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/10/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">Louis Armstrong</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">$106.33</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Unknown</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Failed</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+                <!-- Row Start -->
+                <div class="nk-tb-item">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95950</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/09/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">Peter Frampton</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">$500.00</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Credit</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Not Collected</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-danger">Declined</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+                <!-- Row Start -->
+                <div class="nk-tb-item">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#95949</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub">10/07/2020</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub">Robin Williams</span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub">-$50.49</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Credit</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">Returned</span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="badge badge-dot badge-dot-xs badge-warning">Refunded</span>
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+        </div>
+        <div class="card-inner-sm border-top text-center d-sm-none">
+            <a href="#" class="btn btn-link btn-block">See History</a>
+        </div>
+    </div><!-- .card -->
+
+
+
+</div>
+
+
+<!-- Modal Default -->
+<div class="modal fade" tabindex="-1" id="tranxDetails">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-body modal-body-md">
+                <div class="nk-modal-head mb-3 mb-sm-5">
+                    <h4 class="nk-modal-title title">Transaction <small class="text-primary">#95953</small></h4>
+
+                </div>
+                <div class="nk-tnx-details">
+                    <div class="nk-block-between flex-wrap g-3">
+                        <div class="nk-tnx-type">
+                            <div class="nk-tnx-type-icon bg-warning text-white">
+                                <em class="icon ni ni-money"></em>
+                            </div>
+                            <div class="nk-tnx-type-text">
+                                <h5 class="title">$116.71</h5>
+                                <span class="sub-text mt-n1">Oct 11th, 2020 09:45 PM</span>
+                            </div>
+                        </div>
+                        <ul class="align-center flex-wrap gx-3">
+                            <li>
+                                <span class="badge badge-sm badge-success">Approved</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Info</h5>
+                    </div>
+                    <div class="row gy-3">
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Base Amount</span>
+                            <span class="caption-text">$100.00</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Discount</span>
+                            <span class="caption-text">-$10.00</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Tax</span>
+                            <span class="caption-text">$4.50</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Gratuity</span>
+                            <span class="caption-text">$18.90</span>
+                        </div>
+                    </div><!-- .row -->
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Gateway Fee</span>
+                            <span class="caption-text">$3.31</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">BIN Type</span>
+                            <span class="caption-text">Credit</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Fee Collected</span>
+                            <span class="caption-text">Success</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Brand</span>
+                            <span class="caption-text"><span class="badge badge-primary text-white">VISA</span></span>
+                        </div>
+                    </div><!-- .row -->
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Details</h5>
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Token</span>
+                            <span class="caption-text">************4242</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Expiration</span>
+                            <span class="caption-text text-break">10/22</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Auth Code</span>
+                            <span class="caption-text">990642</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Reference ID</span>
+                            <span class="caption-text text-break">T557810</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Name on Card</span>
+                            <span class="caption-text">Sally Field</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Email Address</span>
+                            <span class="caption-text align-center">sally@fields.com</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Phone Number</span>
+                            <span class="caption-text text-break">(800) 555-1212</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">MID</span>
+                            <span class="caption-text text-break">7130229339283</span>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="row gy-3">
+                        <div class="col-lg-12">
+                            <ul class="preview-btn-list">
+                                <li class="preview-btn-item">
+                                    <a href="#" class="btn btn-danger">Refund</a>
+                                </li>
+                                <li class="preview-btn-item">
+                                    <a href="#" class="btn btn-secondary">Send Receipt</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div><!-- .row -->
+            </div><!-- .nk-tnx-details -->
+        </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+</div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+
+
+
+<% else %>
+
+no merchant found
+
+
+<% end %>

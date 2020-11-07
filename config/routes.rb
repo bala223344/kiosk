@@ -65,6 +65,8 @@ Rails.application.routes.draw do
     root to: 'devise/registrations#edit'
   end
 
+
+
   resource :user, only: [:edit] do
     collection do
       patch 'update_password'
@@ -73,6 +75,10 @@ Rails.application.routes.draw do
 
   # kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
   resources :kiosks, path: :secure
+  namespace :dashboard do
+    get 'vt', to: '/kiosks#vt'
+
+  end
   resources :activations
   resources :terms, only: [:index]
 end

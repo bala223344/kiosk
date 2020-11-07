@@ -24,21 +24,21 @@
     "summernote": "^0.8.18",
     "sweetalert2": "^9.7.2",
     "tinymce": "^5.4.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "gulp-file-include": "^2.1.0",
     "gulp-html-beautify": "^1.0.1",
+    "gulp-minifier": "^3.4.0",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-babel": "^8.0.0",
-    "gulp-minifier": "^3.4.0",
     "gulp-strip-comments": "^2.5.2",
     "gulp-uglify": "^3.0.2",
     "gulp-watch": "^5.0.1",
     "uglify-js": "^3.7.7"
   }
- 
 }

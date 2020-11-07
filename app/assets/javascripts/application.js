@@ -12,4 +12,7 @@
 //
 
 //= require bundle
+//= require functions
 //= require scripts
+
+

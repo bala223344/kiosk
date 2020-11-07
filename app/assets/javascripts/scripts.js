@@ -417,7 +417,7 @@
           return true;
         } // Needed in some cases if the user went back (clean up)
 
-
+       
         if (currentIndex < newIndex) {
           // To remove error styles
           $wizard.find(".body:eq(" + newIndex + ") label.error").remove();
@@ -427,6 +427,16 @@
         $wizard.validate().settings.ignore = ":disabled,:hidden";
         return $wizard.valid();
       },
+
+      onStepChanged: function onStepChanged(event, currentIndex, priorIndex) {
+        //preview section
+        if (currentIndex == 2) {
+          populate_amt()
+        }
+      },
+
+     
+
       onFinishing: function onFinishing(event, currentIndex) {
         $wizard.validate().settings.ignore = ":disabled";
         return $wizard.valid();
