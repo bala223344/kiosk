@@ -16,9 +16,6 @@
         margin: -10px;
         padding-top: 20px;
         li{
-            &:first-child{
-                order: 1;
-            }
             padding:10px;
             a{
                 display: inline-block;
@@ -28,7 +25,7 @@
                 transition: all .4s ease;
                 border-color: $accent-color;
                 background: $accent-color;
-                @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+                @include button-size(10px, 55px, $btn-font-size, $btn-line-height, $btn-border-radius);
             }
             &.disabled{
                 display: none;

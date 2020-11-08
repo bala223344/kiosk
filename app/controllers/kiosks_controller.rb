@@ -114,7 +114,6 @@ class KiosksController < BaseController
               params[:kiosk][:donations_attributes]['0'][:tx_status] = cresponse['setlstat']
               
 
-              byebug
               if kiosk.update(donation_params)
 
                 if !email.blank? && email != ''
@@ -172,6 +171,6 @@ class KiosksController < BaseController
   private
 
   def donation_params
-    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status])
+    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status zip])
   end
 end

@@ -433,13 +433,13 @@
                         <span class="tb-sub"><%=donation.name %></span>
                     </div>
                     <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub"><%=donation.amount %></span>
+                        <span class="tb-sub"><%= number_to_currency(donation.amount) %></span>
                     </div>
                     <div class="nk-tb-col">
                         <span class="tb-sub"><%=donation.card_type %></span>
                     </div>
                     <div class="nk-tb-col">
-                        <span class="tb-sub"><%=donation.gateway_fee %></span>
+                        <span class="tb-sub"><%=number_to_currency(donation.gateway_fee) %></span>
                     </div>
                     <div class="nk-tb-col">
                         <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
@@ -467,7 +467,7 @@
                                 <em class="icon ni ni-money"></em>
                             </div>
                             <div class="nk-tnx-type-text">
-                                <h5 class="title">$<%=donation.amount %></h5>
+                                <h5 class="title"><%=number_to_currency(donation.amount) %></h5>
                                 <span class="sub-text mt-n1"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
                             </div>
                         </div>
@@ -485,14 +485,14 @@
                     <div class="row gy-3">
                         <div class="col-6 col-sm-3">
                             <span class="sub-text">Base Amount</span>
-                            <span class="caption-text">$<%= (donation.amount.to_f - donation.gateway_fee.to_f) %></span>
+                            <span class="caption-text"><%= number_to_currency(donation.amount.to_f - donation.gateway_fee.to_f) %></span>
                         </div>
                      
                     </div><!-- .row -->
                     <div class="row gy-3">
                         <div class="col-6 col-sm-3">
                             <span class="sub-text">Gateway Fee</span>
-                            <span class="caption-text">$<%=donation.gateway_fee %></span>
+                            <span class="caption-text"><%=number_to_currency(donation.gateway_fee) %></span>
                         </div>
                         <div class="col-6 col-sm-3">
                             <span class="sub-text">BIN Type</span>
