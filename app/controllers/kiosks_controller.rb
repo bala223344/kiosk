@@ -28,13 +28,21 @@ class KiosksController < BaseController
 
   end
 
+  def bin
+
+    number = params[:number]
+    first8dig = number.to_s[0..7]
+    ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
+    render json: ccres.body
+  end
+
   def update
     id = params[:id]
     kiosk = Kiosk.find(id)
 
     number = params[:number]
     cvc = params[:cvc]
-    exp_mn = params[:expiry].to_s
+    exp_mn = params[:exp_mn].to_s
     exp_yr = params[:exp_yr].to_s
     amount = params[:kiosk][:donations_attributes]['0'][:amount]
     fee = params[:kiosk][:donations_attributes]['0'][:fee_amt]
@@ -46,16 +54,22 @@ class KiosksController < BaseController
 
 
     begin
-        #if model is surcharge fee is only for credit card..determin if it is not a CC
-       if kiosk.user.cmodel == 'surcharge'
-        first8dig = number.to_s[0..7]
+
+       first8dig = number.to_s[0..7]
         ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
         ccbody = JSON.parse(ccres.body)
+        ctype = 'credit'
         #no CC..no fee
+        #if model is surcharge fee is only for credit card..determin if it is not a CC
         if ccbody["type"] != "credit"
-          fee = 0
+          if kiosk.user.cmodel == 'surcharge'
+            fee = 0
+          end 
+          ctype = 'debit'
         end 
-      end 
+
+       
+       
       amount = amount.to_f + fee.to_f
 
       if amount < 0
@@ -71,8 +85,7 @@ class KiosksController < BaseController
 
         response = JSON.parse(res.body)
 
-        
-       
+        #byebug
         if response['respstat'] == 'A'
           string_email = ''
           string_email = 'from ' + email if !email.blank? && email != ''
@@ -87,12 +100,19 @@ class KiosksController < BaseController
             cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture", { 'merchid' => kiosk.user.merchid, 'retref' => response['retref'], 'items' => [{ 'description' => 'Donation for ' + title + string_email }] }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
             cresponse = JSON.parse(cres.body)
-            @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'],  'amount' => amount , 'title' => title }
+            @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'],  'amount' => amount , 'title' => title, 'merchid' => kiosk.user.merchid }
 
             if cresponse['setlstat'] != 'Rejected'
 
               params[:kiosk][:donations_attributes]['0'][:cardconnectref] = cresponse['retref']
 
+              params[:kiosk][:donations_attributes]['0'][:donated_by] = current_user.id
+              params[:kiosk][:donations_attributes]['0'][:gateway_fee] = fee
+              params[:kiosk][:donations_attributes]['0'][:card_type] = ctype
+              params[:kiosk][:donations_attributes]['0'][:tx_status] = cresponse['setlstat']
+              
+
+              byebug
               if kiosk.update(donation_params)
 
                 if !email.blank? && email != ''
@@ -112,7 +132,7 @@ class KiosksController < BaseController
             #error from mailer..should be considered success
             if e.message.include? " recipient is required"
 
-              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'donated_by' => current_user.id, 'gateway_fee' => fee, 'card_type' =>  ccbody["type"], 'tx_status' => cresponse['setlstat']}
+              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
               KioskMailer.owner_email(charge).deliver
               #do nothgin..we already have @response..just send ownder mail
             else  
@@ -133,7 +153,7 @@ class KiosksController < BaseController
 
 
     respond_to do |format|
-      format.js {}
+      format.js {render json: @response }
     end
   end
 
@@ -150,6 +170,6 @@ class KiosksController < BaseController
   private
 
   def donation_params
-    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc])
+    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status])
   end
 end

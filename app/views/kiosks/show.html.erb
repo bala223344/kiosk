@@ -44,7 +44,7 @@
     </div>
     <div class="card card-bordered">
         <div class="card-inner">
-            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter edit_kiosk", :novalidate => "novalidate"  },:id => 'steps-uid-0', :remote => true, :role => "application" ) do |f| %>
+            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter ", :novalidate => "novalidate",  :id => 'edit_kiosk' }, :remote => true, :role => "application", authenticity_token: true  ) do |f| %>
             <%= f.fields_for :donations, Donation.new  do |d| %>
 
 
@@ -230,7 +230,7 @@
                             <label class="form-label">Name on Card</label>
                             <div class="form-control-wrap">
 
-                              <%= d.text_field :name, :placeholder => "Cardholder Name", :class => "form-control", :required => true, :value => @name%>
+                              <%= d.text_field :name, :id => "cardholder-name" ,:placeholder => "Cardholder Name", :class => "form-control", :required => true, :value => @name%>
 
                                
                             </div>
@@ -249,7 +249,7 @@
                         <div class="form-group">
                             <label class="form-label">Receipt Email Address</label>
                             <div class="form-control-wrap">
-                                <%= d.email_field :email,  :placeholder => "Optional", :class => "form-control", :value => @email %>
+                                <%= d.email_field :email, :id =>"receipt_email" ,  :placeholder => "Optional", :class => "form-control", :value => @email %>
 
 
                   
@@ -272,39 +272,22 @@
                         </div>
                     </div>
                     <ul class="align-center flex-wrap gx-3">
-                        <li>
-                            <span class="badge badge-lg badge-success">Approved</span>
+                        <li id="tx_badge">
+                            
                         </li>
                     </ul>
                 </div>
                 <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
                     <h5 class="title">Transaction Info</h5>
                 </div>
-                <div class="row gy-3">
-                 <div id="ajx-loader"  class="hide text-center">
-                  <%= image_tag("ajax-loader.gif")%>
-                  Your card will be charged now. Please wait.
-              </div>
-                </div>
+               
                 <div class="row gy-3">
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">Base Amount</span>
                         <span class="caption-text" id="actual_amt"></span>
                     </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Discount</span>
-                        <span class="caption-text">-$10.00</span>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Tax</span>
-                        <span class="caption-text">$4.50</span>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Gratuity</span>
-                        <span class="caption-text">$18.90</span>
-                    </div>
-                </div><!-- .row -->
-                <div class="row gy-3">
+
+
                     <div class="col-6 col-sm-3">
                    
 
@@ -313,7 +296,7 @@
                               
                         <span class="caption-text" id="fee"></span>
   <% if @user.cmodel == 'surcharge' %>
-                            <small class="sub-text tb-status text-warning"> (Gateway fees are waived if paying with a debit card) 
+                            <small class="sub-text tb-status text-warning"> (Gateway fees are waived for debit card) 
 
                                                          </small>
                              <% end  %>  
@@ -321,53 +304,64 @@
                     </div>
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">BIN Type</span>
-                        <span class="caption-text">Credit</span>
+                        <span class="caption-text text-capitalize" id="card_type"></span>
                     </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Fee Collected</span>
-                        <span class="caption-text">Success</span>
-                    </div>
-                    <div class="col-6 col-sm-3">
+
+<div class="col-6 col-sm-3">
                         <span class="sub-text">Brand</span>
-                        <span class="caption-text"><span class="badge badge-primary text-white">VISA</span></span>
+                        <span class="caption-text"><span id="card_scheme" class="badge badge-primary text-white text-uppercase"></span></span>
                     </div>
-                </div><!-- .row -->
-                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
-                    <h5 class="title">Transaction Details</h5>
+
+
+                   
                 </div>
+                
+                <!-- .row -->
                 <div class="row gy-3">
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Token</span>
-                        <span class="caption-text">************4242</span>
+
+                 <div class="col-6 col-sm-3">
+                        <span class="sub-text">Card</span>
+                        <span class="caption-text" id="card_number"></span>
                     </div>
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">Expiration</span>
-                        <span class="caption-text text-break">10/22</span>
+                        <span class="caption-text"  id="card_exp"></span>
                     </div>
                     <div class="col-6 col-sm-3">
-                        <span class="sub-text">Auth Code</span>
-                        <span class="caption-text">990642</span>
+                        <span class="sub-text">Email</span>
+                        <span class="caption-text"  id="txt_email"></span>
                     </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Reference ID</span>
-                        <span class="caption-text text-break">T557810</span>
-                    </div>
+
+
+                    
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">Name on Card</span>
-                        <span class="caption-text">Sally Field</span>
+                        <span class="caption-text" id="txt_name"></span>
                     </div>
+                    
+                </div>
+
+
+                <div id="txDetails">
+                <div  class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Details</h5>
+                </div>
+                <div class="row gy-3">
+                   
+                  
                     <div class="col-6 col-sm-3">
-                        <span class="sub-text">Email Address</span>
-                        <span class="caption-text align-center">sally@fields.com</span>
+                        <span class="sub-text">Reference ID</span>
+                        <span class="caption-text text-break" id="tx_ref"></span>
                     </div>
-                    <div class="col-6 col-sm-3">
-                        <span class="sub-text">Phone Number</span>
-                        <span class="caption-text text-break">(800) 555-1212</span>
-                    </div>
+                
+                 
+                   
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">MID</span>
-                        <span class="caption-text text-break">7130229339283</span>
+                        <span class="caption-text text-break" id="tx_mid" ></span>
                     </div>
+                </div>
+
                 </div>
                 <br /><br />
 
@@ -395,17 +389,23 @@
         <div class="card-inner">
             <div class="card-title-group">
                 <div class="card-title">
-                    <h6 class="title"><span class="mr-2">Recent Transactions</span> <a href="#"
-                            class="link d-none d-sm-inline">See History</a></h6>
+                    <h6 class="title"><span class="mr-2">Recent Transactions</span> 
+                    <%# <a href="#"
+                            class="link d-none d-sm-inline">See History</a> %>
+                            
+                            </h6>
+                            
+
+       
                 </div>
-                <div class="card-tools">
+                <%# <div class="card-tools">
                     <ul class="card-tools-nav">
                         <li><a href="#"><span>Credit</span></a></li>
                         <li><a href="#"><span>Debit</span></a></li>
                         <li><a href="#"><span>Refunds</span></a></li>
                         <li class="active"><a href="#"><span>All</span></a></li>
                     </ul>
-                </div>
+                </div> %>
             </div>
         </div>
         <div class="card-inner p-0 border-top">
@@ -440,7 +440,7 @@
                         <span class="tb-sub">Collected</span>
                     </div>
                     <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+                        <span class="badge badge-dot badge-dot-xs badge-success" >Approved</span>
                     </div>
                 </div>
                 <!-- Row End -->
@@ -581,134 +581,8 @@
 </div>
 
 
-<!-- Modal Default -->
-<div class="modal fade" tabindex="-1" id="tranxDetails">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                <em class="icon ni ni-cross"></em>
-            </a>
-            <div class="modal-body modal-body-md">
-                <div class="nk-modal-head mb-3 mb-sm-5">
-                    <h4 class="nk-modal-title title">Transaction <small class="text-primary">#95953</small></h4>
-
-                </div>
-                <div class="nk-tnx-details">
-                    <div class="nk-block-between flex-wrap g-3">
-                        <div class="nk-tnx-type">
-                            <div class="nk-tnx-type-icon bg-warning text-white">
-                                <em class="icon ni ni-money"></em>
-                            </div>
-                            <div class="nk-tnx-type-text">
-                                <h5 class="title">$116.71</h5>
-                                <span class="sub-text mt-n1">Oct 11th, 2020 09:45 PM</span>
-                            </div>
-                        </div>
-                        <ul class="align-center flex-wrap gx-3">
-                            <li>
-                                <span class="badge badge-sm badge-success">Approved</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
-                        <h5 class="title">Transaction Info</h5>
-                    </div>
-                    <div class="row gy-3">
-                    </div>
-                    <div class="row gy-3">
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Base Amount</span>
-                            <span class="caption-text">$100.00</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Discount</span>
-                            <span class="caption-text">-$10.00</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Tax</span>
-                            <span class="caption-text">$4.50</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Gratuity</span>
-                            <span class="caption-text">$18.90</span>
-                        </div>
-                    </div><!-- .row -->
-                    <div class="row gy-3">
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Gateway Fee</span>
-                            <span class="caption-text">$3.31</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">BIN Type</span>
-                            <span class="caption-text">Credit</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Fee Collected</span>
-                            <span class="caption-text">Success</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Brand</span>
-                            <span class="caption-text"><span class="badge badge-primary text-white">VISA</span></span>
-                        </div>
-                    </div><!-- .row -->
-                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
-                        <h5 class="title">Transaction Details</h5>
-                    </div>
-                    <div class="row gy-3">
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Token</span>
-                            <span class="caption-text">************4242</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Expiration</span>
-                            <span class="caption-text text-break">10/22</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Auth Code</span>
-                            <span class="caption-text">990642</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Reference ID</span>
-                            <span class="caption-text text-break">T557810</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Name on Card</span>
-                            <span class="caption-text">Sally Field</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Email Address</span>
-                            <span class="caption-text align-center">sally@fields.com</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Phone Number</span>
-                            <span class="caption-text text-break">(800) 555-1212</span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">MID</span>
-                            <span class="caption-text text-break">7130229339283</span>
-                        </div>
-                    </div>
-                    <br /><br />
-                    <div class="row gy-3">
-                        <div class="col-lg-12">
-                            <ul class="preview-btn-list">
-                                <li class="preview-btn-item">
-                                    <a href="#" class="btn btn-danger">Refund</a>
-                                </li>
-                                <li class="preview-btn-item">
-                                    <a href="#" class="btn btn-secondary">Send Receipt</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div><!-- .row -->
-            </div><!-- .nk-tnx-details -->
-        </div><!-- .modal-body -->
-    </div><!-- .modal-content -->
-</div><!-- .modal-dialog -->
-</div><!-- .modal -->
-
+  <%= render "shared/txdetails" %>
+  <%= render "shared/loading" %>
 
 
 

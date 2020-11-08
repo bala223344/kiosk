@@ -77,7 +77,7 @@ Rails.application.routes.draw do
   resources :kiosks, path: :secure
   namespace :dashboard do
     get 'vt', to: '/kiosks#vt'
-
+    get 'bin', to: '/kiosks#bin'
   end
   resources :activations
   resources :terms, only: [:index]

@@ -431,6 +431,7 @@
       onStepChanged: function onStepChanged(event, currentIndex, priorIndex) {
         //preview section
         if (currentIndex == 2) {
+          loading("show")
           populate_amt()
         }
       },
@@ -706,3 +707,78 @@
   NioApp.init();
   return NioApp;
 }(NioApp, jQuery);
+
+$(function() {
+  //set up this form as ajax form ..so this will come here$("#edit_kiosk").submit()
+
+  $('#edit_kiosk').ajaxForm({
+      dataType:  'json',
+      success:   processJson
+  });
+});
+
+function processJson(data) {
+  // 'data' is the json object returned from the server
+  
+  if (data.errors) {
+    $("#tx_badge").html(`<span class="badge badge-sm badge-danger">${data.errors
+  }</span>`)
+  }
+  if (data.status) {
+    $("#tx_ref").html(data.retref)
+    $("#tx_mid").html(data.merchid)
+    $("#txDetails").removeClass("d-none")
+    $("#tx_badge").html(`<span class="badge badge-lg badge-success">Approved
+    </span>`)
+  }
+  loading("hide")
+}
+
+function populate_amt() {
+
+  $("#txDetails").addClass("d-none")
+  formatter = new (Intl.NumberFormat)('en-US',{style: 'currency', currency: 'USD'})
+  $amt = parseFloat($('.payment-amt').val())
+  $amt += 0.00
+  $percent = parseFloat($("#scharge_percent").val())
+  $percent = ($percent / 100) 
+  $fee =  $amt * $percent
+  
+  
+  $.get('/dashboard/bin?number='+$("#number").val(), function(data) {
+    type = 'credit'
+    if (data.type !='credit') {
+      type = 'debit'
+      //concession apply only if it is surcharge model
+      if($percent > 0)
+        $fee = 0
+
+    }
+    $("#card_scheme").html(data.scheme)
+    $("#card_type").html(type)
+
+    $fee = parseFloat($fee.toFixed(2))
+  
+    $amtandfee =  $amt +  $fee
+    $amt = $amt.toFixed(3)
+    
+    $('#amount').val($amt)
+    $('#fee_amt').val($fee)
+    
+    $('#actual_amt').html(formatter.format($amt))
+    $('#display_amt').html(formatter.format($amtandfee))
+    
+    $('#fee').html(formatter.format($fee))
+
+    $('#card_number').html("****"+$("#number").val().substring(12, 16))
+    $('#card_exp').html($("#exp_mn").val() + '/' + $("#exp_yr").val())
+    $('#txt_name').html($("#cardholder-name").val())
+    $('#txt_email').html($("#receipt_email").val())
+
+    
+
+    loading("hide")
+    
+  })
+  
+}
