@@ -5,6 +5,8 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @user = current_user
+      @donations = current_user.donations
+      p @donations
     else
       @kiosk = nil
       @user = nil

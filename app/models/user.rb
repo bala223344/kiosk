@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
 
   has_one :kiosk
+  has_many :donations, foreign_key: "donated_by"
   accepts_nested_attributes_for(:kiosk, update_only: true)
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

@@ -390,22 +390,22 @@
             <div class="card-title-group">
                 <div class="card-title">
                     <h6 class="title"><span class="mr-2">Recent Transactions</span> 
-                    <%# <a href="#"
-                            class="link d-none d-sm-inline">See History</a> %>
+                    <a href="#"
+                            class="link d-none d-sm-inline">See History</a>
                             
                             </h6>
                             
 
        
                 </div>
-                <%# <div class="card-tools">
+                <div class="card-tools">
                     <ul class="card-tools-nav">
                         <li><a href="#"><span>Credit</span></a></li>
                         <li><a href="#"><span>Debit</span></a></li>
                         <li><a href="#"><span>Refunds</span></a></li>
                         <li class="active"><a href="#"><span>All</span></a></li>
                     </ul>
-                </div> %>
+                </div>
             </div>
         </div>
         <div class="card-inner p-0 border-top">
@@ -414,161 +414,153 @@
                     <div class="nk-tb-col"><span>Transaction ID</span></div>
                     <div class="nk-tb-col tb-col-sm"><span>Date</span></div>
                     <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
-                    <div class="nk-tb-col tb-col-lg"><span>Subtotal</span></div>
+                    <div class="nk-tb-col tb-col-lg"><span>Amount</span></div>
                     <div class="nk-tb-col"><span>Type</span></div>
                     <div class="nk-tb-col"><span>Fee</span></div>
                     <div class="nk-tb-col"><span>Status</span></div>
                 </div>
                 <!-- Row Start -->
-                <div class="nk-tb-item" href="#tranxDetails" data-toggle="modal">
+<% @donations.each do |donation|  %>
+  
+   <div class="nk-tb-item" href="#tx<%=donation.id %>" data-toggle="modal">
                     <div class="nk-tb-col">
-                        <span class="tb-sub">#95954</span>
+                        <span class="tb-sub">#<%=donation.id %></span>
                     </div>
                     <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/11/2020</span>
+                        <span class="tb-sub"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
                     </div>
                     <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">Sally Fields</span>
+                        <span class="tb-sub"><%=donation.name %></span>
                     </div>
                     <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">$93.39</span>
+                        <span class="tb-sub"><%=donation.amount %></span>
                     </div>
                     <div class="nk-tb-col">
-                        <span class="tb-sub">Credit</span>
+                        <span class="tb-sub"><%=donation.card_type %></span>
                     </div>
                     <div class="nk-tb-col">
-                        <span class="tb-sub">Collected</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-success" >Approved</span>
-                    </div>
-                </div>
-                <!-- Row End -->
-                <!-- Row Start -->
-                <div class="nk-tb-item">
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">#95953</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/11/2020</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">Frank Sinatra</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">$59.50</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Debit</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Not Collected</span>
+                        <span class="tb-sub"><%=donation.gateway_fee %></span>
                     </div>
                     <div class="nk-tb-col">
                         <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
                     </div>
                 </div>
-                <!-- Row End -->
-                <!-- Row Start -->
-                <div class="nk-tb-item">
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">#95952</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/10/2020</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">David Lee Roth</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">$14.00</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Cash</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Not Collected</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
-                    </div>
+
+
+
+                <!-- Modal Default -->
+<div class="modal fade" tabindex="-1" id="tx<%=donation.id %>">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-body modal-body-md">
+                <div class="nk-modal-head mb-3 mb-sm-5">
+                    <h4 class="nk-modal-title title">Transaction <small class="text-primary">#<%=donation.id %></small></h4>
+
                 </div>
+                <div class="nk-tnx-details">
+                    <div class="nk-block-between flex-wrap g-3">
+                        <div class="nk-tnx-type">
+                            <div class="nk-tnx-type-icon bg-warning text-white">
+                                <em class="icon ni ni-money"></em>
+                            </div>
+                            <div class="nk-tnx-type-text">
+                                <h5 class="title">$<%=donation.amount %></h5>
+                                <span class="sub-text mt-n1"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
+                            </div>
+                        </div>
+                        <ul class="align-center flex-wrap gx-3">
+                            <li>
+                                <span class="badge badge-sm badge-success">Approved</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Info</h5>
+                    </div>
+                    <div class="row gy-3">
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Base Amount</span>
+                            <span class="caption-text">$<%= (donation.amount.to_f - donation.gateway_fee.to_f) %></span>
+                        </div>
+                     
+                    </div><!-- .row -->
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Gateway Fee</span>
+                            <span class="caption-text">$<%=donation.gateway_fee %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">BIN Type</span>
+                            <span class="caption-text"><%=donation.card_type %></span>
+                        </div>
+                      
+                       
+                    </div><!-- .row -->
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Details</h5>
+                    </div>
+                    <div class="row gy-3">
+                        
+                       
+                       
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Reference ID</span>
+                            <span class="caption-text text-break"><%=donation.cardconnectref %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Name on Card</span>
+                            <span class="caption-text"><%=donation.name %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Email Address</span>
+                            <span class="caption-text align-center"><%=donation.email %></span>
+                        </div>
+                     
+                       
+                    </div>
+                    <div class="row gy-3">
+                        
+                       
+                       
+                     
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">MID </span>
+                            <span class="caption-text text-break"><%=@user.merchid%></span>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="row gy-3">
+                        <div class="col-lg-12">
+                            <ul class="preview-btn-list">
+                                <li class="preview-btn-item">
+                                    <a href="#" class="btn btn-danger">Refund</a>
+                                </li>
+                                <li class="preview-btn-item">
+                                    <a href="#" class="btn btn-secondary">Send Receipt</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+            </div><!-- .nk-tnx-details -->
+        </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+</div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+<% end %>
+
+
+
+
+              
                 <!-- Row End -->
-                <!-- Row Start -->
-                <div class="nk-tb-item">
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">#95951</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/10/2020</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">Louis Armstrong</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">$106.33</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Unknown</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Failed</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
-                    </div>
-                </div>
-                <!-- Row End -->
-                <!-- Row Start -->
-                <div class="nk-tb-item">
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">#95950</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/09/2020</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">Peter Frampton</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">$500.00</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Credit</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Not Collected</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-danger">Declined</span>
-                    </div>
-                </div>
-                <!-- Row End -->
-                <!-- Row Start -->
-                <div class="nk-tb-item">
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">#95949</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub">10/07/2020</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-sm">
-                        <span class="tb-sub">Robin Williams</span>
-                    </div>
-                    <div class="nk-tb-col tb-col-lg">
-                        <span class="tb-sub">-$50.49</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Credit</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="tb-sub">Returned</span>
-                    </div>
-                    <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-warning">Refunded</span>
-                    </div>
-                </div>
-                <!-- Row End -->
+             
             </div>
         </div>
         <div class="card-inner-sm border-top text-center d-sm-none">
@@ -581,7 +573,6 @@
 </div>
 
 
-  <%= render "shared/txdetails" %>
   <%= render "shared/loading" %>
 
 
