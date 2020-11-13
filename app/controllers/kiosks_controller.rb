@@ -107,14 +107,21 @@ class KiosksController < ApplicationController
 
 
                if kiosk.sms_number.length > 6
-                p "sent ou1t"
-                require 'signalwire/sdk'
+                
+               # require 'signalwire/sdk'
 
                 require 'signalwire/relay/task'
 
                 task = Signalwire::Relay::Task.new(project: "3fe73725-f958-4c16-ad94-be32579bed82",  token: "PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5")
 
-                  @client = Signalwire::REST::Client.new '3fe73725-f958-4c16-ad94-be32579bed82', 'PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5', signalwire_space_url: "startgroup.signalwire.com"
+               
+                
+                
+
+
+
+
+                 # @client = Signalwire::REST::Client.new '3fe73725-f958-4c16-ad94-be32579bed82', 'PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5', signalwire_space_url: "startgroup.signalwire.com"
 
                   collected = 'was'
                   if fee == 0
@@ -123,24 +130,31 @@ class KiosksController < ApplicationController
                   end
                   
 
-                  p "sent ou12"
 
 
                   body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(amount)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
                   body = 'esy'
+
+                  message = {
+                    'action': 'call',
+                    'from': '+14158140047',
+                    to: kiosk.sms_number,
+                  }
+
+                  result = task.deliver(context: 'incoming', message: body)
+
                   # message = @client.messages.send(
                   #   from: '+14158140047',
                   #   body: body,
                   #   to: kiosk.sms_number
                   # )
-                  @client.messages.send(
-                  from: '+14158140047',
-  to: '+14158140047',
-  body: 'SignalWire says hello!'
-)
+#                   @client.messages.send(
+#                   from: '+14158140047',
+#   to: '+14158140047',
+#   body: 'SignalWire says hello!'
+# )
                   
 
-                  p "sent out"
 
                 end
 
