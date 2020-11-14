@@ -7,7 +7,7 @@ ActiveAdmin.register Kiosk do
   # or
   #
   permit_params do
-    permitted = %i[title user_id]
+    permitted = %i[title user_id sms_number]
     #   permitted = [:permitted, :attributes]
     #   permitted << :other if resource.something?
     #   permitted
