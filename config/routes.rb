@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get 'vt', to: '/kiosks#vt'
     get 'bin', to: '/kiosks#bin'
+    post 'refund', to: '/kiosks#refund'
   end
   resources :activations
   resources :terms, only: [:index]

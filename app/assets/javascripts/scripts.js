@@ -405,6 +405,7 @@
     $wizard.steps({
       headerTag: ".nk-wizard-head",
       bodyTag: ".nk-wizard-content",
+      enableFinishButton : false,
       labels: {
         finish: "Submit",
         next: "Next",
@@ -429,11 +430,12 @@
       },
 
       onStepChanged: function onStepChanged(event, currentIndex, priorIndex) {
-        //preview section
-        if (currentIndex == 2) {
+         //preview section
+         if (currentIndex == 2) {
           loading("show")
           populate_amt()
         }
+
       },
 
      
@@ -443,9 +445,6 @@
         return $wizard.valid();
       },
       onFinished: function onFinished(event, currentIndex) {
-        //alert('s')
-        submitToCC()
-        
         
       }
     }).validate({
@@ -710,7 +709,7 @@
 
 $(function() {
   //set up this form as ajax form ..so this will come here$("#edit_kiosk").submit()
-
+  //this was setup this way because remote => true not working previously..
   $('#edit_kiosk').ajaxForm({
       dataType:  'json',
       success:   processJson
@@ -730,6 +729,10 @@ function processJson(data) {
     $("#txDetails").removeClass("d-none")
     $("#tx_badge").html(`<span class="badge badge-lg badge-success">Approved
     </span>`)
+    $(".actions").hide()
+    $("#divReset").show()
+
+
   }
   loading("hide")
 }
@@ -744,26 +747,32 @@ function populate_amt() {
   $percent = ($percent / 100) 
   $fee =  $amt * $percent
   
-  
   $.get('/dashboard/bin?number='+$("#number").val(), function(data) {
+
+
     type = 'credit'
     if (data.type !='credit') {
       type = 'debit'
       //concession apply only if it is surcharge model
       if($percent > 0)
         $fee = 0
-
     }
+    // no service fee if checkbox is disabled  
+    if ($("#service_fee").val() == 0) {
+      $fee = 0
+    }
+
     $("#card_scheme").html(data.scheme)
     $("#card_type").html(type)
 
     $fee = parseFloat($fee.toFixed(2))
-  
+
     $amtandfee =  $amt +  $fee
     $amt = $amt.toFixed(3)
-    
-    $('#amount').val($amt)
+
+    $('#hid_amount').val($amt)
     $('#fee_amt').val($fee)
+
     
     $('#actual_amt').html(formatter.format($amt))
     $('#display_amt').html(formatter.format($amtandfee))
@@ -774,10 +783,7 @@ function populate_amt() {
     $('#card_exp').html($("#exp_mn").val() + '/' + $("#exp_yr").val())
     $('#txt_name').html($("#cardholder-name").val())
     $('#txt_email').html($("#receipt_email").val())
-
-    
-
-    loading("hide")
+    submitToCC()
     
   })
   

@@ -44,7 +44,7 @@
     </div>
     <div class="card card-bordered">
         <div class="card-inner">
-            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter ", :novalidate => "novalidate",  :id => 'edit_kiosk' }, :remote => true, :role => "application", authenticity_token: true  ) do |f| %>
+            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter ", :novalidate => "novalidate",  :id => 'edit_kiosk' }, :role => "application", authenticity_token: true  ) do |f| %>
             <%= f.fields_for :donations, Donation.new  do |d| %>
 
 
@@ -61,11 +61,16 @@
 
                                 <% if params[:amount] %>
 
-                                <%= d.number_field :amount, :placeholder =>"Example: 199.50", :class => "form-control payment-amt", :id => "amount",  :required => true, :readonly=>true, :data => {:msg =>"Required"}, :inputmode => "decimal", :pattern => "[0-9]*", :value =>  '%.2f' % params[:amount].to_d %>
+                         
+
+                                <input type="number" data-msg="Required" inputmode="decimal" pattern="[0-9]*" placeholder="Example: 199.50" class="form-control payment-amt" id="amount" required value="<%='%.2f' % params[:amount].to_d %>">
+
 
                                 <% else %>
 
-                                <%= d.number_field :amount, :placeholder =>"Example: 199.50", :class => "form-control payment-amt", :id => "amount",  :required => true,  :data => {:msg =>"Required"}, :inputmode => "decimal", :pattern => "[0-9]*", :aria => {:describedby =>"amount-error"} %>
+                                <input type="number" data-msg="Required" inputmode="decimal" pattern="[0-9]*" placeholder="Example: 199.50" class="form-control payment-amt" id="amount" required>
+
+                             
 
 
 
@@ -115,8 +120,9 @@
                             <label class="form-label">Service Fee</label>
                             <div class="g">
                                 <div class="custom-control custom-control-lg custom-switch">
-                                    <input type="checkbox" checked class="custom-control-input" id="recovery">
-                                    <label class="custom-control-label" for="recovery"></label>
+                                 <%= d.check_box :service_fee, :placeholder => "Optional", :checked => true, :class => "custom-control-input", :id => "service_fee"%>
+                                   
+                                    <label class="custom-control-label" for="service_fee"></label>
                                 </div>
                             </div>
                         </div>
@@ -136,11 +142,11 @@
                             <label class="form-label" for="card">Card Number</label>
                             <div class="form-control-wrap">
                             
-                                <%= d.hidden_field :amount, :id => "amount", :value => 1.00 %>
+                                <%= d.hidden_field :amount, :id => "hid_amount" %>
                             <%= d.hidden_field :fee_amt, :id => "fee_amt", :value => 0 %>
                             <%= d.hidden_field :scharge_percent, :id => "scharge_percent", :value => @user.scharge_percent %>
 
-                                                                 <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required,  data-msg="Required" pattern="[0-9]*" >
+                                                                 <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required,  data-msg="Required" >
 
 
 
@@ -219,7 +225,9 @@
                         <div class="form-group">
                             <label class="form-label">Zip Code</label>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control" placeholder="55555" required id="zip" name="zip">
+                             
+
+                                <input type="text" class="form-control" placeholder="55555" name required id="zip" name="zip">
                             </div>
                         </div>
                     </div>
@@ -362,6 +370,20 @@
                     </div>
                 </div>
 
+                <div class="row gy-3" id="divReset">
+                   
+                  
+                
+
+                
+                 
+                   
+                    <div class="col-6 col-sm-3">
+                           <a href="/dashboard/vt" class="btn btn-info">Reset</a>
+                    </div>
+                </div>
+          
+
                 </div>
                 <br /><br />
 
@@ -442,7 +464,23 @@
                         <span class="tb-sub"><%=number_to_currency(donation.gateway_fee) %></span>
                     </div>
                     <div class="nk-tb-col">
-                        <span class="badge badge-dot badge-dot-xs badge-success">Approved</span>
+
+                       
+
+                        <% if (donation.tx_status == "Queued for Capture")  %>
+ <span class="badge badge-dot badge-dot-xs badge-success text-capitalize">
+ Approved
+  </span>
+                        <% else %>
+                       
+                        
+                        <span class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
+  <%= donation.tx_status %>
+  </span>
+   <%end%>
+                        
+                        
+                       
                     </div>
                 </div>
 
@@ -472,8 +510,24 @@
                             </div>
                         </div>
                         <ul class="align-center flex-wrap gx-3">
+
+
+
                             <li>
-                                <span class="badge badge-sm badge-success">Approved</span>
+                              <% if (donation.tx_status == "Queued for Capture")  %>
+ <span class="badge badge-sm  badge-success text-capitalize">
+ Approved
+  </span>
+                        <% else %>
+                       
+                        
+                        <span class="badge badge-sm badge-warning text-capitalize">
+  <%= donation.tx_status %>
+  </span>
+   <%end%>
+                   
+
+                                
                             </li>
                         </ul>
                     </div>
@@ -520,6 +574,8 @@
                             <span class="sub-text">Email Address</span>
                             <span class="caption-text align-center"><%=donation.email %></span>
                         </div>
+
+                        
                      
                        
                     </div>
@@ -532,14 +588,51 @@
                             <span class="sub-text">MID </span>
                             <span class="caption-text text-break"><%=@user.merchid%></span>
                         </div>
+
+                         <div class="col-6 col-sm-3">
+                            <span class="sub-text">Auth Code </span>
+                            <span class="caption-text text-break"><%=donation.authcode%></span>
+                        </div>
+
+                        
                     </div>
+
+    <%
+    unless donation.inv_num.nil? || donation.inv_num == "" %>
+
+      <div class="row gy-3">
+                   
+                  
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Invoice #</span>
+                        <span class="caption-text text-break" ><%=donation.inv_num%></span>
+                    </div>
+                
+                 
+                   
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Invoice description</span>
+                        <span class="caption-text text-break"  ><%=donation.inv_desc%></span>
+                    </div>
+                </div>
+
+        <% end%>
+
                     <br /><br />
                     <div class="row gy-3">
                         <div class="col-lg-12">
                             <ul class="preview-btn-list">
+
+                              <% if (donation.tx_status == "Queued for Capture")  %>
                                 <li class="preview-btn-item">
-                                    <a href="#" class="btn btn-danger">Refund</a>
+                                      <%= form_for(@kiosk, :url => { :action => "refund" },  authenticity_token: true , :method => "post",  :html => {:class => "refund_form"},  remote: true , data: {type: 'script'}) do |f| %>
+                                       <%= f.hidden_field :id, :value => donation.id %>
+                            <%= f.submit "Refund", :class => "btn btn-danger btn-refund" %>
+                                        <span class="badge badge-dot-xs"></span>
+                                        <% end %>
+
                                 </li>
+                                <% end %>
                                 <li class="preview-btn-item">
                                     <a href="#" class="btn btn-secondary">Send Receipt</a>
                                 </li>
