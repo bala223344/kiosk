@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.1'
+gem 'rails', '5.2'
 
 # gem 'bundler', '1.17.1'
 
@@ -49,6 +49,8 @@ gem 'sparkpost_rails'
 gem 'bigdecimal', '1.4.2'
 gem 'gaffe'
 gem 'rqrcode'
+
+gem 'kaminari'
 
 
 gem 'rest-client'

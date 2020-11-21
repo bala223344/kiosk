@@ -4,7 +4,8 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @user = current_user
-      @donations = current_user.donations.order('id desc').limit(20)
+      page = (params[:page]?params[:page]:0)
+      @donations = current_user.donations.order('id desc').page(page).per(20)
     else
       @kiosk = nil
       @user = nil

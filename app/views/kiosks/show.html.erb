@@ -379,7 +379,7 @@
                  
                    
                     <div class="col-6 col-sm-3">
-                           <a href="/dashboard/vt" class="btn btn-info">Reset</a>
+                           <a  data-no-turbolink='true'  href="/dashboard/vt"  class="btn btn-info">Reset</a>
                     </div>
                 </div>
           
@@ -483,6 +483,7 @@
                        
                     </div>
                 </div>
+
 
 
 
@@ -648,6 +649,11 @@
 
 <% end %>
 
+
+                   <div class="nk-tb-item">
+                        <%= paginate @donations %>
+
+                    </div>
 
 
 
