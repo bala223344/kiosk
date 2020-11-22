@@ -1,0 +1,684 @@
+<% if @kiosk %>
+
+
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title"></h3>
+            <div class="nk-block-des text-soft">
+                <p></p>
+            </div>
+        </div><!-- .nk-block-head-content -->
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
+                        class="icon ni ni-more-v"></em></a>
+                <div class="toggle-expand-content" data-content="pageMenu">
+                    <ul class="nk-block-tools g-3">
+
+
+                        <li class="nk-block-tools-opt"><a href="#" class="btn btn-warning"><em
+                                    class="icon ni ni-mobile"></em><span>Launch HPP</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- .nk-block-head-content -->
+    </div><!-- .nk-block-between -->
+</div>
+
+
+
+
+
+
+
+
+<div class="nk-block nk-block-lg">
+    <div class="nk-block-head">
+        <div class="nk-block-head-content">
+            <h4 class="title nk-block-title">Virtual Terminal for <%= @kiosk.title %></h4>
+            <div class="nk-block-des">
+                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put,  :class => "nk-wizard nk-wizard-simple is-alter ", :novalidate => "novalidate",  :id => 'edit_kiosk' }, :role => "application", authenticity_token: true  ) do |f| %>
+            <%= f.fields_for :donations, Donation.new  do |d| %>
+
+
+
+            <div class="nk-wizard-head">
+                <h5>Amount</h5>
+            </div>
+            <div class="nk-wizard-content mt-5">
+                <div class="row g-4">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="form-label" for="amount">Amount to Charge</label>
+                            <div class="form-control-wrap">
+
+                                <% if params[:amount] %>
+
+                         
+
+                                <input type="number" data-msg="Required" inputmode="decimal" pattern="[0-9]*" placeholder="Example: 199.50" class="form-control payment-amt" id="amount" required value="<%='%.2f' % params[:amount].to_d %>">
+
+
+                                <% else %>
+
+                                <input type="number" data-msg="Required" inputmode="decimal" pattern="[0-9]*" placeholder="Example: 199.50" class="form-control payment-amt" id="amount" required>
+
+                             
+
+
+
+                                <% end %>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="form-label" for="phone-no-1">Invoice #</label>
+                            <div class="form-control-wrap">
+
+ <% if params[:inv_num] %>
+                              <%= d.text_field :inv_num, :readonly =>true, :class => "form-control", :value => params[:inv_num],   :required => true%>
+
+  <% else %>    
+ <%= d.text_field :inv_num, :placeholder =>"Optional", :class => "form-control"%>
+    <% end %>
+
+
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <label class="form-label" for="pay-amount-1">Description</label>
+                            <div class="form-control-wrap">
+                             <% if params[:inv_desc] %>
+                              <%= d.text_field :inv_desc, :readonly =>true, :class => "form-control", :value => params[:inv_desc],   :required => true%>
+
+  <% else %>  
+
+                            <%= d.text_field :inv_desc, :placeholder => "Optional", :class => "form-control"%>
+                               <% end %>
+
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Service Fee</label>
+                            <div class="g">
+                                <div class="custom-control custom-control-lg custom-switch">
+                                 <%= d.check_box :service_fee, :placeholder => "Optional", :checked => true, :class => "custom-control-input", :id => "service_fee"%>
+                                   
+                                    <label class="custom-control-label" for="service_fee"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+
+                    </div>
+                </div>
+            </div>
+            <div class="nk-wizard-head">
+                <h5>Credit Card</h5>
+            </div>
+            <div class="nk-wizard-content mt-5">
+                <div class="row gy-3">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="card">Card Number</label>
+                            <div class="form-control-wrap">
+                            
+                                <%= d.hidden_field :amount, :id => "hid_amount" %>
+                            <%= d.hidden_field :fee_amt, :id => "fee_amt", :value => 0 %>
+                            <%= d.hidden_field :scharge_percent, :id => "scharge_percent", :value => @user.scharge_percent %>
+
+                                                                 <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="<%= @testcard %>" required,  data-msg="Required" >
+
+
+
+
+                                
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label" for="expiration">Expiration</label>
+                            <div class="form-control-wrap">
+
+ <select id="exp_mn" name="exp_mn" class="form-control"  data-stripe="exp-month">
+                                  <option value="01" selected>Jan (01)</option>
+                                  <option value="02">Feb (02)</option>
+                                  <option value="03">Mar (03)</option>
+                                  <option value="04">Apr (04)</option>
+                                  <option value="05">May (05)</option>
+                                  <option value="06">Jun (06)</option>
+                                  <option value="07">Jul (07)</option>
+                                  <option value="08">Aug (08)</option>
+                                  <option value="09">Sep (09)</option>
+                                  <option value="10">Oct (10)</option>
+                                  <option value="11">Nov (11)</option>
+                                  <option value="12">Dec (12)</option>
+                                </select>
+                         
+
+
+                     
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+
+ <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label" for="expiration">&nbsp;</label>
+                            <div class="form-control-wrap">
+       <select id="exp_yr" name="exp_yr" class="form-control"  data-stripe="exp-year">
+                                  <option value="20">2020</option>
+                                  <option value="21">2021</option>
+                                  <option value="22" selected>2022</option>
+                                  <option value="23">2023</option>
+                                  <option value="24">2024</option>
+                                  <option value="25">2025</option>
+                                  <option value="26">2026</option>
+                                  <option value="27">2027</option>
+                                  <option value="28">2028</option>
+                                  <option value="29">2029</option>
+                                  <option value="30">2030</option>
+                                  <option value="31">2031</option>
+                                  <option value="32">2032</option>
+                                  <option value="33">2033</option>
+                                  <option value="34">2034</option>
+                                  <option value="35">2035</option>
+                                  <option value="36">2036</option>
+                                  <option value="37">2037</option>
+                                  <option value="38">2038</option>
+                                  
+                                </select>
+
+                            </div></div></div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <div class="form-control-wrap">
+                            	<input type="number" id="cvc" name="cvc" size="4" class="form-control" value="<%= @CVV %>"  data-msg="Required" required pattern="[0-9]*" data-stripe="cvc"/>
+
+                               
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Zip Code</label>
+                            <div class="form-control-wrap">
+                             
+
+                                <input type="text" class="form-control" placeholder="55555" name required id="zip" name="zip">
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .row -->
+                <div class="row gy-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Name on Card</label>
+                            <div class="form-control-wrap">
+
+                              <%= d.text_field :name, :id => "cardholder-name" ,:placeholder => "Cardholder Name", :class => "form-control", :required => true, :value => @name%>
+
+                               
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" placeholder="Optional" id="company"
+                                    name="company">
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Receipt Email Address</label>
+                            <div class="form-control-wrap">
+                                <%= d.email_field :email, :id =>"receipt_email" ,  :placeholder => "Optional", :class => "form-control", :value => @email %>
+
+
+                  
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .row -->
+            </div>
+            <div class="nk-wizard-head">
+                <h5>Confirmation</h5>
+            </div>
+            <div class="nk-wizard-content">
+                <div class="nk-block-between flex-wrap g-3 mt-5">
+                    <div class="nk-tnx-type">
+                        <div class="nk-tnx-type-icon bg-warning text-white">
+                            <em class="icon ni ni-money"></em>
+                        </div>
+                        <div class="nk-tnx-type-text">
+                            <h5 class="title" id="display_amt">1.00</h5>
+                        </div>
+                    </div>
+                    <ul class="align-center flex-wrap gx-3">
+                        <li id="tx_badge">
+                            
+                        </li>
+                    </ul>
+                </div>
+                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Info</h5>
+                </div>
+               
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Base Amount</span>
+                        <span class="caption-text" id="actual_amt"></span>
+                    </div>
+
+
+                    <div class="col-6 col-sm-3">
+                   
+
+
+                        <span class="sub-text">Gateway Fee</span>
+                              
+                        <span class="caption-text" id="fee"></span>
+  <% if @user.cmodel == 'surcharge' %>
+                            <small class="sub-text tb-status text-warning"> (Gateway fees are waived for debit card) 
+
+                                                         </small>
+                             <% end  %>  
+
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">BIN Type</span>
+                        <span class="caption-text text-capitalize" id="card_type"></span>
+                    </div>
+
+<div class="col-6 col-sm-3">
+                        <span class="sub-text">Brand</span>
+                        <span class="caption-text"><span id="card_scheme" class="badge badge-primary text-white text-uppercase"></span></span>
+                    </div>
+
+
+                   
+                </div>
+                
+                <!-- .row -->
+                <div class="row gy-3">
+
+                 <div class="col-6 col-sm-3">
+                        <span class="sub-text">Card</span>
+                        <span class="caption-text" id="card_number"></span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Expiration</span>
+                        <span class="caption-text"  id="card_exp"></span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Email</span>
+                        <span class="caption-text"  id="txt_email"></span>
+                    </div>
+
+
+                    
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Name on Card</span>
+                        <span class="caption-text" id="txt_name"></span>
+                    </div>
+                    
+                </div>
+
+
+                <div id="txDetails">
+                <div  class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Details</h5>
+                </div>
+                <div class="row gy-3">
+                   
+                  
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Reference ID</span>
+                        <span class="caption-text text-break" id="tx_ref"></span>
+                    </div>
+                
+                 
+                   
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">MID</span>
+                        <span class="caption-text text-break" id="tx_mid" ></span>
+                    </div>
+                </div>
+
+                <div class="row gy-3" id="divReset">
+                   
+                  
+                
+
+                
+                 
+                   
+                    <div class="col-6 col-sm-3">
+                           <a  data-no-turbolink='true'  href="/dashboard/vt"  class="btn btn-info">Reset</a>
+                    </div>
+                </div>
+          
+
+                </div>
+                <br /><br />
+
+            </div><!-- .row -->
+
+
+        </div>
+
+
+        <% end %>
+
+        <% end %>
+    </div>
+</div>
+</div><!-- .nk-block -->
+
+
+
+<div class="nk-block nk-block-lg">
+
+
+
+
+    <div class="card card-bordered card-full">
+        <div class="card-inner">
+            <div class="card-title-group">
+                <div class="card-title">
+                    <h6 class="title"><span class="mr-2">Recent Transactions</span> 
+                    <a href="#"
+                            class="link d-none d-sm-inline">See History</a>
+                            
+                            </h6>
+                            
+
+       
+                </div>
+                <div class="card-tools">
+                    <ul class="card-tools-nav">
+                        <li><a href="#"><span>Credit</span></a></li>
+                        <li><a href="#"><span>Debit</span></a></li>
+                        <li><a href="#"><span>Refunds</span></a></li>
+                        <li class="active"><a href="#"><span>All</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-inner p-0 border-top">
+            <div class="nk-tb-list nk-tb-orders">
+                <div class="nk-tb-item nk-tb-head">
+                    <div class="nk-tb-col"><span>Transaction ID</span></div>
+                    <div class="nk-tb-col tb-col-sm"><span>Date</span></div>
+                    <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
+                    <div class="nk-tb-col tb-col-lg"><span>Amount</span></div>
+                    <div class="nk-tb-col"><span>Type</span></div>
+                    <div class="nk-tb-col"><span>Fee</span></div>
+                    <div class="nk-tb-col"><span>Status</span></div>
+                </div>
+                <!-- Row Start -->
+<% @donations.each do |donation|  %>
+  
+   <div class="nk-tb-item" href="#tx<%=donation.id %>" data-toggle="modal">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#<%=donation.id %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-sm">
+                        <span class="tb-sub"><%=donation.name %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub"><%= number_to_currency(donation.amount) %></span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub"><%=donation.card_type %></span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub"><%=number_to_currency(donation.gateway_fee) %></span>
+                    </div>
+                    <div class="nk-tb-col">
+
+                       
+
+                        <% if (donation.tx_status == "Queued for Capture")  %>
+ <span class="badge badge-dot badge-dot-xs badge-success text-capitalize">
+ Approved
+  </span>
+                        <% else %>
+                       
+                        
+                        <span class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
+  <%= donation.tx_status %>
+  </span>
+   <%end%>
+                        
+                        
+                       
+                    </div>
+                </div>
+
+
+
+
+                <!-- Modal Default -->
+<div class="modal fade" tabindex="-1" id="tx<%=donation.id %>">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-body modal-body-md">
+                <div class="nk-modal-head mb-3 mb-sm-5">
+                    <h4 class="nk-modal-title title">Transaction <small class="text-primary">#<%=donation.id %></small></h4>
+
+                </div>
+                <div class="nk-tnx-details">
+                    <div class="nk-block-between flex-wrap g-3">
+                        <div class="nk-tnx-type">
+                            <div class="nk-tnx-type-icon bg-warning text-white">
+                                <em class="icon ni ni-money"></em>
+                            </div>
+                            <div class="nk-tnx-type-text">
+                                <h5 class="title"><%=number_to_currency(donation.amount) %></h5>
+                                <span class="sub-text mt-n1"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
+                            </div>
+                        </div>
+                        <ul class="align-center flex-wrap gx-3">
+
+
+
+                            <li>
+                              <% if (donation.tx_status == "Queued for Capture")  %>
+ <span class="badge badge-sm  badge-success text-capitalize">
+ Approved
+  </span>
+                        <% else %>
+                       
+                        
+                        <span class="badge badge-sm badge-warning text-capitalize">
+  <%= donation.tx_status %>
+  </span>
+   <%end%>
+                   
+
+                                
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Info</h5>
+                    </div>
+                    <div class="row gy-3">
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Base Amount</span>
+                            <span class="caption-text"><%= number_to_currency(donation.amount.to_f - donation.gateway_fee.to_f) %></span>
+                        </div>
+                     
+                    </div><!-- .row -->
+                    <div class="row gy-3">
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Gateway Fee</span>
+                            <span class="caption-text"><%=number_to_currency(donation.gateway_fee) %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">BIN Type</span>
+                            <span class="caption-text"><%=donation.card_type %></span>
+                        </div>
+                      
+                       
+                    </div><!-- .row -->
+                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                        <h5 class="title">Transaction Details</h5>
+                    </div>
+                    <div class="row gy-3">
+                        
+                       
+                       
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Reference ID</span>
+                            <span class="caption-text text-break"><%=donation.cardconnectref %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Name on Card</span>
+                            <span class="caption-text"><%=donation.name %></span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">Email Address</span>
+                            <span class="caption-text align-center"><%=donation.email %></span>
+                        </div>
+
+                        
+                     
+                       
+                    </div>
+                    <div class="row gy-3">
+                        
+                       
+                       
+                     
+                        <div class="col-6 col-sm-3">
+                            <span class="sub-text">MID </span>
+                            <span class="caption-text text-break"><%=@user.merchid%></span>
+                        </div>
+
+                         <div class="col-6 col-sm-3">
+                            <span class="sub-text">Auth Code </span>
+                            <span class="caption-text text-break"><%=donation.authcode%></span>
+                        </div>
+
+                        
+                    </div>
+
+    <%
+    unless donation.inv_num.nil? || donation.inv_num == "" %>
+
+      <div class="row gy-3">
+                   
+                  
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Invoice #</span>
+                        <span class="caption-text text-break" ><%=donation.inv_num%></span>
+                    </div>
+                
+                 
+                   
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Invoice description</span>
+                        <span class="caption-text text-break"  ><%=donation.inv_desc%></span>
+                    </div>
+                </div>
+
+        <% end%>
+
+                    <br /><br />
+                    <div class="row gy-3">
+                        <div class="col-lg-12">
+                            <ul class="preview-btn-list">
+
+                              <% if (donation.tx_status == "Queued for Capture")  %>
+                                <li class="preview-btn-item">
+                                      <%= form_for(@kiosk, :url => { :action => "refund" },  authenticity_token: true , :method => "post",  :html => {:class => "refund_form"},  remote: true , data: {type: 'script'}) do |f| %>
+                                       <%= f.hidden_field :id, :value => donation.id %>
+                            <%= f.submit "Refund", :class => "btn btn-danger btn-refund" %>
+                                        <span class="badge badge-dot-xs"></span>
+                                        <% end %>
+
+                                </li>
+                                <% end %>
+                                <li class="preview-btn-item">
+                                    <a href="#" class="btn btn-secondary">Send Receipt</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+            </div><!-- .nk-tnx-details -->
+        </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+</div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+<% end %>
+
+
+                   <div class="nk-tb-item">
+                        <%= paginate @donations %>
+
+                    </div>
+
+
+
+              
+                <!-- Row End -->
+             
+            </div>
+        </div>
+        <div class="card-inner-sm border-top text-center d-sm-none">
+            <a href="#" class="btn btn-link btn-block">See History</a>
+        </div>
+    </div><!-- .card -->
+
+
+
+</div>
+
+
+  <%= render "snippets/loading" %>
+
+
+
+<% else %>
+
+no merchant found
+
+
+<% end %>
