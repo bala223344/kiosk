@@ -6,9 +6,17 @@ $ ->
   
     #disable onclick disable
   $(".refund_form").on("ajax:success", (e, data, status, xhr) ->
-    $(this).find('.badge').addClass('.badge-success').html 'Processed'
+    $(this).find('.badge').addClass('.badge-success').html 'Processed.redirecting..'
+
+    setTimeout (->
+      location.reload()
+      return
+    ), 3000
+
+
+
   ).on "ajax:error", (e, xhr, status, error) ->
-    $(this).find('.badge').addClass('.badge-danger').html 'Declined'
+    $(this).find('.badge').addClass('.badge-danger').html error
 
 
 

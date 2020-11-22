@@ -18,6 +18,17 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+
+  def update
+    @user = User.find(current_user.id)
+    if @user.update(user_profile_params)
+      render 'success'
+    else
+      render 'edit'
+    end
+  end
+
+
   def update_password
     @user = User.find(current_user.id)
     if @user.update_with_password(user_params)
@@ -34,5 +45,11 @@ class UsersController < ApplicationController
   def user_params
     # NOTE: Using `strong_parameters` gem
     params.require(:user).permit(:password, :password_confirmation, :current_password)
+  end
+
+
+  def user_profile_params
+    # NOTE: Using `strong_parameters` gem
+    params.require(:user).permit(:email)
   end
 end

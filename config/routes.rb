@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   resource :user, only: [:edit] do
     collection do
       patch 'update_password'
+      patch 'update'
     end
   end
 

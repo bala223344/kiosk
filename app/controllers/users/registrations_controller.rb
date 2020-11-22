@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
-  prepend_before_filter :authenticate_scope!, only: [:change_password]
+  prepend_before_action :authenticate_scope!, only: [:change_password]
   layout "auth"
 
   # GET /resource/sign_up

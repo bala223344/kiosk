@@ -1,0 +1,120 @@
+
+  <%= form_for(@user, :url => { :action => "update" }) do |f| %>
+
+
+  <!-- @@ Profile Edit Modal @e -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="profile-edit">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                            <div class="modal-body modal-body-lg">
+                                <h5 class="title">Update Profile</h5>
+                                <ul class="nk-nav nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#contact">Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#prefrences">Preferences</a>
+                                    </li>
+                                    
+                                </ul><!-- .nav-tabs -->
+                                <div class="tab-content">
+
+                                 
+
+                                    <div class="tab-pane" id="contact">
+                                        <div class="row gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="first-name">First Name</label>
+                                                    <input type="text" class="form-control form-control-lg" id="first-name" value="___" placeholder="Owner's first name?">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="last-name">Last Name</label>
+                                                    <input type="text" class="form-control form-control-lg" id="last-name" value="___" placeholder="Owner's last name?">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="phone">Phone Number</label>
+                                                    <input type="tel" pattern="[0-9]*" class="form-control form-control-lg" value="____" placeholder="Owner's phone number?">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="birth-day">Email Address</label>
+
+
+                                                      <%= f.email_field :email,   :placeholder => "Owner's email address?", :class => "form-control", :value => @user.email %>
+
+
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                    <li>
+
+                                                                                                                                      <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+
+
+                                                       
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- .tab-pane -->
+                                    <div class="tab-pane" id="prefrences">
+                                        <div class="row gy-4">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="language">Language</label>
+                                                    <select class="form-select" id="language" data-ui="lg">
+                                                        <option>English (United States)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+
+                                                    <label class="form-label" for="time-zone">Time Zone</label>
+                                                    <select class="form-select" id="time-zone" data-ui="lg">
+
+   <% all_tzs.each do | key, tz| %>
+     <option><%= tz %></option>
+       <% end %>
+
+
+                                                      
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                    <li>
+                                                          <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- .tab-pane -->
+
+
+
+                                </div><!-- .tab-content -->
+                            </div><!-- .modal-body -->
+                        </div><!-- .modal-content -->
+                    </div><!-- .modal-dialog -->
+                </div><!-- .modal -->
+
+<% end %>
