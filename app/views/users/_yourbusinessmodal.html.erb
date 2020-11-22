@@ -1,0 +1,142 @@
+
+
+
+  <%= form_for(@user.kiosk, :url => dashboard_update_kiosk_profile_path, :method => "post") do |f| %>
+
+      <!-- @@ Profile Edit Modal @e -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="business-edit">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                            <div class="modal-body modal-body-lg">
+                                <h5 class="title">Update Profile</h5>
+                                <ul class="nk-nav nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#business1">Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#address">Address</a>
+                                    </li>
+                                </ul><!-- .nav-tabs -->
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="business1">
+                                        <div class="row gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="business-name">Business Name</label>
+
+
+                                                    <%= f.text_field :title,   :placeholder => "Owner's first name?", :class => "form-control  form-control-lg" %>
+
+
+                                              
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="slogan">Slogan</label>
+                                                    <%= f.text_field :slogan,   :placeholder => "Does your company have a slogan?", :class => "form-control  form-control-lg" %>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="phone">Phone Number</label>
+
+                                                     <%= f.text_field :sms_number,   :placeholder => "Phone number of the business?", :class => "form-control  form-control-lg" %>
+
+
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="birth-day">Website </label>
+
+                                                         <%= f.text_field :website,   :placeholder => "Does your company have a website?", :class => "form-control  form-control-lg" %>
+
+                                                   
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                    <li>
+
+                                                      <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+
+
+                                                       
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- .tab-pane -->
+                                    <div class="tab-pane" id="address">
+                                        <div class="row gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="address">Street Address</label>
+                                                    
+                                                     <%= f.text_field :staddr,   :placeholder => "What is the physical address?", :class => "form-control  form-control-lg" %>
+
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="city">City</label>
+
+<%= f.text_field :city,   :placeholder => "What city is your business located in?", :class => "form-control  form-control-lg" %>
+
+
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="zip">Zip Code</label>
+                                                    
+<%= f.text_field :zip,   :placeholder => "Which zip code is your business located in?", :class => "form-control  form-control-lg" %>
+
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                  <label class="form-label" for="state">State</label>
+                                                   
+                                                    <%= f.select(:state, options_for_select(us_states.invert, @user.kiosk.state),{}, {:class => "form-select"} ) %>
+                                                 
+
+
+                                                        
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                    <li>
+
+                                                        <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+
+
+                                                     
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- .tab-pane -->
+                                </div><!-- .tab-content -->
+                            </div><!-- .modal-body -->
+                        </div><!-- .modal-content -->
+                    </div><!-- .modal-dialog -->
+                </div><!-- .modal -->
+
+<% end %>

@@ -46,10 +46,14 @@
                                       </a>
                                   </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="html/settings.html" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-account-setting-alt"></em></span>
-                                        <span class="nk-menu-text">Settings</span>
-                                    </a>
+
+                                  <%= link_to edit_user_path(current_user), class: "nk-menu-link"  do %>
+                                        <span
+                                                class="nk-menu-icon"><em class="icon ni ni-account-setting-alt"></em></span>
+                                                <span class="nk-menu-text">Settings</span>
+                                        <% end %>
+
+                                   
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
                                     <a href="#" class="nk-menu-link">

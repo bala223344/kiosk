@@ -1,66 +1,53 @@
 
-                            <!-- Modal -->
+
+
+  <div class="nk-content nk-content-lg nk-content-fluid">
+                    <div class="container-xl wide-lg">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head">
+                                    <div class="nk-block-head-content">
+                                        <h2 class="nk-block-title fw-normal">Account Setting</h2>
+                                        <div class="nk-block-des">
+                                            <p>You have full control to manage your own account setting. <span class="text-primary"><em class="icon ni ni-info"></em></span></p>
+                                        </div>
+                                    </div>
+                                </div><!-- .nk-block-head -->
+                                <ul class="nk-nav nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#yourac"  data-toggle="tab">Your Account</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#yourbusiness" data-toggle="tab">Your Business</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#security" data-toggle="tab">Security</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#notifications" data-toggle="tab">Notifications</a>
+                                    </li>
+
+                                </ul><!-- .nav-tabs -->
 
 
 
-  <div class="modal-dialog">
-  <%= form_for(@user, :url => { :action => "update_password" }, :remote => true) do |f| %>
+          <div class="tab-content">
+          <%= render "yourac" %>
+          <%= render "yourbusiness" %>
+          <%= render "security" %>
+          <%= render "notifications" %>
+          </div>
 
 
 
-
-
-    <!-- Modal content-->
-    <div class="modal-content form-horizontal">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Change Password</h4>
-      </div>
-      <div class="modal-body">
-        <% if @user.errors.any? %>
-
-
-    <% @user.errors.full_messages.each do |msg| %>
-      <div class="alert alert-danger" role="alert"><%= msg %></div>
-    <% end %>
-
-<% end %>
-         <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label class = "control-label">Current Password</label>
-              <div class="controls">
-
-		    <%= f.password_field :current_password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
-
-              </div>
-            </div>
-         <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label class = "control-label">Password</label>
-              <div class="controls">
-
-		    <%= f.password_field :password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
-
-              </div>
-            </div>
-             <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label class = "control-label">Password Confirmation</label>
-              <div class="controls">
-
-		    <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
-
-              </div>
-            </div>
-
-       <%= f.submit "Save", :class => "btn btn-primary btn-cons m-t-10 pull-left" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
 
+   <%= render "youracmodal" %>
+  <%= render "yourbusinessmodal" %>
 
-             </div>
-    
-    </div>
-<% end %>
-  </div>

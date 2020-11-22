@@ -70,15 +70,19 @@ Rails.application.routes.draw do
   resource :user, only: [:edit] do
     collection do
       patch 'update_password'
+      patch 'update'
     end
   end
 
   # kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
   resources :kiosks, path: :secure
+  
   namespace :dashboard do
     get 'vt', to: '/kiosks#vt'
     get 'bin', to: '/kiosks#bin'
     post 'refund', to: '/kiosks#refund'
+    post 'update_kiosk_profile', to: '/kiosks#update_profile'
+    post 'sendreceipt', to: '/kiosks#sendreceipt'
   end
   resources :activations
   resources :terms, only: [:index]

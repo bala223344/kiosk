@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hello <%= @donation.name %>
+    <p>
+      Status of the Payment made  for the amount <b> USD <%= number_to_currency(@donation.amount) %> </b> is <b> 
+       <% if (@donation.tx_status == "Queued for Capture")  %>
+       Approved
+         <% else %>
+       <%= @donation.tx_status %>
+        </span>
+   <%end%>
+      
+      </b>
+
+    </p>
+    <p>
+      Your payment reference id is : <b><%= @donation.cardconnectref %></b>
+    </p>
+    <p>
+      <% if (@donation.inv_num != "" ) %>
+      Invoice Number  : <%= @donation.inv_num %>
+      <% end %>
+      </p>
+      <p>
+      <% if (@donation.inv_desc != "" ) %>
+      Invoice Description  : <%= @donation.inv_desc %>
+      <% end %>
+    </p>
+    <p>Thank you for the payment.</p>
+  </body>
+</html>

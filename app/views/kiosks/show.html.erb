@@ -1,3 +1,4 @@
+
 <% if @kiosk %>
 
 <div class="nk-block nk-block-lg">
@@ -437,7 +438,7 @@
                         <span class="tb-sub">#<%=donation.id %></span>
                     </div>
                     <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
+                        <span class="tb-sub"><%=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %H:%M %p") %></span>
                     </div>
                     <div class="nk-tb-col tb-col-md">
                         <span class="tb-sub"><%=donation.name %></span>
@@ -494,8 +495,8 @@
                                 <em class="icon ni ni-money"></em>
                             </div>
                             <div class="nk-tnx-type-text">
-                                <h5 class="title"><%=number_to_currency(donation.amount) %></h5>
-                                <span class="sub-text mt-n1"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
+                                <h5 class="title"><%=number_to_currency(donation.amount.to_f +  donation.gateway_fee.to_f) %></h5>
+                                <span class="sub-text mt-n1"><%=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %H:%M %p") %></span>
                             </div>
                         </div>
                         <ul class="align-center flex-wrap gx-3">
@@ -528,7 +529,7 @@
                     <div class="row gy-3">
                         <div class="col-6 col-sm-3">
                             <span class="sub-text">Base Amount</span>
-                            <span class="caption-text"><%= number_to_currency(donation.amount.to_f - donation.gateway_fee.to_f) %></span>
+                            <span class="caption-text"><%= number_to_currency(donation.amount.to_f ) %></span>
                         </div>
                      
                     </div><!-- .row -->
@@ -623,7 +624,12 @@
                                 </li>
                                 <% end %>
                                 <li class="preview-btn-item">
-                                    <a href="#" class="btn btn-secondary">Send Receipt</a>
+
+                                  <%= form_for(@kiosk, :url => { :action => "sendreceipt" },  authenticity_token: true , :method => "post",  :html => {:class => "receipt_form"},  remote: true , data: {type: 'script'}) do |f| %>
+                                       <%= f.hidden_field :id, :value => donation.id %>
+                            <%= f.submit "Send Receipt", :class => "btn btn-secondary btn-refund" %>
+<span class="badge badge-dot-xs"></span>
+                                <% end %>
                                 </li>
                             </ul>
                         </div>

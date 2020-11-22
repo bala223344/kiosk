@@ -4,8 +4,9 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @user = current_user
-      page = (params[:page]?params[:page]:0)
+      page = (params[:page]?params[:page]:1)
       @donations = current_user.donations.order('id desc').page(page).per(20)
+      @tz = current_user.tz
     else
       @kiosk = nil
       @user = nil
@@ -20,45 +21,47 @@ class KiosksController < BaseController
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
 
-    
+
 
   end
 
 
+  def sendreceipt
+    donation = Donation.find(params[:kiosk][:id])
+    KioskMailer.modal_receipt_email(donation).deliver
+
+  end
   def refund 
+
     donation = Donation.find(params[:kiosk][:id])
     kiosk = donation.kiosk
 
-
-
     cred_combo = "#{kiosk.user.merchant_username}:#{kiosk.user.merchant_password}"
 
-    cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/refund", { 'merchid' => kiosk.user.merchid, 'retref' => donation.cardconnectref }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+
+    rres = RestClient.get("#{kiosk.user.merchant_end_point}/cardconnect/rest/inquire/#{donation.cardconnectref}/#{kiosk.user.merchid}",  { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+
+    
+    rresponse = JSON.parse(rres.body)
+
+    if rresponse["voidable"] == "Y"
+
+      cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/void", { 'merchid' => kiosk.user.merchid, 'retref' => donation.cardconnectref }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+      donation.tx_status = 'voided'
+    else
+
+      
+      cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/refund", { 'merchid' => kiosk.user.merchid, 'retref' => donation.cardconnectref }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+
+      donation.tx_status = 'refunded'
+
+    end
+
 
     cresponse = JSON.parse(cres.body)
     if cresponse['respstat'] == 'A'
-
-
-      donation.tx_status = 'refunded'
       donation.save
-      # dobj = Donation.new   
-      # dobj.cardconnectref = cresponse['retref']
-      # dobj.amount = cresponse['amount']
-      # dobj.tx_status = 'refunded'
-      # dobj.kios_id = kiosk.id
-      # dobj.save
-
-      # if kiosk.update(donation_params)
-
-      #   if !email.blank? && email != ''
-      #     charge = { 'email' => email, 'name' => name, 'amount' => amount, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
-      #     KioskMailer.receipt_email(charge).deliver
-      #   end
-      #   charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
-      #   KioskMailer.owner_email(charge).deliver
-      # end
-
-
+  
       respond_to do |format|
         format.js { render :json => {:success => true,  status: :created }}
       end
@@ -76,7 +79,6 @@ class KiosksController < BaseController
 
 
   def new
-    @kiosk = Project.new
 
   end
 
@@ -165,8 +167,6 @@ class KiosksController < BaseController
             cresponse = JSON.parse(cres.body)
 
 
-            p "authcodeauthcodeauthcodeauthcode"
-            p cresponse.inspect
 
             @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'],  'amount' => amount , 'title' => title, 'merchid' => kiosk.user.merchid }
 
@@ -235,9 +235,23 @@ class KiosksController < BaseController
     end
   end
 
+
+  def update_profile
+    @kiosk = current_user.kiosk
+    if @kiosk.update(profile_params)
+     redirect_to edit_user_path(current_user)
+    else
+      redirect_to edit_user_path(current_user)
+    end
+
+  end
   private
 
   def donation_params
     params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status zip authcode])
+  end
+
+  def profile_params
+    params.require(:kiosk).permit(:title, :sms_number, :city, :zip, :state, :staddr, :website, :slogan )
   end
 end
