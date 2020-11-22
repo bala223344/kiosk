@@ -16,7 +16,7 @@
                                             <div class="data-item" data-toggle="modal" data-target="#profile-edit" data-tab-target="#contact">
                                                 <div class="data-col">
                                                     <span class="data-label">Account Owner</span>
-                                                    <span class="data-value">_____</span>
+                                                    <span class="data-value"><%=@user.fname%> <%=@user.lname%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
@@ -32,7 +32,7 @@
                                             <div class="data-item" data-toggle="modal" data-target="#profile-edit">
                                                 <div class="data-col">
                                                     <span class="data-label">Phone Number</span>
-                                                    <span class="data-value">____</span>
+                                                    <span class="data-value"><%=@user.phone%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
@@ -75,7 +75,11 @@
                                             <div class="data-item" data-toggle="modal" data-target="#profile-edit" data-tab-target="#prefrences">
                                                 <div class="data-col">
                                                     <span class="data-label">Time Zone</span>
-                                                    <span class="data-value">_____</span>
+                                                    <span class="data-value">
+                                                    
+                                                    <%=all_tzs[@user.tz]%>
+                                                    
+                                                    </span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>

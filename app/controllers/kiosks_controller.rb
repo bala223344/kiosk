@@ -6,6 +6,7 @@ class KiosksController < BaseController
       @user = current_user
       page = (params[:page]?params[:page]:1)
       @donations = current_user.donations.order('id desc').page(page).per(20)
+      @tz = current_user.tz
     else
       @kiosk = nil
       @user = nil
@@ -20,11 +21,16 @@ class KiosksController < BaseController
     @kiosk = Kiosk.find(params[:id])
     @user = User.find(@kiosk.user_id)
 
-    
+
 
   end
 
 
+  def sendreceipt
+    donation = Donation.find(params[:kiosk][:id])
+    KioskMailer.modal_receipt_email(donation).deliver
+
+  end
   def refund 
 
     donation = Donation.find(params[:kiosk][:id])
@@ -161,8 +167,6 @@ class KiosksController < BaseController
             cresponse = JSON.parse(cres.body)
 
 
-            p "authcodeauthcodeauthcodeauthcode"
-            p cresponse.inspect
 
             @response = { 'status' => '! ' + cresponse['setlstat'], 'retref' => cresponse['retref'],  'amount' => amount , 'title' => title, 'merchid' => kiosk.user.merchid }
 
@@ -231,9 +235,23 @@ class KiosksController < BaseController
     end
   end
 
+
+  def update_profile
+    @kiosk = current_user.kiosk
+    if @kiosk.update(profile_params)
+     redirect_to edit_user_path(current_user)
+    else
+      redirect_to edit_user_path(current_user)
+    end
+
+  end
   private
 
   def donation_params
     params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status zip authcode])
+  end
+
+  def profile_params
+    params.require(:kiosk).permit(:title, :sms_number, :city, :zip, :state, :staddr, :website, :slogan )
   end
 end

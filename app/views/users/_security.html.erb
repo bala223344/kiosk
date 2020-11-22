@@ -24,7 +24,11 @@
                                                                 <a href="#"  class="btn btn-primary"  data-toggle="modal" data-target="#profile-pwd">Change Password</a>
                                                             </li>
                                                             <li>
-                                                                <em class="text-soft text-date fs-12px">Last changed: <span>___Oct 2, 2019</span></em>
+                                                                <em class="text-soft text-date fs-12px">Last changed: <span>
+                                                                <%=(@user.password_changed_at)?
+                                                                @user.password_changed_at.strftime("%^b %d, %Y %H:%M %p"): '-' %>
+
+                                                                </span></em>
                                                             </li>
                                                         </ul>
                                                     </div>

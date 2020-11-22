@@ -27,19 +27,31 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label" for="first-name">First Name</label>
-                                                    <input type="text" class="form-control form-control-lg" id="first-name" value="___" placeholder="Owner's first name?">
+
+                                                      <%= f.text_field :fname,   :placeholder => "Owner's first name?", :class => "form-control  form-control-lg", :value => @user.fname %>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label" for="last-name">Last Name</label>
-                                                    <input type="text" class="form-control form-control-lg" id="last-name" value="___" placeholder="Owner's last name?">
+
+                                                       <%= f.text_field :lname,   :placeholder => "Owner's last name?", :class => "form-control  form-control-lg", :value => @user.lname %>
+
+
+                                                 
+
+
+
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label" for="phone">Phone Number</label>
-                                                    <input type="tel" pattern="[0-9]*" class="form-control form-control-lg" value="____" placeholder="Owner's phone number?">
+   <%= f.text_field :phone,   :placeholder => "Owner's phone number?", :class => "form-control form-control-lg", :value => @user.phone %>
+
+                                                   
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -47,7 +59,7 @@
                                                     <label class="form-label" for="birth-day">Email Address</label>
 
 
-                                                      <%= f.email_field :email,   :placeholder => "Owner's email address?", :class => "form-control", :value => @user.email %>
+                                                      <%= f.email_field :email,   :placeholder => "Owner's email address?", :class => "form-control form-control-lg", :value => @user.email %>
 
 
                                                     
@@ -85,15 +97,12 @@
                                                 <div class="form-group">
 
                                                     <label class="form-label" for="time-zone">Time Zone</label>
-                                                    <select class="form-select" id="time-zone" data-ui="lg">
 
-   <% all_tzs.each do | key, tz| %>
-     <option><%= tz %></option>
-       <% end %>
+                                                    
+<%= f.select(:tz, options_for_select(all_tzs.invert),{}, {:class => "form-select"} ) %>
 
 
-                                                      
-                                                    </select>
+                                                  
                                                 </div>
                                             </div>
                                             <div class="col-12">

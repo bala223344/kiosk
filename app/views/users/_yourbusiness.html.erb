@@ -22,7 +22,10 @@
                                             <div class="data-item">
                                                 <div class="data-col">
                                                     <span class="data-label">MID</span>
-                                                    <span class="data-value text-soft">7130229339283</span>
+                                                    <span class="data-value text-soft">
+                                                    
+                                                    <%=@user.merchid%>
+                                                    </span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
                                             </div>
@@ -45,35 +48,35 @@
                                           <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
                                                 <div class="data-col">
                                                     <span class="data-label">Business Name</span>
-                                                    <span class="data-value">Demo ABC Company</span>
+                                                    <span class="data-value"> <%=@user.kiosk.title%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
                                             <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
                                                 <div class="data-col">
                                                     <span class="data-label">Slogan</span>
-                                                    <span class="data-value text-soft">Not Yet Added</span>
+                                                    <span class="data-value text-soft"><%=@user.kiosk.slogan%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
                                             <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
                                                 <div class="data-col">
                                                     <span class="data-label">Phone Number</span>
-                                                    <span class="data-value">(555) 555-1212</span>
+                                                    <span class="data-value"><%=@user.kiosk.sms_number%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
                                             <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
                                                 <div class="data-col">
                                                     <span class="data-label">Website URL</span>
-                                                    <span class="data-value">http://www.abcdemostore.com</span>
+                                                    <span class="data-value"><%=@user.kiosk.website%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>
                                             <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#address">
                                                 <div class="data-col">
                                                     <span class="data-label">Physical Address</span>
-                                                    <span class="data-value">2231 Blue Street, STE 110<br>Los Angeles, CA 90210</span>
+                                                    <span class="data-value"><%=@user.kiosk.staddr%> <br><%=@user.kiosk.city%>, <%=@user.kiosk.state%> <%=@user.kiosk.zip%></span>
                                                 </div>
                                                 <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                                             </div>

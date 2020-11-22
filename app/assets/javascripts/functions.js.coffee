@@ -19,6 +19,11 @@ $ ->
     $(this).find('.badge').addClass('.badge-danger').html error
 
 
+$(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
+    $(this).find('.badge').addClass('.badge-success').html 'Sent.'
+  ).on "ajax:error", (e, xhr, status, error) ->
+    $(this).find('.badge').addClass('.badge-danger').html error
+
 
 
 

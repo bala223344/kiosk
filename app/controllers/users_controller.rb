@@ -22,16 +22,18 @@ class UsersController < ApplicationController
   def update
     @user = User.find(current_user.id)
     if @user.update(user_profile_params)
-      render 'success'
+     redirect_to edit_user_path(current_user)
     else
-      render 'edit'
+      redirect_to edit_user_path(current_user)
     end
   end
 
 
   def update_password
     @user = User.find(current_user.id)
+    user_params[:password_changed_at] = Time.new
     if @user.update_with_password(user_params)
+
       # Sign in the user by passing validation in case their password changed
       sign_in @user, bypass: true
       render 'success'
@@ -50,6 +52,6 @@ class UsersController < ApplicationController
 
   def user_profile_params
     # NOTE: Using `strong_parameters` gem
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:email, :fname, :lname, :phone, :tz)
   end
 end
