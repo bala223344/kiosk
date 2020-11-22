@@ -1,15 +1,16 @@
 <% if @kiosk %>
 
-
-<div class="nk-block-head nk-block-head-sm">
+<div class="nk-block nk-block-lg">
+    <div class="nk-block-head">
     <div class="nk-block-between">
         <div class="nk-block-head-content">
-            <h3 class="nk-block-title page-title"></h3>
+            <h4 class="title nk-block-title">Virtual Terminal for <%= @kiosk.title %></h4>
             <div class="nk-block-des text-soft">
-                <p></p>
-            </div>
+                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+            </div> <!-- .nk-block-des -->
         </div><!-- .nk-block-head-content -->
-        <div class="nk-block-head-content">
+
+ <div class="nk-block-head-content">
             <div class="toggle-wrap nk-block-tools-toggle">
                 <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
                         class="icon ni ni-more-v"></em></a>
@@ -23,24 +24,11 @@
                 </div>
             </div>
         </div><!-- .nk-block-head-content -->
-    </div><!-- .nk-block-between -->
+ 
+
 </div>
 
 
-
-
-
-
-
-
-<div class="nk-block nk-block-lg">
-    <div class="nk-block-head">
-        <div class="nk-block-head-content">
-            <h4 class="title nk-block-title">Virtual Terminal for <%= @kiosk.title %></h4>
-            <div class="nk-block-des">
-                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
-            </div>
-        </div>
     </div>
     <div class="card card-bordered">
         <div class="card-inner">
@@ -133,7 +121,7 @@
                 </div>
             </div>
             <div class="nk-wizard-head">
-                <h5>Credit Card</h5>
+                <h5>Card Info</h5>
             </div>
             <div class="nk-wizard-content mt-5">
                 <div class="row gy-3">
@@ -267,7 +255,7 @@
                 </div><!-- .row -->
             </div>
             <div class="nk-wizard-head">
-                <h5>Confirmation</h5>
+                <h5>Receipt</h5>
             </div>
             <div class="nk-wizard-content">
                 <div class="nk-block-between flex-wrap g-3 mt-5">
@@ -379,7 +367,7 @@
                  
                    
                     <div class="col-6 col-sm-3">
-                           <a  data-no-turbolink='true'  href="/dashboard/vt"  class="btn btn-info">Reset</a>
+                           <a  data-no-turbolink='true'  href="/dashboard/vt"  class="btn btn-info">All Done</a>
                     </div>
                 </div>
           
@@ -399,7 +387,7 @@
     </div>
 </div>
 </div><!-- .nk-block -->
-
+<br /><!-- scott -->
 
 
 <div class="nk-block nk-block-lg">
@@ -433,11 +421,11 @@
         <div class="card-inner p-0 border-top">
             <div class="nk-tb-list nk-tb-orders">
                 <div class="nk-tb-item nk-tb-head">
-                    <div class="nk-tb-col"><span>Transaction ID</span></div>
-                    <div class="nk-tb-col tb-col-sm"><span>Date</span></div>
+                    <div class="nk-tb-col"><span>Trans #</span></div>
+                    <div class="nk-tb-col tb-col-md"><span>Date</span></div>
                     <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
-                    <div class="nk-tb-col tb-col-lg"><span>Amount</span></div>
-                    <div class="nk-tb-col"><span>Type</span></div>
+                    <div class="nk-tb-col"><span>Amount</span></div>
+                    <div class="nk-tb-col tb-col-lg"><span>Type</span></div>
                     <div class="nk-tb-col"><span>Fee</span></div>
                     <div class="nk-tb-col"><span>Status</span></div>
                 </div>
@@ -451,13 +439,13 @@
                     <div class="nk-tb-col tb-col-md">
                         <span class="tb-sub"><%=donation.created_at.strftime("%^b %d, %Y %H:%M %p") %></span>
                     </div>
-                    <div class="nk-tb-col tb-col-sm">
+                    <div class="nk-tb-col tb-col-md">
                         <span class="tb-sub"><%=donation.name %></span>
                     </div>
-                    <div class="nk-tb-col tb-col-lg">
+                    <div class="nk-tb-col">
                         <span class="tb-sub"><%= number_to_currency(donation.amount) %></span>
                     </div>
-                    <div class="nk-tb-col">
+                    <div class="nk-tb-col tb-col-lg">
                         <span class="tb-sub"><%=donation.card_type %></span>
                     </div>
                     <div class="nk-tb-col">

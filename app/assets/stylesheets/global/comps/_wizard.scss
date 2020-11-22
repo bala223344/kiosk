@@ -58,6 +58,8 @@
                         font-size: 13px;
                         color: $base-light;
                         font-weight: 700;
+		       visibility: hidden; //Scott
+
                     }
                     &:after{
                         position: absolute;
