@@ -6,7 +6,7 @@
   <body>
     Hello <%= @charge.source.name %>
     <p>
-      Payment has been successfully made for the amount of <b> USD <%= number_to_currency(@charge.amount/100.0) %> </b>
+      Payment has been successfully made for the amount of <b> USD <%= ActiveSupport::NumberHelper.number_to_currency(@charge.amount/100.0) %> </b>
     </p>
     <p>
       Your Stripe reference id is : <b><%= @charge.id %></b>

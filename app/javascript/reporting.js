@@ -20,37 +20,37 @@
 
 
 import Vue from 'vue';
-import { VuejsDatatableFactory } from 'vuejs-datatable';
-Vue.use(VuejsDatatableFactory);
 
 import axios from 'axios';
-import REPORTING_URL from 'siteconfig';
+
+var config = require('siteconfig');
+
+import { BModal } from 'bootstrap-vue'
 
 
 
+console.log(config);
 
-var app = new Vue({
+
+ new Vue({
     el: '#app',
     data: {
-      columns: [
-          {label: 'id', field: 'id'},
-          {label: 'First Name', field: 'name'},
-          {label: 'Email', field: 'email'},
-          
-      ],
+     
+      showModal: false,
       rows: [
-          //...
-        
-          //...
-      ]
+      ],
+      detail : null
   },
+  components: { BModal },
+
   mounted() {
 
     
     var self = this
-    axios.get(REPORTING_URL)
+    axios.get(config.REPORTING_URL)
       .then(function (response) {
         self.rows = response.data.donations
+       
       })
       .catch(function (error) {
         // handle error
@@ -61,6 +61,30 @@ var app = new Vue({
       });
       
 
+  },
+
+  methods: {
+    getDetails: function (id) {
+     
+      var self = this
+    axios.get(config.REPORTING_DETAIL_URL)
+      .then(function (response) {
+       
+        self.detail = response.data.donations
+        console.log(self.detail);
+        self.$refs['my-modal'].show()
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+      
+      
+    }
   }
+
  
   })

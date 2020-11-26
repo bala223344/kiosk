@@ -20,6 +20,23 @@ class KiosksController < BaseController
 
 
 
+  def donation_detail
+    donation = current_user.donations.find(params[:id])
+
+    temp = Hash.new
+
+    temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
+    temp["id"] = donation.id
+    temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount) 
+    temp["name"] = donation.name
+    temp["card_type"] = donation.card_type
+    temp["gateway_fee"] = ActiveSupport::NumberHelper.number_to_currency(donation.gateway_fee)
+    temp["status"] =  (donation.tx_status == "Queued for Capture") ? "Approved" : donation.tx_status
+     #
+
+    render :json => {:donation =>  donation }
+
+  end
 
   def reporting
 
@@ -34,13 +51,27 @@ class KiosksController < BaseController
           @user = current_user
           page = (params[:page]?params[:page]:1)
 
-          donations = current_user.donations
+          recs = current_user.donations
           
          # donations = donations.where("tx_status = ?", "refunded")
-          donations = donations.order('id desc').page(page).per(20)
-          @tz = current_user.tz
+         recs = recs.order('id desc').page(page).per(20)
+          
+          donations = []
+          temp = Hash.new
+          recs.each do |donation|  
 
-          render :json => {:donations =>  donations, :total_count => donations.total_count }
+            temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
+            temp["id"] = donation.id
+            temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount) 
+            temp["name"] = donation.name
+            temp["card_type"] = donation.card_type
+            temp["gateway_fee"] = ActiveSupport::NumberHelper.number_to_currency(donation.gateway_fee)
+            temp["status"] =  (donation.tx_status == "Queued for Capture") ? "Approved" : donation.tx_status
+           #
+            donations.push(temp)
+          end
+
+          render :json => {:donations =>  donations, :total_count => recs.total_count }
         }
 
       end
