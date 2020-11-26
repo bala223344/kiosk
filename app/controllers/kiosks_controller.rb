@@ -57,9 +57,10 @@ class KiosksController < BaseController
          recs = recs.order('id desc').page(page).per(20)
           
           donations = []
-          temp = Hash.new
+
           recs.each do |donation|  
 
+            temp = Hash.new
             temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
             temp["id"] = donation.id
             temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount) 

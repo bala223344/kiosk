@@ -29,41 +29,63 @@ import { BModal } from 'bootstrap-vue'
 
 
 
-console.log(config);
-
-
  new Vue({
     el: '#app',
     data: {
      
+      total_count: 0,
       showModal: false,
       rows: [
       ],
-      detail : null
+      detail : null,
+      page : 1,
+      total_pages : 1
   },
   components: { BModal },
 
   mounted() {
 
-    
-    var self = this
-    axios.get(config.REPORTING_URL)
-      .then(function (response) {
-        self.rows = response.data.donations
-       
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
+    this.getIndex()
+   
       
 
   },
 
   methods: {
+    next: function () {
+      this.page = this.page + 1
+      this.getIndex()
+
+    },
+    prev: function () {
+      this.page = this.page - 1
+      this.getIndex()
+    },
+
+    getIndex: function () {
+
+      var params =  {
+        page: this.page
+      }
+      var self = this
+      axios.get(config.REPORTING_URL, {
+        params: params
+       
+      })
+        .then(function (response) {
+          self.rows = response.data.donations
+          self.total_count = response.data.total_count
+          self.total_pages = Math.ceil(response.data.total_count / 20 )
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+        });
+    },
+
     getDetails: function (id) {
      
       var self = this

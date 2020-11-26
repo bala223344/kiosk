@@ -179,3 +179,15 @@ a:hover { color: #1b5091; }
 .modal-backdrop {
   opacity: 0.5 !important;
 }
+
+.page-item {
+  .go-num {
+    width: 50px;
+    border-radius: 0;
+  }
+  .go-btn {
+    width: 50px;
+    color:#fff;
+    border-radius: 0px 4px 4px 0px !important;
+  }
+}
