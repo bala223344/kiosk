@@ -16,6 +16,49 @@ class KiosksController < BaseController
     #@kiosk = current_user.find(params[:id])
     #render 'show'
   end
+
+
+
+
+
+  def reporting
+
+    respond_to do |format|
+
+      if (current_user && current_user.kiosk && current_user.kiosk.id)
+        format.html {
+          render 'reporting'
+        }
+        format.json {
+          @kiosk = current_user.kiosk
+          @user = current_user
+          page = (params[:page]?params[:page]:1)
+
+          donations = current_user.donations
+          
+         # donations = donations.where("tx_status = ?", "refunded")
+          donations = donations.order('id desc').page(page).per(20)
+          @tz = current_user.tz
+
+          render :json => {:donations =>  donations, :total_count => donations.total_count }
+        }
+
+      end
+    end
+
+
+    # if (current_user && current_user.kiosk && current_user.kiosk.id)
+    #   render 'reporting'
+    
+    #   render :json => {:donations => @donations}
+
+    # else
+    #   @kiosk = nil
+    #   @user = nil
+    # end
+    # render 'reporting'
+
+  end
   def show
     
     @kiosk = Kiosk.find(params[:id])

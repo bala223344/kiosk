@@ -1,0 +1,184 @@
+
+<div id="app">
+    <datatable :columns="columns" :data="rows"></datatable>
+                <datatable-pager v-model="rows"></datatable-pager>
+
+</div>
+
+
+<% if @kiosk %>
+
+<div class="nk-block nk-block-lg">
+    <div class="nk-block-head">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h4 class="title nk-block-title">Report for <%= @kiosk.title %></h4>
+            <div class="nk-block-des text-soft">
+                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+            </div> <!-- .nk-block-des -->
+        </div><!-- .nk-block-head-content -->
+
+ <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
+                        class="icon ni ni-more-v"></em></a>
+                <div class="toggle-expand-content" data-content="pageMenu">
+                   
+                </div>
+            </div>
+        </div><!-- .nk-block-head-content -->
+ 
+
+</div>
+
+
+    </div>
+  
+</div>
+</div><!-- .nk-block -->
+<br /><!-- scott -->
+
+
+<div class="nk-block nk-block-lg">
+
+
+
+
+    <div class="card card-bordered card-full">
+
+
+
+    
+        <div class="card-inner">
+            <div class="card-title-group">
+                <div class="card-title">
+                    <h6 class="title"><span class="mr-2">Recent Transactions</span> 
+                    <a href="#"
+                            class="link d-none d-sm-inline">See History</a>
+                            
+                            </h6>
+                            
+
+       
+                </div>
+                <div class="card-tools">
+                    <ul class="card-tools-nav">
+                        <li><a href="#"><span>Credit</span></a></li>
+                        <li><a href="#"><span>Debit</span></a></li>
+                        <li><a href="#"><span>Refunds</span></a></li>
+                        <li class="active"><a href="#"><span>All</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-inner p-0 border-top">
+<table class="table">  <thead>    <tr>      <th scope="col">Trans #</th>    
+  <th scope="col">Date</th>      <th scope="col">Customer</th>      <th scope="col">Amount</th> 
+
+   <th scope="col">Type</th> 
+   <th scope="col">Fee</th> 
+   <th scope="col">Status</th> 
+   
+  
+  
+  
+     </tr>  </thead>
+     
+     
+       <tbody>    <tr>      <th scope="row">1</th>      <td>Mark</td>      <td>Otto</td>      <td>@mdo</td>    </tr>  
+
+
+
+
+
+
+
+
+
+
+            <div class="nk-tb-list nk-tb-orders">
+                
+                <!-- Row Start -->
+<% @donations.each do |donation|  %>
+  
+   <div class="nk-tb-item" href="#tx<%=donation.id %>" data-toggle="modal">
+                    <div class="nk-tb-col">
+                        <span class="tb-sub">#<%=donation.id %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub"><%=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %H:%M %p") %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-md">
+                        <span class="tb-sub"><%=donation.name %></span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub"><%= number_to_currency(donation.amount) %></span>
+                    </div>
+                    <div class="nk-tb-col tb-col-lg">
+                        <span class="tb-sub"><%=donation.card_type %></span>
+                    </div>
+                    <div class="nk-tb-col">
+                        <span class="tb-sub"><%=number_to_currency(donation.gateway_fee) %></span>
+                    </div>
+                    <div class="nk-tb-col">
+
+                       
+
+                        <% if (donation.tx_status == "Queued for Capture")  %>
+ <span class="badge badge-dot badge-dot-xs badge-success text-capitalize">
+ Approved
+  </span>
+                        <% else %>
+                       
+                        
+                        <span class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
+  <%= donation.tx_status %>
+  </span>
+   <%end%>
+                        
+                        
+                       
+                    </div>
+                </div>
+
+
+
+
+
+
+
+<% end %>
+
+
+                   <div class="nk-tb-item">
+                        <%= paginate @donations %>
+
+                    </div>
+
+
+
+              
+                <!-- Row End -->
+             
+            </div>
+        </div>
+        <div class="card-inner-sm border-top text-center d-sm-none">
+            <a href="#" class="btn btn-link btn-block">See History</a>
+        </div>
+    </div><!-- .card -->
+
+
+
+</div>
+
+
+  <%= render "snippets/loading" %>
+
+
+
+<% else %>
+
+no merchant found
+
+
+<% end %>

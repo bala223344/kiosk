@@ -155,6 +155,8 @@ GEM
     polyamorous (2.3.0)
       activerecord (>= 5.0)
     rack (2.2.3)
+    rack-proxy (0.6.5)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.0)
@@ -242,6 +244,10 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.8)
       rack (>= 2.0.6)
+    webpacker (4.3.0)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -270,6 +276,7 @@ DEPENDENCIES
   sparkpost_rails
   therubyracer
   unicorn
+  webpacker (~> 4.x)
 
 BUNDLED WITH
    2.1.4

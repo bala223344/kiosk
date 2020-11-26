@@ -1,0 +1,1 @@
+let REPORTING_URL; export default REPORTING_URL = '/dashboard/reporting.json';

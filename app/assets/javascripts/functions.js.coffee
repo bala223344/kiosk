@@ -13,6 +13,8 @@ $ ->
       return
     ), 3000
 
+    
+
 
 
   ).on "ajax:error", (e, xhr, status, error) ->

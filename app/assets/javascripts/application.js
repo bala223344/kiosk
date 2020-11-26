@@ -15,6 +15,3 @@
 //= require functions
 //= require scripts
 //= require jqueryform
-
-
-

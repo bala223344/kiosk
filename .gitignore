@@ -31,3 +31,10 @@ yarn-debug.log*
 config/database.yml
 shared/
 shared/log/*
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

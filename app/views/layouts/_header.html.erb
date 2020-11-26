@@ -36,7 +36,9 @@
                                 </div>
                                 <div class="user-info d-none d-md-block">
                                     <div class="user-status">Administrator</div>
-                                    <div class="user-name dropdown-indicator"><%=current_user.email%></div>
+                                    <div class="user-name dropdown-indicator">
+                                    <%=current_user.email%>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -44,10 +46,10 @@
                             <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                                 <div class="user-card">
                                     <div class="user-avatar">
-                                        <span><%=current_user.email%></span>
+                                        <span><%=current_user.email.slice(0)%></span>
                                     </div>
                                     <div class="user-info">
-                                        <span class="lead-text"> <%=current_user.email%></span>
+                                        <span class="lead-text"> <%=current_user.fname%></span>
                                         <span class="sub-text">
                                         <%=current_user.email%>
                                         </span>
