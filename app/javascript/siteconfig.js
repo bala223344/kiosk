@@ -3,5 +3,7 @@
 
 module.exports = {
     REPORTING_URL: '/dashboard/reporting.json',
-    REPORTING_DETAIL_URL: '/dashboard/reporting.json'
+    REPORTING_DETAIL_URL: '/dashboard/donation_detail.json',
+    REFUND_URL: '/dashboard/refund',
+    RECEIPT_URL: '/dashboard/sendreceipt'
   };

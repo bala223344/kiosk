@@ -28,7 +28,8 @@
     "sweetalert2": "^9.7.2",
     "tinymce": "^5.4.1",
     "toastr": "^2.1.4",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vue-loading-overlay": "^3.4.2"
   },
   "devDependencies": {
     "gulp": "^4.0.2",

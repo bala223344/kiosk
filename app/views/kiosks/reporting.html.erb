@@ -1,5 +1,7 @@
-<div id="app">
+<div id="app" v-cloak>
 
+
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="true"></loading>
 
 
 
@@ -7,7 +9,7 @@
         <div class="nk-block-head">
             <div class="nk-block-between">
                 <div class="nk-block-head-content">
-                    <h4 class="title nk-block-title">Report for ---</h4>
+                    <h4 class="title nk-block-title">Report for {{kiosk_title}}</h4>
                     <div class="nk-block-des text-soft">
                         <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
                     </div> <!-- .nk-block-des -->
@@ -55,83 +57,115 @@
 
                     </div>
                     <div class="card-tools">
+                        <ul class="pagination justify-content-end">
+
+
+
+                            <li class="page-item"> <input class="search-text form-control" type="text" v-model="s"
+                                    placeholder="Search">
+                            </li>
+                            <li class="page-item"> <a v-on:click="search()" class="search-btn btn btn-primary"
+                                    data-target="pageMenu" role="button"> Search
+                                </a>
+                            </li>
+
+
+
+                        </ul>
                         <ul class="card-tools-nav">
-                            <li><a href="#"><span>Credit</span></a></li>
-                            <li><a href="#"><span>Debit</span></a></li>
-                            <li><a href="#"><span>Refunds</span></a></li>
-                            <li class="active"><a href="#"><span>All</span></a></li>
+
+                            <li  v-bind:class="{active: ctype == 'credit'}"><a  role="button" v-on:click="ctype_filter('credit')"><span>Credit</span></a></li>
+                            <li v-bind:class="{active: ctype == 'debit'}"><a  role="button" v-on:click="ctype_filter('debit')"><span>Debit</span></a></li>
+                            <li v-bind:class="{active: tx_status == 'refund'}"><a  role="button" v-on:click="tx_status_filter('refund')"><span>Refunds</span></a></li>
+                            <li  v-bind:class="{active: (tx_status == null &&  ctype == null)}"  role="button"><a v-on:click="reset()"><span>All</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="card-inner p-0 border-top">
-                 <div class="nk-tb-list nk-tb-orders">
+                <div class="nk-tb-list nk-tb-orders">
 
-                         <div class="nk-tb-item nk-tb-head">
-                    <div class="nk-tb-col"><span>Trans #</span></div>
-                    <div class="nk-tb-col tb-col-md"><span>Date</span></div>
-                    <div class="nk-tb-col tb-col-md"><span>Customer</span></div>
-                    <div class="nk-tb-col"><span>Amount</span></div>
-                    <div class="nk-tb-col tb-col-lg"><span>Type</span></div>
-                    <div class="nk-tb-col"><span>Fee</span></div>
-                    <div class="nk-tb-col"><span>Status</span></div>
-                </div>
+                    <div class="nk-tb-item nk-tb-head">
+                        <div class="nk-tb-col sorting" :class="getclass('id')"><span role="button"
+                                v-on:click="sort('id')">Trans #</span></div>
 
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('created_at')"><span role="button"
+                                v-on:click="sort('created_at')">Date</span></div>
 
-                                <div class="nk-tb-item pointer" v-for="row of rows" v-on:click="getDetails(row.id)"  role="button">
-                                    <div class="nk-tb-col">
-                                        <span class="tb-sub">{{row.id}}</span>
-                                    </div>
-                                    <div class="nk-tb-col tb-col-md">
-                                        <span class="tb-sub">{{row.date}}</span>
-                                    </div>
-                                    <div class="nk-tb-col tb-col-md">
-                                        <span class="tb-sub">{{row.name}}</span>
-                                    </div>
-                                    <div class="nk-tb-col">
-                                        <span class="tb-sub">{{row.amount}}</span>
-                                    </div>
-                                    <div class="nk-tb-col tb-col-lg">
-                                        <span class="tb-sub">{{row.card_type}}</span>
-                                    </div>
-                                    <div class="nk-tb-col">
-                                        <span class="tb-sub">{{row.gateway_fee}}</span>
-                                    </div>
-                                    <div class="nk-tb-col">
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('name')"><span role="button"
+                                v-on:click="sort('name')">Customer</span></div>
 
 
+                        <div class="nk-tb-col sorting" :class="getclass('amount')"><span role="button"
+                                v-on:click="sort('amount')">Amount</span></div>
+
+                        <div class="nk-tb-col tb-col-lg sorting" :class="getclass('card_type')"><span
+                                v-on:click="sort('card_type')">Type</span></div>
 
 
-                                        <span v-if="row.tx_status == 'Approved'" class="badge badge-dot badge-dot-xs badge-success text-capitalize">
-                                            Approved
-                                        </span>
+                        <div class="nk-tb-col sorting" :class="getclass('fee')"><span role="button"
+                                v-on:click="sort('fee')">Fee</span></div>
+
+                        <div class="nk-tb-col sorting" :class="getclass('tx_status')"><span role="button"
+                                v-on:click="sort('tx_status')">Status</span></div>
+                    </div>
 
 
-
-                                        <span v-else class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
-                                            {{row.tx_status}}
-                                        </span>
-
-
-
-                                    </div>
-                                </div>
+                    <div class="nk-tb-item pointer" v-for="row of rows" v-on:click="getDetails(row.id)" role="button">
+                        <div class="nk-tb-col">
+                            <span class="tb-sub">{{row.id}}</span>
+                        </div>
+                        <div class="nk-tb-col tb-col-md">
+                            <span class="tb-sub">{{row.date}}</span>
+                        </div>
+                        <div class="nk-tb-col tb-col-md">
+                            <span class="tb-sub">{{row.name}}</span>
+                        </div>
+                        <div class="nk-tb-col">
+                            <span class="tb-sub">{{row.amount}}</span>
+                        </div>
+                        <div class="nk-tb-col tb-col-lg">
+                            <span class="tb-sub">{{row.card_type}}</span>
+                        </div>
+                        <div class="nk-tb-col">
+                            <span class="tb-sub">{{row.gateway_fee}}</span>
+                        </div>
+                        <div class="nk-tb-col">
 
 
 
 
-
-                       
-
-
-
-
+                            <span v-if="row.tx_status == 'Approved'"
+                                class="badge badge-dot badge-dot-xs badge-success text-capitalize">
+                                Approved
+                            </span>
 
 
 
-                            <!-- Row End -->
+                            <span v-else class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
+                                {{row.tx_status}}
+                            </span>
+
+
 
                         </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- Row End -->
+
+                </div>
             </div>
             <div class="card-inner-sm border-top text-center d-sm-none">
                 <a href="#" class="btn btn-link btn-block">See History</a>
@@ -143,198 +177,218 @@
     </div>
 
 
-<div>
-<ul class="pagination justify-content-start">
- <li class="page-item"  v-bind:class="{ disabled: page == 1 }"><a class="page-link"  tabindex="-1" aria-disabled="true" v-on:click="prev()">Prev</a></li>
-   <li class="page-item" v-bind:class="{ disabled: page == total_pages }"><a class="page-link"    v-on:click="next()">Next</a></li>
-    <li class="page-item"><a class="page-link"  > {{total_count}} records found</a></li>
+    <div>
+        <ul class="pagination justify-content-start">
+            <li class="page-item" v-bind:class="{ disabled: page == 1 }"><a class="page-link" tabindex="-1"
+                    aria-disabled="true" role="button" v-on:click="nextp()">Prev</a></li>
+            <li class="page-item" v-bind:class="{ disabled: page == total_pages }"><a class="page-link"
+                    v-on:click="nextp()" role="button">Next</a></li>
+            <li class="page-item"><a class="page-link"> {{total_count}} records found</a></li>
 
-</ul>
+        </ul>
 
-<ul class="pagination justify-content-end">
-    
-           
-
-    <li class="page-item">   <input class="go-num form-control" type="text"  v-model="page" > 
-</li>
-<li class="page-item">  <a  v-on:click="getIndex()"  class="go-btn btn btn-primary" data-target="pageMenu"> Go
-</a>   
-</li>
-    
-    <li class="page-item"><a class="page-link" > of {{total_pages}}</a></li>
-
-    
-</ul>
-</div>
+        <ul class="pagination justify-content-end">
 
 
 
+            <li class="page-item"> <input class="go-num form-control" type="text" v-model="page">
+            </li>
+            <li class="page-item"> <a v-on:click="getIndex()" class="go-btn btn btn-primary" data-target="pageMenu"
+                    role="button"> Go
+                </a>
+            </li>
+
+            <li class="page-item"><a class="page-link"> of {{total_pages}}</a></li>
+
+
+        </ul>
+    </div>
 
 
 
-  <b-modal ref="my-modal"  hide-footer  id="modal-1">
-    <div class="nk-modal-head mb-3 mb-sm-5">
-                    <h4 class="nk-modal-title title">Transaction <small class="text-primary">{{detail}}</small></h4>
+
+
+
+    <b-modal ref="my-modal" hide-footer id="modal-1" size="lg">
+
+        <div v-if="detail">
+            <div class="nk-modal-head mb-3 mb-sm-5">
+                <h4 class="nk-modal-title title">Transaction <small class="text-primary">#{{detail.id}}</small></h4>
+
+            </div>
+
+
+
+            <div class="nk-tnx-details">
+                <div class="nk-block-between flex-wrap g-3">
+                    <div class="nk-tnx-type">
+                        <div class="nk-tnx-type-icon bg-warning text-white">
+                            <em class="icon ni ni-money"></em>
+                        </div>
+                        <div class="nk-tnx-type-text">
+                            <h5 class="title">{{detail.total_charged}}</h5>
+                            <span class="sub-text mt-n1">{{detail.date}} </span>
+                        </div>
+                    </div>
+                    <ul class="align-center flex-wrap gx-3">
+
+
+
+                         <li>
+
+                            <span v-if="detail.tx_status == 'Approved'"
+                                class="badge badge-sm  badge-success text-capitalize">
+                                Approved
+                            </span>
+
+
+                            <span v-else class="badge badge-sm badge-warning text-capitalize">
+                                {{detail.tx_status}}
+                            </span>
+
+
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Info</h5>
+                </div>
+                <div class="row gy-3">
+                </div>
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Base Amount</span>
+                        <span class="caption-text"> {{detail.amount}}</span>
+                    </div>
+
+                </div><!-- .row -->
+                <div class="row gy-3">
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Gateway Fee</span>
+                        <span class="caption-text">{{detail.gateway_fee}}</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">BIN Type</span>
+                        <span class="caption-text">{{detail.card_type}}</span>
+                    </div>
+
+
+                </div><!-- .row -->
+                <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
+                    <h5 class="title">Transaction Details</h5>
+                </div>
+                <div class="row gy-3">
+
+
+
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Reference ID</span>
+                        <span class="caption-text text-break">{{detail.cardconnectref}}</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Name on Card</span>
+                        <span class="caption-text">{{detail.name}}</span>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Email Address</span>
+                        <span class="caption-text align-center">{{detail.email}}</span>
+                    </div>
+
+
+
+
+                </div>
+                <div class="row gy-3">
+
+
+
+
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">MID </span>
+                        <span class="caption-text text-break">{{detail.merchid}}</span>
+                    </div>
+
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Auth Code </span>
+                        <span class="caption-text text-break">{{detail.authcode}}</span>
+                    </div>
+
 
                 </div>
 
 
-  </b-modal>
 
-                    <!-- Modal Default -->
-<div class="modal fade show" tabindex="-1" v-if="showModal">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                <em class="icon ni ni-cross"></em>
-            </a>
-            <div class="modal-body modal-body-md">
-                
+                <div class="row gy-3" v-if="detail.inv_num">
 
 
-                <div class="nk-tnx-details">
-                    <div class="nk-block-between flex-wrap g-3">
-                        <div class="nk-tnx-type">
-                            <div class="nk-tnx-type-icon bg-warning text-white">
-                                <em class="icon ni ni-money"></em>
-                            </div>
-                            <div class="nk-tnx-type-text">
-                                <h5 class="title">=number_to_currency(donation.amount.to_f +  donation.gateway_fee.to_f) %></h5>
-                                <span class="sub-text mt-n1">=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %H:%M %p") %></span>
-                            </div>
-                        </div>
-                        <ul class="align-center flex-wrap gx-3">
-
-
-
-                            <li>
-                               if (donation.tx_status == "Queued for Capture")  %>
- <span class="badge badge-sm  badge-success text-capitalize">
- Approved
-  </span>
-                         else %>
-                       
-                        
-                        <span class="badge badge-sm badge-warning text-capitalize">
-   donation.tx_status %>
-  </span>
-   end%>
-                   
-
-                                
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
-                        <h5 class="title">Transaction Info</h5>
-                    </div>
-                    <div class="row gy-3">
-                    </div>
-                    <div class="row gy-3">
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Base Amount</span>
-                            <span class="caption-text"> number_to_currency(donation.amount.to_f ) %></span>
-                        </div>
-                     
-                    </div><!-- .row -->
-                    <div class="row gy-3">
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Gateway Fee</span>
-                            <span class="caption-text">number_to_currency(donation.gateway_fee) %></span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">BIN Type</span>
-                            <span class="caption-text">donation.card_type %></span>
-                        </div>
-                      
-                       
-                    </div><!-- .row -->
-                    <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
-                        <h5 class="title">Transaction Details</h5>
-                    </div>
-                    <div class="row gy-3">
-                        
-                       
-                       
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Reference ID</span>
-                            <span class="caption-text text-break">donation.cardconnectref %></span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Name on Card</span>
-                            <span class="caption-text">donation.name %></span>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">Email Address</span>
-                            <span class="caption-text align-center">donation.email %></span>
-                        </div>
-
-                        
-                     
-                       
-                    </div>
-                    <div class="row gy-3">
-                        
-                       
-                       
-                     
-                        <div class="col-6 col-sm-3">
-                            <span class="sub-text">MID </span>
-                            <span class="caption-text text-break">@user.merchid%></span>
-                        </div>
-
-                         <div class="col-6 col-sm-3">
-                            <span class="sub-text">Auth Code </span>
-                            <span class="caption-text text-break">donation.authcode%></span>
-                        </div>
-
-                        
-                    </div>
-
-   
-    unless donation.inv_num.nil? || donation.inv_num == "" %>
-
-      <div class="row gy-3">
-                   
-                  
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">Invoice #</span>
-                        <span class="caption-text text-break" >donation.inv_num%></span>
+                        <span class="caption-text text-break">{{detail.inv_num}}</span>
                     </div>
-                
-                 
-                   
+
+
+
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">Invoice description</span>
-                        <span class="caption-text text-break"  >donation.inv_desc%></span>
+                        <span class="caption-text text-break">{{detail.inv_desc}}</span>
                     </div>
                 </div>
 
-        end%>
 
-                    <br /><br />
-                    <div class="row gy-3">
-                        <div class="col-lg-12">
-                            <ul class="preview-btn-list">
+                <br /><br />
+                <div class="row gy-3">
+                    <div class="col-lg-12">
 
-                          
-
+                        <ul class="preview-btn-list">
+                            <li class="preview-btn-item" v-if="detail.tx_status == 'Approved' || detail.tx_status == 'Queued for Capture'">
 
 
-                        </div>
+                                <input type="button" v-on:click="refund(detail.id)" value="Refund"
+                                    class="btn btn-danger btn-refund">
+                                <span class="badge badge-dot-xs"
+                                    v-if="refund_status[detail.id]">{{refund_status[detail.id]}}</span>
+
+
+
+
+
+
+                            </li>
+
+                            <li class="preview-btn-item">
+
+                                <input type="button" v-on:click="sendreceipt(detail.id)" value="Send Receipt"
+                                    class="btn btn-secondary btn-refund">
+
+
+                                <span class="badge badge-dot-xs"
+                                    v-if="receipt_status[detail.id]">{{receipt_status[detail.id]}}</span>
+                            </li>
+
+                        </ul>
+
+
+
+
                     </div>
+                </div>
+
+
 
             </div><!-- .nk-tnx-details -->
-        </div><!-- .modal-body -->
+
+
+        </div>
 
 
 
+    </b-modal>
 
-    </div><!-- .modal-content -->
-</div><!-- .modal-dialog -->
-</div><!-- .modal -->
+
+
 
 
 </div>
 
-
+<%= render "snippets/loading" %>

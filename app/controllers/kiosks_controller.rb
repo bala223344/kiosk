@@ -27,14 +27,26 @@ class KiosksController < BaseController
 
     temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
     temp["id"] = donation.id
-    temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount) 
+    temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount.to_f) 
     temp["name"] = donation.name
+    temp["email"] = donation.email
+    temp["merchid"] = donation.kiosk.user.merchid
+    temp["authcode"] = donation.authcode
     temp["card_type"] = donation.card_type
     temp["gateway_fee"] = ActiveSupport::NumberHelper.number_to_currency(donation.gateway_fee)
-    temp["status"] =  (donation.tx_status == "Queued for Capture") ? "Approved" : donation.tx_status
+    temp["status"] = donation.tx_status
+    temp["total_charged"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount.to_f +  donation.gateway_fee.to_f)
+
+    temp["cardconnectref"] =  donation.cardconnectref
+    temp["inv_num"] = donation.inv_num
+    temp["inv_desc"] = donation.inv_desc
+    temp["tx_status"] = donation.tx_status
+
+
+
      #
 
-    render :json => {:donation =>  donation }
+    render :json => {:donation =>  temp }
 
   end
 
@@ -47,14 +59,47 @@ class KiosksController < BaseController
           render 'reporting'
         }
         format.json {
-          @kiosk = current_user.kiosk
-          @user = current_user
           page = (params[:page]?params[:page]:1)
 
           recs = current_user.donations
-          
+          q  = params[:q]
+          sort_order = params[:sort_order]
+          sort_field = params[:sort_field]
+          ctype =  params[:ctype]
+          tx_status = params[:tx_status]
+
          # donations = donations.where("tx_status = ?", "refunded")
-         recs = recs.order('id desc').page(page).per(20)
+         if q 
+          if q.to_s =~ /\A[-+]?\d*\.?\d+\z/ 
+            #if an int include id as well
+            if Integer(q ,  exception: false)
+              recs = recs.where("amount = ? OR gateway_fee = ? OR id = ?", q, q, q)
+            else 
+              #dont bother abt id
+              recs = recs.where("amount = ? OR gateway_fee = ?", q, q)
+            end
+
+          else
+            recs = recs.where("tx_status LIKE ? OR email LIKE ? OR name LIKE ? OR card_type LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
+          end
+         end
+
+         if ctype
+          recs = recs.where("card_type LIKE ?", "%#{ctype}%")
+         end
+
+         if tx_status
+          recs = recs.where("tx_status LIKE ?", "%#{tx_status}%")
+         end
+
+         order = 'id desc'
+         if sort_field 
+          order = "#{sort_field} #{sort_order}"
+         end
+
+         
+
+         recs = recs.order(order).page(page).per(20)
           
           donations = []
 
@@ -67,12 +112,12 @@ class KiosksController < BaseController
             temp["name"] = donation.name
             temp["card_type"] = donation.card_type
             temp["gateway_fee"] = ActiveSupport::NumberHelper.number_to_currency(donation.gateway_fee)
-            temp["status"] =  (donation.tx_status == "Queued for Capture") ? "Approved" : donation.tx_status
+            temp["tx_status"] =  donation.tx_status
            #
             donations.push(temp)
           end
 
-          render :json => {:donations =>  donations, :total_count => recs.total_count }
+          render :json => {:donations =>  donations, :total_count => recs.total_count, :kiosk_title => current_user.kiosk.title }
         }
 
       end
@@ -139,10 +184,17 @@ class KiosksController < BaseController
   
       respond_to do |format|
         format.js { render :json => {:success => true,  status: :created }}
+        format.html { render :json => {:success => true,  status: :created }}
+        format.json { render :json => {:success => true,  status: :created }}
+
       end
+
     else
       respond_to do |format|
         format.js { render :json => {:success => false, :errors =>cresponse['resptext'], }, status: :unprocessable_entity  }
+        format.html { render :json => {:success => false, :errors =>cresponse['resptext'], }, status: :unprocessable_entity  }
+        format.json { render :json => {:success => false, :errors =>cresponse['resptext'], }, status: :unprocessable_entity  }
+
       end
    end
 
@@ -252,7 +304,13 @@ class KiosksController < BaseController
               params[:kiosk][:donations_attributes]['0'][:donated_by] = current_user.id
               params[:kiosk][:donations_attributes]['0'][:gateway_fee] = fee
               params[:kiosk][:donations_attributes]['0'][:card_type] = ctype
-              params[:kiosk][:donations_attributes]['0'][:tx_status] = cresponse['setlstat']
+
+              setlstat = (cresponse['setlstat'] == "Queued for Capture") ? "Approved" : cresponse['setlstat']
+
+              params[:kiosk][:donations_attributes]['0'][:tx_status] = setlstat
+
+             
+
               params[:kiosk][:donations_attributes]['0'][:authcode] = cresponse['authcode']
               
 

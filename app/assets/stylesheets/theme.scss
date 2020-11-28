@@ -190,4 +190,37 @@ a:hover { color: #1b5091; }
     color:#fff;
     border-radius: 0px 4px 4px 0px !important;
   }
+  .search-btn {
+    border-radius: 0px 4px 4px 0px !important;
+    color:#fff;
+
+  }
+  .search-text{
+    border-radius: 0;
+
+  }
 }
+
+.sorting {
+  &.asc {
+    &:after {
+      right: 1em;
+      content: "\2191";
+    }
+  }
+  
+  
+}
+
+.sorting {
+  &.desc {
+    &:after {
+      right: 0.5em;
+      content: "\2193";
+    }
+  }
+  
+}
+
+[v-cloak] { display: none; }
+.modal-header {border:0px;}

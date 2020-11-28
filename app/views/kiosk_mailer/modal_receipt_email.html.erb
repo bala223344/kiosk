@@ -7,12 +7,9 @@
     Hello <%= @donation.name %>
     <p>
       Status of the Payment made  for the amount <b> USD <%= number_to_currency(@donation.amount) %> </b> is <b> 
-       <% if (@donation.tx_status == "Queued for Capture")  %>
-       Approved
-         <% else %>
+       
        <%= @donation.tx_status %>
-        </span>
-   <%end%>
+      
       
       </b>
 

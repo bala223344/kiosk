@@ -80,6 +80,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get 'vt', to: '/kiosks#vt'
     get 'reporting', to: '/kiosks#reporting'
+    get 'donation_detail', to: '/kiosks#donation_detail'
     get 'bin', to: '/kiosks#bin'
     post 'refund', to: '/kiosks#refund'
     post 'update_kiosk_profile', to: '/kiosks#update_profile'

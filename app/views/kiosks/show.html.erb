@@ -456,7 +456,7 @@
 
                        
 
-                        <% if (donation.tx_status == "Queued for Capture")  %>
+                        <% if (donation.tx_status == "Approved")  %>
  <span class="badge badge-dot badge-dot-xs badge-success text-capitalize">
  Approved
   </span>
@@ -504,7 +504,8 @@
 
 
                             <li>
-                              <% if (donation.tx_status == "Queued for Capture")  %>
+                              <% if (donation.tx_status == "Approved
+")  %>
  <span class="badge badge-sm  badge-success text-capitalize">
  Approved
   </span>
@@ -613,7 +614,8 @@
                         <div class="col-lg-12">
                             <ul class="preview-btn-list">
 
-                              <% if (donation.tx_status == "Queued for Capture")  %>
+                              <% if (donation.tx_status == "Approved
+" || donation.tx_status == "Queued for Capture")  %>
                                 <li class="preview-btn-item">
                                       <%= form_for(@kiosk, :url => { :action => "refund" },  authenticity_token: true , :method => "post",  :html => {:class => "refund_form"},  remote: true , data: {type: 'script'}) do |f| %>
                                        <%= f.hidden_field :id, :value => donation.id %>
