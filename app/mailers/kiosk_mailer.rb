@@ -1,6 +1,12 @@
 class KioskMailer < ActionMailer::Base
   default from: 'admin@paynow.io'
 
+  def online_email(charge)
+    @charge = charge
+    mail(to: charge['email'], subject: 'Hosted payment page - PayNow.io')
+  end
+
+
   def receipt_email(charge)
     @charge = charge
     mail(to: charge['email'], subject: 'Payment receipt - PayNow.io')

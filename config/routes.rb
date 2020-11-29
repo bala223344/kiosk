@@ -82,6 +82,8 @@ Rails.application.routes.draw do
     get 'reporting', to: '/kiosks#reporting'
     get 'donation_detail', to: '/kiosks#donation_detail'
     get 'bin', to: '/kiosks#bin'
+    get 'online', to: '/kiosks#online'
+    post 'online', to: '/kiosks#submit_online'
     post 'refund', to: '/kiosks#refund'
     post 'update_kiosk_profile', to: '/kiosks#update_profile'
     post 'sendreceipt', to: '/kiosks#sendreceipt'

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hello 
+    <p>
+      You are requested to use the following link to access the Hosted Payment Page of <b> <%= @charge["kiosk_title"] %> </b> for the amount USD <%= number_to_currency(@charge["amount"]) %> </b> using the linke  <b><a href="<%=@charge["url"]%>"><%=@charge["url"]%></a></b>
+    </p>
+   
+    <p>
+      <% if (@charge["inv_num"] != "" ) %>
+      Invoice Number  : <%= @charge["inv_num"] %>
+      <% end %>
+      </p>
+      <p>
+      <% if (@charge["inv_desc"] != "" ) %>
+      Invoice Description  : <%= @charge["inv_desc"] %>
+      <% end %>
+
+    </p>
+    <p>Thank you for the payment.</p>
+  </body>
+</html>

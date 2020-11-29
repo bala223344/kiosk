@@ -1,0 +1,202 @@
+
+<% if @kiosk %>
+
+     <div class="nk-block">
+                <div class="card card-bordered">
+              
+                </div><!-- .card -->
+            </div>
+
+
+
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title">Hosted Payment Page</h3>
+            <div class="nk-block-des text-soft">
+                <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+            </div>
+        </div><!-- .nk-block-head-content -->
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
+                        class="icon ni ni-more-v"></em></a>
+                <div class="toggle-expand-content" data-content="pageMenu">
+                    <ul class="nk-block-tools g-3">
+                        <li class="nk-block-tools-opt"><a href="<%=kiosk_url(@kiosk) %>"
+                                class="btn btn-warning"><em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- .nk-block-head-content -->
+    </div><!-- .nk-block-between -->
+</div><!-- .nk-block-head -->
+
+
+
+<div class="nk-block">
+
+
+    
+
+
+    <div class="row g-gs">
+        <div class="col-xxl-6">
+            <div class="row g-gs">
+                <div class="col-lg-6 col-xxl-12">
+                    <div class="card card-bordered">
+                    
+
+                          <div class="nk-refwg">
+                        <div class="nk-refwg-invite card-inner">
+                            <div class="nk-refwg-head g-3">
+                                <div class="nk-refwg-title">
+                                    <h5 class="title">Your Secure Page</h5>
+                                    <div class="title-sub">Use the bellow link to securely collect payments.</div>
+                                </div>
+                                <div class="nk-refwg-action">
+                                    <a href="#online-modal" data-toggle="modal" class="btn btn-primary" >Send
+                                        Payment Request</a>
+                                </div>
+                            </div>
+                            <div class="nk-refwg-url">
+                                <div class="form-control-wrap">
+                                    <div class="form-clip clipboard-init" data-clipboard-target="#refUrl"
+                                        data-success="Copied" data-text="Copy Link"><em
+                                            class="clipboard-icon icon ni ni-copy"></em> <span
+                                            class="clipboard-text">Copy Link</span></div>
+                                    <div class="form-icon">
+                                        <em class="icon ni ni-link-alt"></em>
+                                    </div>
+                                    <input type="text" class="form-control copy-text" id="refUrl"
+                                        value="<%=kiosk_url(@kiosk) %>">
+                                </div>
+                            </div>
+                        </div><!-- .nk-refwg-invite -->
+
+                    </div><!-- .nk-refwg -->
+
+                    </div>
+                </div><!-- .col -->
+                         
+
+ 
+
+           
+
+            </div>  <%# row g-gs %>
+           
+
+ </div><%# col-xxl-6 %>
+
+
+
+
+                     </div><!-- .row g-gs -->
+          
+
+          
+        </div>
+
+
+
+               <!-- Modal Default -->
+<div class="modal fade" tabindex="-1" id="online-modal">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-body modal-body-md">
+
+
+
+
+                                <%= form_with(url: "/dashboard/online", method: "post") do %>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Email</label>
+                                                            <div class="form-control-wrap">
+
+                                                              <%= text_field_tag 'email', nil, :placeholder => "", :class => "form-control" %>
+
+                                                                
+                                                                
+                                                                
+                                                                                                                     </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="form-label">Amount in USD</label>
+                                                            <div class="form-control-wrap">
+
+                                                              <%= text_field_tag 'amount', nil, :placeholder => "15.00", :class => "form-control" %>
+
+                                                                
+                                                                
+                                                                
+                                                                                                                     </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="form-label">Invoice number</label>
+                                                            <div class="form-control-wrap">
+                                                                
+
+
+                                                              <%= text_field_tag 'inv_num', nil, :placeholder => "", :class => "form-control" %>
+
+
+                                                                
+
+                                                            </div>
+                                                        </div>
+
+                                                          <div class="form-group">
+                                                            <label class="form-label"> Invoice description</label>
+                                                            <div class="form-control-wrap">
+                                                              
+                                
+                                                                                                                <%= text_field_tag :inv_desc, nil, :placeholder => "", :class => "form-control"%>
+
+                                                                                                                                                                                                            <%= hidden_field_tag :url, kiosk_url(@kiosk) %>
+            <%= hidden_field_tag :kiosk_title, @kiosk.title %>
+
+                                                                
+                                                                
+                                                               
+
+
+                                                            </div>
+                                                        </div>
+
+
+                                                         <%= submit_tag "Send", :class => "btn btn-lg btn-primary", :id => "btnsend" %>
+
+                 
+
+
+
+
+
+<% end%>
+
+
+                                                  
+                                                 
+
+
+
+
+        </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+</div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+
+
+<% else %>
+
+no merchant found
+
+
+<% end %>

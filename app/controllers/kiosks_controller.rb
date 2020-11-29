@@ -19,6 +19,33 @@ class KiosksController < BaseController
 
 
 
+  def online
+    if (current_user && current_user.kiosk && current_user.kiosk.id)
+      @kiosk = current_user.kiosk
+    else
+      @kiosk = nil
+    end
+
+
+  end
+
+
+  def submit_online
+
+
+
+    if !params[:email].blank? && params[:email] != ''
+      url = params[:url]+"?inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}&amount=#{params[:amount]}"
+      charge = { 'email' => params[:email],  'amount' => params[:amount] , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc] }
+      KioskMailer.online_email(charge).deliver
+    end
+
+  end
+
+
+
+
+
 
   def donation_detail
     donation = current_user.donations.find(params[:id])

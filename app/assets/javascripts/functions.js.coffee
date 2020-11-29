@@ -27,6 +27,13 @@ $(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
     $(this).find('.badge').addClass('.badge-danger').html error
 
 
+$('#btnsend').click ->
+  setTimeout (->
+    $('#online-modal').modal('hide');
+    return
+  ), 2000
+   
+
 
 
 window.loading = (vis,txt='') ->
