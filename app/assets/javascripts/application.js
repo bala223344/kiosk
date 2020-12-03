@@ -14,4 +14,6 @@
 //= require jquery_ujs 
 //= require functions
 //= require scripts
+//= require chart-crypto
 //= require jqueryform
+

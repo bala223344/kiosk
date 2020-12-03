@@ -96,7 +96,15 @@ $rtl: false;
   .nk-refwg-more { position: absolute; right: -4px; top: -2px; }
   
   .nk-refwg .nk-refwg-invite { border-bottom: 1px solid #dbdfea; }
-  
+  .nk-refwg-ck { height: 50px; margin-top: 0.75rem; }
 
-@media (min-width: 768px) { .nk-refwg .nk-refwg-invite {border-bottom: none; border-right: 1px solid #dbdfea; }
+
+@media (min-width: 768px) { .nk-refwg .nk-refwg-invite { width: 55%; border-bottom: none; border-right: 1px solid #dbdfea; }
+.nk-refwg .nk-refwg-stats { width: 45%; }
 }
+.ui-shady .tb-tnx-head, .ui-shady .sp-plan-action, .ui-shady .tb-ticket-item.is-unread, .ui-shady .support-topic-block:link:hover, .ui-shady .nk-refwg-stats { background: rgba(245, 246, 250, 0.5); }
+
+  .ui-shady .nk-refwg-stats { background: rgba(245, 246, 250, 0.5) !important; }
+
+  .dark-mode .tranx-item:not(:last-child), .dark-mode .nk-refwg .nk-refwg-invite, .dark-mode .nk-wgw-actions, .dark-mode .card-custom-s1 .card-inner-group, .dark-mode .nk-kyc-app-icon .icon, .dark-mode .nk-kycfm-head:not(:last-child), .dark-mode .nk-kycfm-content:not(:last-child), .dark-mode .nk-kycfm-footer:not(:last-child) { border-color: #1d2d40; }
+

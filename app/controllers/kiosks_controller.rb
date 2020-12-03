@@ -22,6 +22,8 @@ class KiosksController < BaseController
   def online
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
+      @donations = current_user.donations
+      @collection = @donations.where("tx_status = 'Queued for Capture'").sum(:amount)
     else
       @kiosk = nil
     end

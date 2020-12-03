@@ -37,14 +37,7 @@
 
 <div class="nk-block">
 
-
-    
-
-
-    <div class="row g-gs">
-        <div class="col-xxl-6">
-            <div class="row g-gs">
-                <div class="col-lg-6 col-xxl-12">
+  
                     <div class="card card-bordered">
                     
 
@@ -75,25 +68,43 @@
                             </div>
                         </div><!-- .nk-refwg-invite -->
 
+                                <div class="nk-refwg-stats card-inner bg-lighter">
+                                                <div class="nk-refwg-group g-3">
+                                                    <div class="nk-refwg-name">
+                                                        <h6 class="title">My Link <em class="icon ni ni-info" data-toggle="tooltip" data-placement="right" title="Your Hosted Payment Page Stats"></em></h6>
+                                                    </div>
+                                                    <div class="nk-refwg-info g-3">
+                                                        <div class="nk-refwg-sub">
+                                                            <div class="title"><%=@donations.count %></div>
+                                                            <div class="sub-text">Total Transactions</div>
+                                                        </div>
+                                                        <div class="nk-refwg-sub">
+                                                            <div class="title"><%=number_to_currency(@collection.to_f)%></div>
+                                                            <div class="sub-text">Total Collected</div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="nk-refwg-ck">
+                                                    <canvas class="chart-refer-stats" id="refBarChart"></canvas>
+                                                </div>
+                                            </div><!-- .nk-refwg-stats -->
+
                     </div><!-- .nk-refwg -->
 
                     </div>
-                </div><!-- .col -->
                          
 
  
 
            
 
-            </div>  <%# row g-gs %>
            
 
- </div><%# col-xxl-6 %>
 
 
 
 
-                     </div><!-- .row g-gs -->
           
 
           
