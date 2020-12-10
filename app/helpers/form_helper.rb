@@ -24,4 +24,8 @@ module FormHelper
   def preview_link(instance)
     link_to kiosk_url(instance.kiosk), kiosk_path(instance.kiosk), class: '', target: '_blank', role: 'button'
   end
+
+  def slug_url(instance)
+    request.base_url+'/'+instance.slug
+  end
 end

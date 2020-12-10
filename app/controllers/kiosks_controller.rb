@@ -167,8 +167,11 @@ class KiosksController < BaseController
   end
   def show
     
-    @kiosk = Kiosk.find(params[:id])
-    @user = User.find(@kiosk.user_id)
+    print "wattt"
+    render :json => {:donations => "sdfsdf"}
+
+    # @kiosk = Kiosk.find(params[:id])
+    # @user = User.find(@kiosk.user_id)
 
 
 
@@ -178,6 +181,16 @@ class KiosksController < BaseController
   def sendreceipt
     donation = Donation.find(params[:kiosk][:id])
     KioskMailer.modal_receipt_email(donation).deliver
+
+  end
+
+
+  def slugupdate
+
+    kiosk = Kiosk.find(params[:id])
+    kiosk.slug = params[:slug]
+    kiosk.save
+   # KioskMailer.modal_receipt_email(donation).deliver
 
   end
   def refund 

@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   end
 
   # kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
-  resources :kiosks, path: :secure
+  resources :kiosks
   
   namespace :dashboard do
     get 'vt', to: '/kiosks#vt'
@@ -87,7 +87,16 @@ Rails.application.routes.draw do
     post 'refund', to: '/kiosks#refund'
     post 'update_kiosk_profile', to: '/kiosks#update_profile'
     post 'sendreceipt', to: '/kiosks#sendreceipt'
+    post 'slugupdate', to: '/kiosks#slugupdate'
   end
   resources :activations
   resources :terms, only: [:index]
+
+
+  #need to find a way for /secure/
+  #resources :pay, path: :secure
+   resources :pay, path: '' do
+    
+  
+   end
 end

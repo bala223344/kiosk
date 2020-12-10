@@ -27,6 +27,17 @@ $(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
     $(this).find('.badge').addClass('.badge-danger').html error
 
 
+$(".slug_form").on("ajax:success", (e, data, status, xhr) ->
+    $(this).find('.badge').addClass('.badge-success').html 'Saved.redirecting..'
+    setTimeout (->
+      location.reload()
+      return
+    ), 3000
+
+  ).on "ajax:error", (e, xhr, status, error) ->
+    $(this).find('.badge').addClass('.badge-danger').html "Error!Already exists"
+
+
 $('#btnsend').click ->
   setTimeout (->
     $('#online-modal').modal('hide');

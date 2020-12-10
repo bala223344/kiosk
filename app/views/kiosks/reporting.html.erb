@@ -62,12 +62,9 @@
 
 
                             <li class="page-item"> <input class="search-text form-control" type="text" v-model="s"
-                                    placeholder="Search">
+                                    placeholder="Search"  @keyup="search()">
                             </li>
-                            <li class="page-item"> <a v-on:click="search()" class="search-btn btn btn-primary"
-                                    data-target="pageMenu" role="button"> Search
-                                </a>
-                            </li>
+                          
 
 
 

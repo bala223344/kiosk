@@ -76,11 +76,13 @@ new Vue({
 
     ctype_filter: function(str) {
       this.page = 1
+      this.tx_status = null
       this.ctype = str
       this.getIndex()
     },
     tx_status_filter: function(str) {
       this.page = 1
+      this.ctype = null
       this.tx_status = str
       this.getIndex()
     },
