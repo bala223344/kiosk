@@ -165,17 +165,7 @@ class KiosksController < BaseController
     # render 'reporting'
 
   end
-  def show
-    
-    print "wattt"
-    render :json => {:donations => "sdfsdf"}
 
-    # @kiosk = Kiosk.find(params[:id])
-    # @user = User.find(@kiosk.user_id)
-
-
-
-  end
 
 
   def sendreceipt
@@ -247,6 +237,7 @@ class KiosksController < BaseController
   
 
 
+
   def new
 
   end
@@ -259,6 +250,8 @@ class KiosksController < BaseController
     render json: ccres.body
   end
 
+
+  
   def update
     id = params[:id]
     kiosk = Kiosk.find(id)

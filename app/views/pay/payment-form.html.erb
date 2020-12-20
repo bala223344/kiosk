@@ -1,0 +1,152 @@
+<%= form_tag("", method: 'post',  class: "payment_form")  do %>
+
+            <div class="hidden-xs">
+               <br><br>
+            </div>
+            <div id="wizard" >
+               <h4></h4>
+               <section>
+                  <h3><%=@kiosk.title %></h3>
+                  <p class="soft">
+                     Please complete the following to complete your payment:
+                  </p>
+                  <br />
+                  <div class="form-row form-group form-container">
+                     <div class="form-holder">
+                        <label for="currency-field">
+                        Amount *
+                        </label>
+                        <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" placeholder="Example $103.50">
+                     </div>
+                     <div class="form-holder">
+                        <label for="invoice">
+                        Invoice Number
+                        </label>
+                        <input type="text" class="form-control" name="invoice" id="invoice" placeholder="(Optional)">
+                     </div>
+                  </div>
+                  <div class="form-row">
+                     <label for="description">
+                     Description
+                     </label>
+                     <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" placeholder="(Optional)"></textarea>
+                  </div>
+               </section>
+               <h4></h4>
+               <section>
+                  <h3><span id="display_amt"></span> Will Be Charged</h3>
+                  <span class="soft">Includes a gateway fee of <span id="display_fee"></span> (gateway fees are automatically waived on the next page if paying with a debit card)</span>
+                  <br><br>
+                  <div class="form-row form-group form-container">
+                     <div class="form-holder field-container">
+                        <label for="name">
+                        Name on Card *
+                        </label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Jane Smith" autocomplete="cc-name">
+                     </div>
+                     <div class="form-holder">
+                        <label for="company">
+                        Company Name
+                        </label>
+                        <input type="text" class="form-control" id="company" name="company" placeholder="(Optional)" autocomplete="organization">
+                     </div>
+                  </div>
+                  <div class="form-row field-container" >
+                     <label for="cardnumber">
+                     Card Number *
+                     </label>
+                    <%# <iframe id="tokenFrame" name="tokenFrame" src="https://fts-uat.cardconnect.com/itoke/ajax-tokenizer.html?css=body%7B%0A%09margin%3A0px%3B%0A%09%7Dinput%7B%0A%09display%3A%20block%3B%0A%09%09width%3A%20100%25%3B%0A%09%09height%3A%2034px%3B%0A%09%09padding%3A%206px%2012px%3B%0A%09%09font-size%3A%2014px%3B%0A%09%09line-height%3A%201.42857143%3B%0A%09%09color%3A%20%23555%3B%0A%09%09background-color%3A%20%23fff%3B%0A%09%09background-image%3A%20none%3B%0A%09%09border%3A%201px%20solid%20%23ccc%3B%0A%09%09border-radius%3A%204px%3B%0A%09%09box-shadow%3A%20inset%200%201px%201px%20rgba(0%2C%200%2C%200%2C%20.075)%3B%0A%09%09transition%3A%20border-color%20ease-in-out%20.15s%2C%20box-shadow%20ease-in-out%20.15s%3B%0A%09%09background%3A%200%200%3B%0A%09%09font-family%3A%20inherit%3B%0A%09%09box-sizing%3A%20border-box%3B%0A%09%09height%3A42px%3B%0A%09%09%7D%20" frameborder="0" scrolling="no" ></iframe> %>
+  <input class="form-control" name="cardnumber" id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="****-****-****-9202" onKeyup="autotab(this, expirationdate)" maxlength="19" autocomplete="cc-number">
+
+
+                     <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+                  </div>
+                  <div class="form-row form-group ">
+                     <div class="form-holder field-container">
+                        <label for="expirationdate">Exp. (mm/yy)</label>
+                        <input class="form-control" name="exp" id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric" onKeyup="autotab(this, securitycode)" maxlength="5" autocomplete="cc-exp" placeholder="MM / YY">
+                     </div>
+                     <div class="form-holder field-container">
+                        <label for="securitycode">CVV</label>
+                        <input class="form-control" name="cvv" id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric" onKeyup="autotab(this, zip)" maxlength="4" autocomplete="cc-csc" placeholder="123">
+                     </div>
+                     <div class="form-holder">
+                        <label for="zip">
+                        Zip *
+                        </label>
+                        <input type="text" class="form-control" name="zip" id="zip" pattern="[0-9]*" inputmode="numeric" placeholder="55555" onKeyup="autotab(this, email)" maxlength="5" autocomplete="postal-code">
+                     </div>
+                  </div>
+                  <div class="form-row" style="margin-bottom: 18px">
+                     <label for="email">
+                     Email Address *
+                     </label>
+                     <input type="text" name="email" class="form-control" id="email" placeholder="We will send the receipt to this address">
+                  </div>
+
+                    <div class="alert alert-danger d-none" role="alert" id="step2-error">
+
+                  </div>
+               </section>
+               <h4></h4>
+               <section>
+                  <div class="checkout">
+                     <br>
+                     <div class="amount">
+                        <span class="big final_amt" > </span>
+                        <p>Press "continue" <br>to send your payment</p>
+                     </div>
+                     <p class="shipping">
+                        The gateway fee is automatically waived for cash, wire, ACH or check payments and is an “in-kind incentive” to incentivize alternative payment methods in compliance with section (2)(A) of the Durbin Amendment, a provision of United States Federal Law, 15 U.S.C & 169o-2.
+                     </p>
+                      <div class="alert alert-danger d-none" role="alert" id="step3-error">
+
+                  </div>
+                  </div>
+               </section>
+               <h4></h4>
+               <section>
+                  <div class="last">
+                     <Br>
+                     <div class="reset">
+                        <lottie-player src="<%=asset_url("check.json") %>" background="transparent"  speed="1"  style="width: 300px; align:center; height: 300px;" loop autoplay></lottie-player>
+                        <span class="big final_amt"  style="display:block; margin-top:-60px"> </span>
+                        <p style="display:block; padding-bottom:20px">Payment Complete</p>
+                     </div>
+                     <br><br>
+                     <p>
+                        Your payment to Demo ABC Store has been approved for the amount of <span class="final_amt"></span> Your payment reference ID is: <span id="retref"></span>. A copy of this payment confirmation has been sent to your email.
+                        <br>
+                        <br>
+                     </p>
+                     <p class="soft">
+                        This page will automatically reset in 10 seconds for your security.
+                     </p>
+                  </div>
+               </section>
+            </div>
+               <%= hidden_field_tag 'kid', @kiosk.id %>
+
+<%= hidden_field_tag 'scharge_percent',  @kiosk.user.scharge_percent %>
+         </form>
+
+
+
+
+
+
+
+
+<input type="hidden" name="mytoken" id="mytoken">
+
+
+<% end %>
+
+  <%= render "snippets/loading" %>
+
+
+
+
+ 
+

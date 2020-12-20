@@ -88,6 +88,8 @@ Rails.application.routes.draw do
     post 'update_kiosk_profile', to: '/kiosks#update_profile'
     post 'sendreceipt', to: '/kiosks#sendreceipt'
     post 'slugupdate', to: '/kiosks#slugupdate'
+    post 'ajx_charge_s1', to: '/pay#ajx_charge_s1'
+    post 'ajx_charge_s2', to: '/pay#ajx_charge_s2'
   end
   resources :activations
   resources :terms, only: [:index]
@@ -95,8 +97,9 @@ Rails.application.routes.draw do
 
   #need to find a way for /secure/
   #resources :pay, path: :secure
-   resources :pay, path: '' do
-    
+  get 'secure/:kid', to: 'pay#show'
+  resources :pay, path: '' do
+   
   
    end
 end
