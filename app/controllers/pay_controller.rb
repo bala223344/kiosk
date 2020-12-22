@@ -28,8 +28,10 @@ class PayController < BaseController
   
   def ajx_charge_s1
 
+    #will be passed to s2
+    session[:formdata] = []
 
-
+    orig_amt = 0
     id = params[:kid]
     kiosk = Kiosk.find(id)
 
@@ -43,7 +45,7 @@ class PayController < BaseController
 
     percent = kiosk.user.scharge_percent
 		percent = (percent / 100) 
-		fee =  amount * percent
+		fee =  amount.to_f * percent
 
 
     first8dig = number.to_s[0..7]
@@ -59,11 +61,12 @@ class PayController < BaseController
       ctype = 'debit'
     end 
 
-  
-
-
+    orig_amt = amount.to_f
     amount = amount.to_f + fee.to_f
 
+    
+    p kiosk.user.cmodel
+    p "^^^^^^^^^^^^^^^^^^^^"
 
    
     cparams = { 'merchid' => kiosk.user.merchid, 'amount' => amount, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email}
@@ -73,7 +76,10 @@ class PayController < BaseController
     #just AUTH  
     res = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/auth", cparams.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
+
   
+    formdata = {:fee => fee.to_f, :ctype => ctype, :orig_amt => orig_amt, :amount => amount}
+    session[:formdata] = formdata
     response = JSON.parse(res.body)
 
    
@@ -85,21 +91,58 @@ class PayController < BaseController
 
 
   def ajx_charge_s2
-    kiosk = Kiosk.find(params[:id])
+    kiosk = Kiosk.find(params[:kid])
     retref = params[:retref]
     cred_combo = "#{kiosk.user.merchant_username}:#{kiosk.user.merchant_password}"
+    title = kiosk.title.nil? ? 'Kiosk' : kiosk.title
+    zip = params[:zip]
+    email = params[:email]
+    inv_num =  params[:invoice]
+    inv_desc =  params[:description]
+
+     name = params[:name]
+
 
     cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture", { 'merchid' => kiosk.user.merchid, 'retref' => retref,
               "userfields" =>  [
                 {
-                    "zip" => "545454",
-                    "title" => "title",
+                    "zip" => zip,
+                    "title" => title,
 
                 },]
           }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
     cresponse = JSON.parse(cres.body)
-    p cresponse.inspect
+    
+
+ 
+
+
+    #params[:kiosk][:donations_attributes]['0'][:cardconnectref] = retref
+
+     #         params[:kiosk][:donations_attributes]['0'][:donated_by] = current_user.id
+            
+
+              setlstat = (cresponse['setlstat'] == "Queued for Capture") ? "Approved" : cresponse['setlstat']
+
+
+
+              if Donation.create(cardconnectref: retref, donated_by: current_user.id, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"] )
+
+                if !email.blank? && email != ''
+                  charge = { 'email' => email, 'name' => name, 'amount' => session[:formdata]["amount"], 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
+                  KioskMailer.receipt_email(charge).deliver
+                end
+
+                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => session[:formdata]["amount"], 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+                KioskMailer.owner_email(charge).deliver
+
+              end
+
+
+
+
+
     if(cresponse['setlstat'])
       response = { 'setlstat' => cresponse['setlstat'], 'retref' => cresponse['retref'] }      
     else

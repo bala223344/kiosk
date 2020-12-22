@@ -28,4 +28,8 @@ module FormHelper
   def slug_url(instance)
     request.base_url+'/'+instance.slug
   end
+
+  def kiosk_friendly_url(instance)
+   (instance.slug && instance.slug!="")?request.base_url+'/'+instance.slug : request.base_url+'/secure/'+instance.id.to_s
+  end
 end

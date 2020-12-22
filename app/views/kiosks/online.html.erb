@@ -260,7 +260,7 @@
 
                         <%= text_field_tag :inv_desc, nil, :placeholder => "", :class => "form-control"%>
 
-                        <%= hidden_field_tag :url, kiosk_url(@kiosk) %>
+                        <%= hidden_field_tag :url, kiosk_friendly_url(@kiosk) %>
                         <%= hidden_field_tag :kiosk_title, @kiosk.title %>
 
 

@@ -1,7 +1,16 @@
+
+function loading(vis) {
+	if(vis) {
+		$("#modal-overlay").removeClass('d-none')
+	}else {
+		$("#modal-overlay").addClass('d-none')
+	}
+}
 $(function () {
 	var retref = null
 	var final_amt = ""
 	var is_async_step = false;
+	var formdata = null
 
 	$("#wizard").steps({
 		headerTag: "h4",
@@ -17,8 +26,14 @@ $(function () {
                 return true;
 			}
 			
+		
+
 			if (newIndex === 1) {
+
 				
+			
+
+
 				
 				
 				if (!$("#amount").val()) {
@@ -55,8 +70,7 @@ $(function () {
 			if (newIndex === 2) {
 
 				const form = document.querySelector('form');
-				const data = Object.fromEntries(new FormData(form).entries());
-
+				formdata = Object.fromEntries(new FormData(form).entries());
 				
 				// if(!$("#mytoken").val()) {
 				// 	$("#step2-error").removeClass("d-none").html('Card gateway error! Cannot proceed')
@@ -76,12 +90,12 @@ $(function () {
 				}
 
 				
-								
+				loading(true)			
 
 				$.ajax({ url: '/dashboard/ajx_charge_s1',
 				type: 'POST',
 				beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-				data: data,
+				data: formdata,
 				success: function(response) {
 					
 					if(response.respstat == 'A') {
@@ -91,11 +105,14 @@ $(function () {
 						final_amt = formatter.format(amt)
 						$(".final_amt").html(formatter.format(amt))
 						retref = response.retref
+						formdata["retref"] = retref
+						loading(false)
 						is_async_step =  true
 						$("#wizard").steps("next");
 
 					}else {
 						$("#step2-error").removeClass("d-none").html(response.resptext)
+						loading(false)
 						return false;
 					}
 
@@ -117,19 +134,25 @@ $(function () {
 			}
 			if (newIndex === 3) {
 
+				loading(true)	
 				$.ajax({ url: '/dashboard/ajx_charge_s2',
 				type: 'POST',
 				beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-				data: {retref:retref, id: $('#kid').val()},
+				data: formdata,
 				success: function(response) {
 					
 					if(response.setlstat != 'Rejected') {
 						$("#step3-error").addClass("d-none")
 						$("#retref").html(retref)
+						loading(false)	
 						is_async_step =  true
 						$("#wizard").steps("next");
+						setTimeout(function () {
+							window.location.reload()
+						  }, 10000);
 					}else {
 						$("#step3-error").removeClass("d-none").html(response.setlstat)
+						loading(false)
 						return false;
 					}
 
@@ -144,9 +167,10 @@ $(function () {
 				$('.actions ul').addClass('step-last');
 			} 
 			
-			if (newIndex === 4) {
+			if (currentIndex === 4) {
 				$('.steps ul').removeClass('step-4');
 				$('.actions ul').removeClass('step-last');
+			
 			}
 			return false;
 		},

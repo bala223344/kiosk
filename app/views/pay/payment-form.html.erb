@@ -16,20 +16,44 @@
                         <label for="currency-field">
                         Amount *
                         </label>
-                        <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" placeholder="Example $103.50">
+                          <% if params[:amount] %>
+
+                        <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="$<%='%.2f' % params[:amount].to_d %>" data-type="currency" >
+                          <% else %>
+                            <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" placeholder="Example $103.50">
+
+                           <% end %>
                      </div>
                      <div class="form-holder">
                         <label for="invoice">
                         Invoice Number
                         </label>
-                        <input type="text" class="form-control" name="invoice" id="invoice" placeholder="(Optional)">
+                       
+
+                        <% if params[:inv_num] %>
+                          
+
+ <input type="text" class="form-control" name="invoice" id="invoice" value="<%=params[:inv_num]%>" readonly>
+
+                        <% else %>   
+                         <input type="text" class="form-control" name="invoice" id="invoice" placeholder="Optional"> 
+                           <% end %>
+
+
                      </div>
                   </div>
                   <div class="form-row">
                      <label for="description">
                      Description
                      </label>
-                     <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" placeholder="(Optional)"></textarea>
+
+                      <% if params[:inv_desc] %>
+
+                     <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" readonly><%=params[:inv_desc]%></textarea>
+ <% else %>   
+ <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" placeholder="(Optional)"></textarea>
+
+   <% end %>
                   </div>
                </section>
                <h4></h4>
@@ -128,7 +152,6 @@
                <%= hidden_field_tag 'kid', @kiosk.id %>
 
 <%= hidden_field_tag 'scharge_percent',  @kiosk.user.scharge_percent %>
-         </form>
 
 
 
@@ -142,4 +165,13 @@
 
 <% end %>
 
-  <%= render "snippets/loading" %>
+
+<div class="overlay d-none" id="modal-overlay">
+    <div class="overlay__inner">
+        <div class="overlay__content"><span class="spinner"></span></div>
+    </div>
+</div>
+
+
+
+
