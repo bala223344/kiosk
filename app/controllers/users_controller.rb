@@ -32,14 +32,20 @@ class UsersController < ApplicationController
   def update_password
     @user = User.find(current_user.id)
     user_params[:password_changed_at] = Time.new
-    if @user.update_with_password(user_params)
+    res = @user.update_with_password(user_params)
+    if res
 
       # Sign in the user by passing validation in case their password changed
       sign_in @user, bypass: true
-      render 'success'
+      render json: {
+        success: true
+      }, status: 200
     else
-      render 'edit'
-    end
+      #render :json => @user.errors.messages, :status => :bad_request
+      render json: {
+        error: @user.errors.messages,
+      }, status: 400
+     end
   end
 
   private

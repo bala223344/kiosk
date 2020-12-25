@@ -51,7 +51,7 @@
 
 
 
-  <%= form_for(@user, :url => { :action => "update_password" }, :remote => true) do |f| %>
+  <%= form_for(@user, :url => { :action => "update_password"  }, :remote => true, :html => {:class => "update_password"}, data: {type: 'json'} ) do |f| %>
 
 
   <!-- @@ Profile Edit Modal @e -->
@@ -119,6 +119,13 @@
                                                     </li>
                                                 </ul>
                                             </div>
+
+
+                                            
+ <div class="col-12 ">
+    <div class="alert alert-danger d-none text-capitalize"  id="pwd-err">
+    </div>
+ </div>
                                         </div>
                                   
                             </div><!-- .modal-body -->
