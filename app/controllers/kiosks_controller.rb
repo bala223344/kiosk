@@ -23,7 +23,7 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @donations = current_user.donations
-      @collection = @donations.where("tx_status = 'Queued for Capture'").sum(:amount)
+      @collection = @donations.where("tx_status = 'Queued for Capture'").or( @donations.where("tx_status = 'Approved'")).sum(:amount)
     else
       @kiosk = nil
     end
@@ -135,7 +135,7 @@ class KiosksController < BaseController
           recs.each do |donation|  
 
             temp = Hash.new
-            temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
+            temp["date"] = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %I:%M %p")
             temp["id"] = donation.id
             temp["amount"] = ActiveSupport::NumberHelper.number_to_currency(donation.amount) 
             temp["name"] = donation.name

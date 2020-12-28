@@ -438,7 +438,7 @@
                         <span class="tb-sub">#<%=donation.id %></span>
                     </div>
                     <div class="nk-tb-col tb-col-md">
-                        <span class="tb-sub"><%=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %H:%M %p") %></span>
+                        <span class="tb-sub"><%=donation.created_at.in_time_zone(@tz).strftime("%^b %d, %Y %I:%M %p") %></span>
                     </div>
                     <div class="nk-tb-col tb-col-md">
                         <span class="tb-sub"><%=donation.name %></span>
