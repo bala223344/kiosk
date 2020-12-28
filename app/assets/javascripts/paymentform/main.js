@@ -111,13 +111,12 @@ $(function () {
 						$("#wizard").steps("next");
 
 					}else {
-						$("#step2-error").removeClass("d-none").html(response.resptext)
+						error = "Declined: "+response.resptext
+						$("#step2-error").removeClass("d-none").html(error)
 						loading(false)
 						return false;
 					}
 
-					
-					
 
 				}
 				});
