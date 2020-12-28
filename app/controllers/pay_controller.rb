@@ -1,4 +1,4 @@
-class PayController < BaseController
+class PayController < NoAuthController
   layout "paylayout", only: [:show]
   
 
@@ -126,8 +126,14 @@ class PayController < BaseController
               setlstat = (cresponse['setlstat'] == "Queued for Capture") ? "Approved" : cresponse['setlstat']
 
 
+              params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"]}
 
-              if Donation.create(cardconnectref: retref, donated_by: current_user.id, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"] )
+              if current_user  
+                params["donated_by"] = current_user.id
+              end 
+
+
+              if Donation.create( params )
 
                 if !email.blank? && email != ''
                   charge = { 'email' => email, 'name' => name, 'amount' => session[:formdata]["amount"], 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
