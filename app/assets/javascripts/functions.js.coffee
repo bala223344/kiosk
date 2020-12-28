@@ -27,6 +27,21 @@ $(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
     $(this).find('.badge').addClass('badge-danger').html error
 
 
+$('#hpp-sms').change ->
+  formdata = {notify_sms_hpp : $(this).is(":checked")}
+  saveNotif(formdata)
+$('#hpp-email').change ->
+  formdata = {notify_email_hpp : $(this).is(":checked")}
+  saveNotif(formdata)
+$('#hpp-daily').change ->
+  formdata = {notify_email_daily : $(this).is(":checked")}
+  saveNotif(formdata)
+$('#hpp-monthly').change ->
+  formdata = {notify_email_monthly : $(this).is(":checked")}
+  saveNotif(formdata)
+  
+  
+
 
 $(".update_password").on("ajax:success", (e, data, status, xhr) ->
     $('#profile-pwd').modal('hide')
@@ -80,7 +95,22 @@ $('#btnsend').click ->
 
 
    
-
+saveNotif = (formdata) ->
+  $.ajax
+    url: '/dashboard/update_notif_pref'
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    data: user: formdata
+    success: (response) ->
+      Swal.fire({
+        title: 'Success!',
+        text: 'Updated successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+      return
 
 window.loading = (vis,txt='') ->
   if vis == 'show'

@@ -15,7 +15,16 @@
                                         <div class="gy-3">
                                             <div class="g-item">
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="hpp-sms">
+
+                                            <% if @user.notify_sms_hpp %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-sms"  checked>
+
+                                            <% else %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-sms">
+                                            <% end %>
+
+
+                                                   
                                                     <label class="custom-control-label" for="hpp-sms">Receive a text message each time someone pays on my hosted payment page.</label>
                                                 </div>
                                             </div>
@@ -32,20 +41,48 @@
                                         <div class="gy-3">
                                             <div class="g-item">
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" checked id="hpp-email">
+                                                   
+
+                                                      <% if @user.notify_email_hpp %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-email"  checked>
+
+                                            <% else %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-email">
+                                            <% end %>
+
+
                                                     <label class="custom-control-label" for="hpp-email">Receive an email each time someone pays on my hosted payment page.</label>
                                                 </div>
                                             </div>
                                             <div class="g-item">
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" checked id="daily-report">
-                                                    <label class="custom-control-label" for="daily-report">Receive an email at the end of each day with your activity and totals.</label>
+
+                                                 <% if @user.notify_email_daily %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-daily"  checked>
+
+                                            <% else %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-daily">
+                                            <% end %>
+
+
+                                               
+
+
+                                                    <label class="custom-control-label" for="hpp-daily">Receive an email at the end of each day with your activity and totals.</label>
                                                 </div>
                                             </div>
                                             <div class="g-item">
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" checked id="monthly-report">
-                                                    <label class="custom-control-label" for="daily-report">Receive an email at the end of each month with your summary activity and totals.</label>
+
+                                                  <% if @user.notify_email_monthly %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-monthly"  checked>
+
+                                            <% else %>
+                                                <input type="checkbox" class="custom-control-input" id="hpp-monthly">
+                                            <% end %>
+
+                                                 
+                                                    <label class="custom-control-label" for="hpp-monthly">Receive an email at the end of each month with your summary activity and totals.</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -28,6 +28,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_notif_pref
+    @user = User.find(current_user.id)
+    if @user.update(user_profile_params)
+
+    end
+
+  end
 
   def update_password
     @user = User.find(current_user.id)
@@ -58,6 +65,6 @@ class UsersController < ApplicationController
 
   def user_profile_params
     # NOTE: Using `strong_parameters` gem
-    params.require(:user).permit(:email, :fname, :lname, :phone, :tz)
+    params.require(:user).permit(:email, :fname, :lname, :phone, :tz, :notify_sms_hpp, :notify_email_hpp, :notify_email_daily, :notify_email_monthly)
   end
 end
