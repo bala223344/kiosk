@@ -151,8 +151,6 @@ class PayController < NoAuthController
 
 
 
-              byebug
-
 
               params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"]}
 
