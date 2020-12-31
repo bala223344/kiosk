@@ -366,8 +366,6 @@ class KiosksController < BaseController
 
 
 
-              end
-
 
 
               end
