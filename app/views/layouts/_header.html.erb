@@ -7,7 +7,7 @@
                         class="icon ni ni-menu"></em></a>
             </div>
             <div class="nk-header-brand d-xl-none">
-                <a href="html/index.html" class="logo-link">
+                <a href="/" class="logo-link">
                     <img class="logo-light logo-img" src="<%=asset_path("logo.png") %>"
                         srcset="<%=asset_path("logo2x.png") %> 2x" alt="logo">
                     <img class="logo-dark logo-img" src="<%=asset_path("logo-dark.png") %>"
@@ -21,7 +21,7 @@
                             <em class="icon ni ni-card-view"></em>
                         </div>
                         <div class="nk-news-text">
-                            <%= render 'layouts/messages' %>
+                            <%=current_user.kiosk.title%> <%= render 'layouts/messages' %>
                         </div>
                     </a>
                 </div>
@@ -58,21 +58,25 @@
                             </div>
                             <div class="dropdown-inner">
                                 <ul class="link-list">
-                                    <li><a href="html/user-profile-regular.html"><em
-                                                class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
-                                    <li>
-                                    
-                                    
-                                       <%= link_to edit_user_path(current_user) do %>
-                                        <em
-                                                class="icon ni ni-setting-alt"></em><span>Account Setting</span>
-                                        <% end %>
 
-                                 
-                                    </li>
-                                    <li><a href="html/user-profile-activity.html"><em
-                                                class="icon ni ni-activity-alt"></em><span>Login Activity</span></a>
-                                    </li>
+                                  <li>
+                                    <%= link_to edit_user_path(current_user) do %>
+                                    <em class="icon ni ni-user-alt"></em><span>View Profile</span>
+                                    <% end %>
+                                  </li>
+
+                                  <li>
+                                    <%= link_to edit_user_path(current_user) do %>
+                                    <em class="icon ni ni-setting-alt"></em><span>Account Setting</span>
+                                    <% end %>
+                                  </li>
+
+                                  <li>
+                                    <%= link_to edit_user_path(current_user) do %>
+                                    <em class="icon ni ni-activity-alt"></em><span>Login Activity</span>
+                                    <% end %>
+                                  </li>
+
                                     <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark
                                                 Mode</span></a></li>
                                 </ul>
@@ -99,7 +103,8 @@
                         <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right dropdown-menu-s1">
                             <div class="dropdown-head">
                                 <span class="sub-title nk-dropdown-title">Notifications</span>
-                                <a href="#">Mark All as Read</a>
+                                <a href="#" onclick='$zoho.salesiq.floatwindow.visible("show");'>Live Chat </a>
+
                             </div>
                             <div class="dropdown-body">
                                 <div class="nk-notification">
@@ -108,8 +113,8 @@
                                             <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your HPP is Live</div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
+                                            <div class="nk-notification-text">Version 2 Live</div>
+                                            <div class="nk-notification-time">Admin</div>
                                         </div>
                                     </div>
                                     <div class="nk-notification-item dropdown-inner">
@@ -117,8 +122,8 @@
                                             <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your Account is Built</div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
+                                            <div class="nk-notification-text">Merchant Account Active</div>
+                                            <div class="nk-notification-time">Admin</div>
                                         </div>
                                     </div>
                                     <div class="nk-notification-item dropdown-inner">
@@ -126,15 +131,15 @@
                                             <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your Merchant Account is Approved</span>
+                                            <div class="nk-notification-text">Your Account is Boarded</span>
                                             </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
+                                            <div class="nk-notification-time">Admin</div>
                                         </div>
                                     </div>
                                 </div><!-- .nk-notification -->
                             </div><!-- .nk-dropdown-body -->
                             <div class="dropdown-foot center">
-                                <a href="#">View All</a>
+                                <a href="#">Done</a>
                             </div>
                         </div>
                     </li><!-- .dropdown -->

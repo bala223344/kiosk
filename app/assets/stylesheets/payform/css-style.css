@@ -323,7 +323,7 @@ textarea.form-control {
 	top: 17px;
 	right: 19px;
 	/* was 41 */
-	font-family: Material-Design-Iconic-Font; 
+	font-family: Material-Design-Iconic-Font;
 	-webkit-transform: translateZ(0);
 	transform: translateZ(0);
 }
@@ -348,6 +348,7 @@ textarea.form-control {
 }
 
 .actions li:first-child a {
+	display: none; /* Dan Hidden previous back button */
 	background: #9a9b9c;
 	padding-left: 53px/* Dan  48 */
 }

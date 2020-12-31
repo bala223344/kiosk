@@ -48,10 +48,9 @@
             <div class="card-inner">
                 <div class="card-title-group">
                     <div class="card-title">
-                        <h6 class="title"><span class="mr-2">Recent Transactions</span>
-                            <a href="#" class="link d-none d-sm-inline">See History</a>
-
-                        </h6>
+                      <h6 class="title"><span class="mr-2">Recent Transactions</span>
+                      <a href="#" class="link d-none d-sm-inline"></a> <!-- See History Dan -->
+                      </h6>
 
 
 
@@ -64,7 +63,7 @@
                             <li class="page-item"> <input class="search-text form-control" type="text" v-model="s"
                                     placeholder="Search"  @keyup="search()">
                             </li>
-                          
+
 
 
 
@@ -83,7 +82,7 @@
                 <div class="nk-tb-list nk-tb-orders">
 
                     <div class="nk-tb-item nk-tb-head">
-                        <div class="nk-tb-col sorting" :class="getclass('id')"><span role="button"
+                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('id')"><span role="button"
                                 v-on:click="sort('id')">Trans #</span></div>
 
                         <div class="nk-tb-col tb-col-md sorting" :class="getclass('created_at')"><span role="button"
@@ -93,23 +92,23 @@
                                 v-on:click="sort('name')">Customer</span></div>
 
 
-                        <div class="nk-tb-col sorting" :class="getclass('amount')"><span role="button"
+                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('amount')"><span role="button"
                                 v-on:click="sort('amount')">Amount</span></div>
 
-                        <div class="nk-tb-col tb-col-lg sorting" :class="getclass('card_type')"><span
+                        <div class="nk-tb-col tb-col-lg sorting" style="width: 10%" :class="getclass('card_type')"><span
                                 v-on:click="sort('card_type')">Type</span></div>
 
 
-                        <div class="nk-tb-col sorting" :class="getclass('fee')"><span role="button"
+                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('fee')"><span role="button"
                                 v-on:click="sort('fee')">Fee</span></div>
 
-                        <div class="nk-tb-col sorting" :class="getclass('tx_status')"><span role="button"
+                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('tx_status')"><span role="button"
                                 v-on:click="sort('tx_status')">Status</span></div>
                     </div>
 
 
                     <div class="nk-tb-item pointer" v-for="row of rows" v-on:click="getDetails(row.id)" role="button">
-                        <div class="nk-tb-col">
+                        <div class="nk-tb-col" style="width: 10%">
                             <span class="tb-sub">{{row.id}}</span>
                         </div>
                         <div class="nk-tb-col tb-col-md">
@@ -118,16 +117,16 @@
                         <div class="nk-tb-col tb-col-md">
                             <span class="tb-sub">{{row.name}}</span>
                         </div>
-                        <div class="nk-tb-col">
+                        <div class="nk-tb-col" style="width: 10%">
                             <span class="tb-sub">{{row.amount}}</span>
                         </div>
-                        <div class="nk-tb-col tb-col-lg">
+                        <div class="nk-tb-col tb-col-lg" style="width: 10%">
                             <span class="tb-sub">{{row.card_type}}</span>
                         </div>
-                        <div class="nk-tb-col">
+                        <div class="nk-tb-col" style="width: 10%">
                             <span class="tb-sub">{{row.gateway_fee}}</span>
                         </div>
-                        <div class="nk-tb-col">
+                        <div class="nk-tb-col" style="width: 10%">
 
 
 
