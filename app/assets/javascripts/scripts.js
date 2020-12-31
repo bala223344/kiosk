@@ -125,7 +125,7 @@
 
   NioApp.PassSwitch = function () {
     NioApp.Passcode('.passcode-switch');
-  }; // Toastr Message @v1.0 
+  }; // Toastr Message @v1.0
 
 
   NioApp.Toast = function (msg, ttype, opt) {
@@ -418,7 +418,7 @@
           return true;
         } // Needed in some cases if the user went back (clean up)
 
-       
+
         if (currentIndex < newIndex) {
           // To remove error styles
           $wizard.find(".body:eq(" + newIndex + ") label.error").remove();
@@ -438,14 +438,14 @@
 
       },
 
-     
+
 
       onFinishing: function onFinishing(event, currentIndex) {
         $wizard.validate().settings.ignore = ":disabled";
         return $wizard.valid();
       },
       onFinished: function onFinished(event, currentIndex) {
-        
+
       }
     }).validate({
       errorElement: "span",
@@ -718,7 +718,7 @@ $(function() {
 
 function processJson(data) {
   // 'data' is the json object returned from the server
-  
+
   if (data.errors) {
     $("#tx_badge").html(`<span class="badge badge-sm badge-danger">${data.errors
   }</span>`)
@@ -744,9 +744,9 @@ function populate_amt() {
   $amt = parseFloat($('.payment-amt').val())
   $amt += 0.00
   $percent = parseFloat($("#scharge_percent").val())
-  $percent = ($percent / 100) 
+  $percent = ($percent / 100)
   $fee =  $amt * $percent
-  
+
   $.get('/dashboard/bin?number='+$("#number").val(), function(data) {
 
 
@@ -757,7 +757,7 @@ function populate_amt() {
       if($percent > 0)
         $fee = 0
     }
-    // no service fee if checkbox is disabled  
+    // no service fee if checkbox is disabled
     if ($("#service_fee").val() == 0) {
       $fee = 0
     }
@@ -773,10 +773,10 @@ function populate_amt() {
     $('#hid_amount').val($amt)
     $('#fee_amt').val($fee)
 
-    
+
     $('#actual_amt').html(formatter.format($amt))
     $('#display_amt').html(formatter.format($amtandfee))
-    
+
     $('#fee').html(formatter.format($fee))
 
     $('#card_number').html("****"+$("#number").val().substring(12, 16))
@@ -784,7 +784,7 @@ function populate_amt() {
     $('#txt_name').html($("#cardholder-name").val())
     $('#txt_email').html($("#receipt_email").val())
     submitToCC()
-    
+
   })
-  
+
 }

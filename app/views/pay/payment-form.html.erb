@@ -5,7 +5,7 @@
             </div>
             <div id="wizard" >
                <h4></h4>
-               
+
                <section>
                   <h3><%=@kiosk.title %></h3>
                   <p class="soft">
@@ -19,7 +19,7 @@
                         </label>
                           <% if params[:amount] %>
 
-                        <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="$<%='%.2f' % params[:amount].to_d %>" data-type="currency" >
+                        <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="$<%='%.2f' % params[:amount].to_d %>" data-type="currency" readonly>
                           <% else %>
                             <input class="form-control" type="text" name="amount" required id="amount" inputmode="decimal" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" placeholder="Example $103.50">
 
@@ -29,15 +29,15 @@
                         <label for="invoice">
                         Invoice Number
                         </label>
-                       
+
 
                         <% if params[:inv_num] %>
-                          
+
 
  <input type="text" class="form-control" name="invoice" id="invoice" value="<%=params[:inv_num]%>" readonly>
 
-                        <% else %>   
-                         <input type="text" class="form-control" name="invoice" id="invoice" placeholder="Optional"> 
+                        <% else %>
+                         <input type="text" class="form-control" name="invoice" id="invoice" placeholder="Optional">
                            <% end %>
 
 
@@ -51,7 +51,7 @@
                       <% if params[:inv_desc] %>
 
                      <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" readonly><%=params[:inv_desc]%></textarea>
- <% else %>   
+ <% else %>
  <textarea  rows="3" name="description" id="description" wrap="soft" class="form-control" placeholder="(Optional)"></textarea>
 
    <% end %>
@@ -172,7 +172,3 @@
         <div class="overlay__content"><span class="spinner"></span></div>
     </div>
 </div>
-
-
-
-

@@ -1,10 +1,10 @@
 "use strict";
 
 !function (NioApp, $) {
-  "use strict"; //////// for developer - accountBalance //////// 
-  // Avilable options to pass from outside 
+  "use strict"; //////// for developer - accountBalance ////////
+  // Avilable options to pass from outside
   // labels: array,
-  // dataUnit: string, (Used in tooltip or other section for display) 
+  // dataUnit: string, (Used in tooltip or other section for display)
   // datasets: [{label : string, color: string (color code with # or other format), data: array}]
 
   var mainBalance = {
@@ -103,10 +103,10 @@
 
   NioApp.coms.docReady.push(function () {
     accountBalance();
-  }); //////// for developer - referStats //////// 
-  // Avilable options to pass from outside 
+  }); //////// for developer - referStats ////////
+  // Avilable options to pass from outside
   // labels: array,
-  // dataUnit: string, (Used in tooltip or other section for display) 
+  // dataUnit: string, (Used in tooltip or other section for display)
   // datasets: [{label : string, color: string (color code with # or other format), data: array}]
 
   var refBarChart = {
@@ -156,7 +156,7 @@
           },
           maintainAspectRatio: false,
           tooltips: {
-            enabled: true,
+            enabled: false, // dan used to hide labels
             rtl: NioApp.State.isRTL,
             callbacks: {
               title: function title(tooltipItem, data) {
@@ -200,10 +200,10 @@
 
   NioApp.coms.docReady.push(function () {
     referStats();
-  }); //////// for developer - accountSummary //////// 
-  // Avilable options to pass from outside 
+  }); //////// for developer - accountSummary ////////
+  // Avilable options to pass from outside
   // labels: array,
-  // dataUnit: string, (Used in tooltip or other section for display) 
+  // dataUnit: string, (Used in tooltip or other section for display)
   // datasets: [{label : string, color: string (color code with # or other format), data: array}]
 
   var summaryBalance = {
