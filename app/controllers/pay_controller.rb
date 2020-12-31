@@ -64,10 +64,6 @@ class PayController < NoAuthController
     orig_amt = amount.to_f
     amount = amount.to_f + fee.to_f
 
-    
-    p kiosk.user.cmodel
-    p "^^^^^^^^^^^^^^^^^^^^"
-
    
     cparams = { 'merchid' => kiosk.user.merchid, 'amount' => amount, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email}
 
@@ -124,6 +120,38 @@ class PayController < NoAuthController
             
 
               setlstat = (cresponse['setlstat'] == "Queued for Capture") ? "Approved" : cresponse['setlstat']
+
+
+
+              if kiosk.user.notify_sms_hpp &&   kiosk.user.phone.length > 6
+
+                print "sending message"
+                collected = 'was'
+                if session[:formdata]["fee"] == 0
+                  collected = 'was not'
+
+                end
+
+                body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(session[:formdata]["amount"])+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
+
+
+                print body
+
+                require 'signalwire/sdk'
+
+                @client = Signalwire::REST::Client.new '3fe73725-f958-4c16-ad94-be32579bed82', 'PT23fade6437f208048a783979382fa088bf9fc6bd06e507d5', signalwire_space_url: "startgroup.signalwire.com"
+
+
+                message = @client.messages.create(
+                                            from: '+14327296690',
+                                            body: body,
+                                            to:  kiosk.user.phone
+                                          )
+              end
+
+
+
+              byebug
 
 
               params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"]}

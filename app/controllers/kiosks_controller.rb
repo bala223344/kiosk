@@ -359,6 +359,17 @@ class KiosksController < BaseController
                 charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
                 KioskMailer.owner_email(charge).deliver
 
+
+
+
+              
+
+
+
+              end
+
+
+
               end
               # is Rejected
             else
