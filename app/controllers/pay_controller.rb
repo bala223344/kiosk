@@ -123,7 +123,7 @@ class PayController < NoAuthController
 
 
 
-              if kiosk.user.notify_sms_hpp &&   kiosk.user.phone.length > 6
+              if kiosk.user.notify_sms_hpp &&   kiosk.user.phone
 
                 print "sending message"
                 collected = 'was'
@@ -135,7 +135,6 @@ class PayController < NoAuthController
                 body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(session[:formdata]["amount"])+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
 
 
-                print body
 
                 require 'signalwire/sdk'
 
