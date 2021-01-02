@@ -7,6 +7,11 @@
 **/
 .nk-sidebar.is-dark { background: #0f192a; border-right-color: #1c2f50; }
 
+@media only screen and (min-width: 800px) {
+  .nk-sidebar.is-theme { background: #000; border-right-color: #03407f; }
+
+}
+
 .nk-sidebar.is-theme { background: #02274d; border-right-color: #03407f; }
 
 .is-dark .nk-sidebar-head { border-color: #1c2f50; }
@@ -208,8 +213,8 @@ a:hover { color: #1b5091; }
       content: "\2191";
     }
   }
-  
-  
+
+
 }
 
 .sorting {
@@ -219,7 +224,16 @@ a:hover { color: #1b5091; }
       content: "\2193";
     }
   }
-  
+
+}
+
+.dash {
+
+}
+
+.dash .title {
+  font-size: 5rem;
+  font-weight: 400;
 }
 
 [v-cloak] { display: none; }

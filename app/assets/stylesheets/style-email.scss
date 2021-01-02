@@ -59,7 +59,7 @@
         line-height:44px;
         text-align:center;
         text-decoration:none;
-        text-transform: uppercase; 
+        text-transform: uppercase;
         padding: 0 30px;
         &-sm{
             line-height:38px;
@@ -74,8 +74,8 @@
         height: 40px;
     }
     &-title{
-        font-size: 13px; 
-        color: $accent-color; 
+        font-size: 13px;
+        color: $accent-color;
         padding-top: 12px;
     }
     &-heading{
@@ -87,25 +87,25 @@
         &-sm{
             font-size: 24px;
             line-height: 1.4;
-            margin-bottom: .75rem; 
+            margin-bottom: .75rem;
         }
         &-s1 {
-            font-size: 20px; 
+            font-size: 20px;
             font-weight: 400;
             color: $base-text;
         }
         &-s2{
-            font-size: 16px; 
-            color: #526484; 
+            font-size: 16px;
+            color: #526484;
             font-weight: 600;
-            margin: 0; 
-            text-transform: uppercase; 
+            margin: 0;
+            text-transform: uppercase;
             margin-bottom: 10px
         }
         &-s3{
-            font-size: 18px; 
-            color: $accent-color; 
-            font-weight: 400; 
+            font-size: 18px;
+            color: $accent-color;
+            font-weight: 400;
             margin-bottom: 8px;
         }
         &-success{
@@ -116,9 +116,9 @@
         }
     }
     &-note{
-        margin: 0; 
-        font-size: 13px; 
-        line-height: 22px; 
+        margin: 0;
+        font-size: 13px;
+        line-height: 22px;
         color: $base-light;
     }
     &-copyright-text{
@@ -129,10 +129,10 @@
             display: inline-block;
             padding: 4px;
             a{
-                display: inline-block; 
-                height: 30px; 
+                display: inline-block;
+                height: 30px;
                 width:30px;
-                border-radius: 50%; 
+                border-radius: 50%;
                 background: #ffffff;
                 img{
                     width: 30px;

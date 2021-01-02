@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title><%= content_for?(:title) ? yield(:title) : "Paynow.io" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Kiosk" %>">
     <head profile="http://www.w3.org/2005/10/profile">
@@ -12,6 +14,11 @@
       href="<%=asset_path("favicon.png") %>"
       >
       	    <meta name="keywords" content="">
+
+
+            <!-- Page Sence -->
+            <script src="https://cdn.pagesense.io/js/startgroup/b6bd5ea2b0ba4c97b5d354f405632301.js"></script>
+            <!-- End Page Sence -->
 
 
 
@@ -32,11 +39,12 @@
       <%= yield(:header) %>
 
 
-
+      <link rel="manifest" href="assets/_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 
 
    </head>
   <body class="nk-body bg-lighter npc-general has-sidebar ui-shady">
+
 
 
     <!-- Google Tag Manager (noscript) -->
@@ -87,6 +95,10 @@
       </div>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track'=> true %>
+    <script type="text/javascript">
+    var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"33b96f4c559e097087876e6f790fcd4152cb3586f20dcf6c287ddf05ba303a86", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);d.write("<div id='zsiqwidget'></div>");
+    </script>
+
 
   </body>
 </html>
