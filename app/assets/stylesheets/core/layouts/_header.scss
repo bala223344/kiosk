@@ -207,11 +207,26 @@
     .hide-mb-xs{
         display: none;
     }
+
+
 }
 @media (max-width:575px){
     .hide-mb-sm{
         display: none;
     }
+    .nk-header{  // dan mobile fix
+
+      padding-top: 40px;
+
+            height: 100px;
+          }
+
+          .nk-sidebar{ // dan mobile fix
+
+            padding-top: 40px;
+
+                  height: 100px;
+                }
 }
 
 @include media-breakpoint-up(sm){
