@@ -17,4 +17,5 @@
 //= require scripts
 //= require chart-crypto
 //= require jqueryform
+//= require jquery.mask.min
 

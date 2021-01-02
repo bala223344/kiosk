@@ -5,3 +5,4 @@
 //= require paymentform/inputs
 //= require paymentform/imask
 //= require paymentform/script
+//= require jquery.mask.min

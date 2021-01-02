@@ -169,7 +169,7 @@
          <em class="icon ni ni-cross"></em>
          </a>
          <div class="modal-body modal-body-md">
-            <%= form_with(url: "/dashboard/online", method: "post") do %>
+            <%= form_with(url: "/dashboard/online", method: "post", local: false) do %>
             <div class="form-group">
                <label class="form-label">Email</label>
                <div class="form-control-wrap">
