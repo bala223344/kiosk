@@ -123,9 +123,12 @@ class PayController < NoAuthController
 
 
 
-              if kiosk.user.notify_sms_hpp &&   kiosk.user.phone
+              if kiosk.user.notify_sms_hpp &&   kiosk.sms_number
 
-                print "sending message"
+                print "sedindding messge 555"
+                sms_number = "+1"+kiosk.sms_number
+                print "=======================================================================>>>>>>>"
+                print sms_number
                 collected = 'was'
                 if session[:formdata]["fee"] == 0
                   collected = 'was not'
@@ -144,7 +147,7 @@ class PayController < NoAuthController
                 message = @client.messages.create(
                                             from: '+14327296690',
                                             body: body,
-                                            to:  kiosk.user.phone
+                                            to:  sms_number
                                           )
               end
 

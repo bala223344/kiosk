@@ -27,6 +27,23 @@ $(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
     $(this).find('.badge').addClass('badge-danger').html error
 
 
+$(".slug_form").on("ajax:success", (e, data, status, xhr) ->
+    Swal.fire({
+      title: 'Success!',
+      text: 'Updated successfully',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    })
+
+    setTimeout (->
+      location.reload()
+      return
+    ), 2000
+
+  ).on "ajax:error", (e, xhr, status, error) ->
+    alert error
+
+
 $('#hpp-sms').change ->
   formdata = {notify_sms_hpp : $(this).is(":checked")}
   saveNotif(formdata)
@@ -39,7 +56,9 @@ $('#hpp-daily').change ->
 $('#hpp-monthly').change ->
   formdata = {notify_email_monthly : $(this).is(":checked")}
   saveNotif(formdata)
-  
+$('#input_hpp_amt').inputmask({regex: "\\d*\\.\\d{0,2}"});
+$('.phone-format').inputmask({regex: "\\d{10}"});
+
   
 
 

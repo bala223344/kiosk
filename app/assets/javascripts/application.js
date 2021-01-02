@@ -13,9 +13,9 @@
 //= require bundle
 //= require jquery_ujs 
 //= require sweetalert2.all.min
+//= require jquery.inputmask.min
 //= require functions
 //= require scripts
 //= require chart-crypto
 //= require jqueryform
-//= require jquery.mask.min
 
