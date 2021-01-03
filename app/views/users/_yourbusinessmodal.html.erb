@@ -29,7 +29,7 @@
                                                     <%= f.text_field :title,   :placeholder => "Owner's first name?", :class => "form-control  form-control-lg" %>
 
 
-                                              
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -46,7 +46,7 @@
                                                      <%= f.text_field :sms_number,   :placeholder => "Phone number of the business?", :class => "form-control  form-control-lg phone-format" %>
 
 
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -55,7 +55,7 @@
 
                                                          <%= f.text_field :website,   :placeholder => "Does your company have a website?", :class => "form-control  form-control-lg" %>
 
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -66,7 +66,7 @@
                                                       <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
 
 
-                                                       
+
                                                     </li>
                                                     <li>
                                                         <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
@@ -80,10 +80,10 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label" for="address">Street Address</label>
-                                                    
+
                                                      <%= f.text_field :staddr,   :placeholder => "What is the physical address?", :class => "form-control  form-control-lg" %>
 
-                                                   
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -93,28 +93,28 @@
 <%= f.text_field :city,   :placeholder => "What city is your business located in?", :class => "form-control  form-control-lg" %>
 
 
-                                                   
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label" for="zip">Zip Code</label>
-                                                    
-<%= f.text_field :zip,   :placeholder => "Which zip code is your business located in?", :class => "form-control  form-control-lg" %>
 
-                                                   
+<%= f.text_field :zip,   :placeholder => "Which zip code is your business located in?", :class => "form-control " %>
+
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                   <label class="form-label" for="state">State</label>
-                                                   
+
                                                     <%= f.select(:state, options_for_select(us_states.invert, @user.kiosk.state),{}, {:class => "form-select"} ) %>
-                                                 
 
 
-                                                        
-                                                   
+
+
+
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -124,7 +124,7 @@
                                                         <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
 
 
-                                                     
+
                                                     </li>
                                                     <li>
                                                         <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>

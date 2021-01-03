@@ -8,10 +8,15 @@
    <div class="nk-block-between">
       <div class="nk-block-head-content">
          <h3 class="nk-block-title page-title">Hosted Payment Page</h3>
-         <div class="nk-block-des text-soft">
-            <p>Our hosted payment page is one of our most popular tools, <a href="#">here is why...</a></p>
+         <div class="nk-block-des text-soft card-title-group align-start mb-2">
+            <p>Our hosted payment page is available to take secure payments for you 24/7.
+              <div class="card-tools">
+                  <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Use your custom link on your invoices, on your buynow button, or embeded in your website. Try our request payment feature to build your custom payment link where you can lock the amount, invoice or description fields. "></em>
+              </div>
+          </p>
          </div>
       </div>
+
       <!-- .nk-block-head-content -->
       <div class="nk-block-head-content">
          <div class="toggle-wrap nk-block-tools-toggle">
@@ -36,18 +41,18 @@
 <!-- Visible on mobile only -->
                <div class="nk-block-tools g-3 d-block d-sm-none">
                   <div class="nk-block-tools-opt">
-                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_url(@kiosk) %>" class="btn btn-warning" target="_blank">
-                      <em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
+                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_url(@kiosk) %>" class="btn btn-sm btn-warning" target="_blank">
+                      <em class="icon ni ni-mobile"></em><span>Launch</span></a>
                   </div>
-                  <br>
+
                   <div class="nk-block-tools-opt">
-                    <a href="#online-modal" data-toggle="modal" class="btn btn-primary">
-                      <em class="icon ni ni-send"></em><span>Request Payment</span></a>
+                    <a href="#online-modal" data-toggle="modal" class="btn btn-sm btn-primary">
+                      <em class="icon ni ni-send"></em><span>Request</span></a>
                   </div>
-                  <br>
+
                   <div class="nk-block-tools-opt">
-                    <a href="#online-modal-2" data-toggle="modal" class="btn btn-info">
-                      <em class="icon ni ni-mobile"></em><span>Change Link</span></a>
+                    <a href="#online-modal-2" data-toggle="modal" class="btn btn-sm btn-info">
+                      <em class="icon ni ni-mobile"></em><span>Link</span></a>
                   </div>
                </div>
 
@@ -218,7 +223,7 @@
            <div class="card-inner">
               <div class="nk-refwg-head g-3">
                  <div class="nk-refwg-title">
-                    <h5 class="title">Make alias for your page</h5>
+                    <h5 class="title">Customize Your Payment Link</h5>
                  </div>
               </div>
               <%= form_for(@kiosk, :url => { :action => "slugupdate" },  authenticity_token: true , :method => "post",  :html => {:class => "slug_form"},  remote: true , data: {type: 'script'}) do |f| %>

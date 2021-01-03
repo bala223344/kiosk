@@ -200,13 +200,13 @@ class KiosksController < BaseController
     if rresponse["voidable"] == "Y"
 
       cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/void", { 'merchid' => kiosk.user.merchid, 'retref' => donation.cardconnectref }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
-      donation.tx_status = 'voided'
+      donation.tx_status = 'Voided'
     else
 
       
       cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/refund", { 'merchid' => kiosk.user.merchid, 'retref' => donation.cardconnectref }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
-      donation.tx_status = 'refunded'
+      donation.tx_status = 'Refunded'
 
     end
 
