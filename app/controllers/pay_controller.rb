@@ -95,8 +95,8 @@ class PayController < NoAuthController
     email = params[:email]
     inv_num =  params[:invoice]
     inv_desc =  params[:description]
-
-     name = params[:name]
+    company =  params[:company]
+    name = params[:name]
 
 
     cres = RestClient.post("#{kiosk.user.merchant_end_point}/cardconnect/rest/capture", { 'merchid' => kiosk.user.merchid, 'retref' => retref,
@@ -123,10 +123,10 @@ class PayController < NoAuthController
 
 
 
-              if kiosk.user.notify_sms_hpp &&   kiosk.sms_number
+              if kiosk.user.notify_sms_hpp && kiosk.user.phone
 
-                print "sedindding messge 555"
-                sms_number = "+1"+kiosk.sms_number
+                print "sedindding messge "
+                sms_number = "+1"+kiosk.user.phone
                 print "=======================================================================>>>>>>>"
                 print sms_number
                 collected = 'was'
@@ -154,7 +154,7 @@ class PayController < NoAuthController
 
 
 
-              params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"]}
+              params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company}
 
               if current_user  
                 params["donated_by"] = current_user.id

@@ -587,8 +587,7 @@
 
                     </div>
 
-    <%
-    unless donation.inv_num.nil? || donation.inv_num == "" %>
+    
 
       <div class="row gy-3">
 
@@ -604,9 +603,12 @@
                         <span class="sub-text">Invoice description</span>
                         <span class="caption-text text-break"  ><%=donation.inv_desc%></span>
                     </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Company</span>
+                        <span class="caption-text text-break"  ><%=donation.company%></span>
+                    </div>
                 </div>
 
-        <% end%>
 
                     <br /><br />
                     <div class="row gy-3">

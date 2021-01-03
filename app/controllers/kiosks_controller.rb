@@ -69,6 +69,7 @@ class KiosksController < BaseController
     temp["cardconnectref"] =  donation.cardconnectref
     temp["inv_num"] = donation.inv_num
     temp["inv_desc"] = donation.inv_desc
+    temp["company"] = donation.company
     temp["tx_status"] = donation.tx_status
 
 
