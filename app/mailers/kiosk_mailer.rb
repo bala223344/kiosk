@@ -3,23 +3,28 @@ class KioskMailer < ActionMailer::Base
 
   def online_email(charge)
     @charge = charge
-    mail(to: charge['email'], subject: 'Invoice - Payment Request')
+
+    from = "#{charge['kiosk_title']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: 'Invoice - Payment Request')
   end
 
 
   def receipt_email(charge)
     @charge = charge
-    mail(to: charge['email'], subject: 'Payment Receipt')
+    from = "#{charge['kiosk_name']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: 'Payment Receipt')
   end
 
 
   def modal_receipt_email(donation)
-    @donation = donation
-    mail(to: donation['email'], subject: 'Payment Receipt - Duplicate')
+    from = "#{donation.kiosk.title} <admin@paynow.io>"
+    mail(from: from, to: donation['email'], subject: 'Payment Receipt - Duplicate')
   end
 
   def owner_email(charge)
     @charge = charge
-    mail(to: charge['email'], subject: 'Payment Received')
+
+    from = "#{charge['kiosk_name']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: 'Payment Received')
   end
 end

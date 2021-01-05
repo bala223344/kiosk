@@ -49,6 +49,8 @@ class PayController < NoAuthController
 
 
     first8dig = number.to_s[0..7]
+    last4 = number.to_s.last(4)
+
     ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
     ccbody = JSON.parse(ccres.body)
     ctype = 'credit'
@@ -74,7 +76,7 @@ class PayController < NoAuthController
 
 
   
-    formdata = {:fee => fee.to_f, :ctype => ctype, :orig_amt => orig_amt, :amount => amount}
+    formdata = {:fee => fee.to_f, :ctype => ctype, :orig_amt => orig_amt, :amount => amount, :last4 => last4}
     session[:formdata] = formdata
     response = JSON.parse(res.body)
 
@@ -154,7 +156,7 @@ class PayController < NoAuthController
 
 
 
-              params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company}
+              params = {cardconnectref: retref, gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company, last4: session[:formdata]["last4"]}
 
               if current_user  
                 params["donated_by"] = current_user.id
@@ -168,7 +170,7 @@ class PayController < NoAuthController
                   KioskMailer.receipt_email(charge).deliver
                 end
 
-                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => session[:formdata]["amount"], 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => session[:formdata]["amount"], 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"]}
                 KioskMailer.owner_email(charge).deliver
 
               end

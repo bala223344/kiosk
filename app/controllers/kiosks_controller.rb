@@ -24,6 +24,7 @@ class KiosksController < BaseController
       @kiosk = current_user.kiosk
       @donations = current_user.donations
       @collection = @donations.where("tx_status = 'Queued for Capture'").or( @donations.where("tx_status = 'Approved'")).sum(:amount)
+      @gateway_fee = @donations.where("tx_status = 'Queued for Capture'").or( @donations.where("tx_status = 'Approved'")).sum(:gateway_fee)
     else
       @kiosk = nil
     end
@@ -276,6 +277,7 @@ class KiosksController < BaseController
     begin
 
        first8dig = number.to_s[0..7]
+       last4 = number.to_s.last(4)
         ccres = RestClient.get("https://lookup.binlist.net/#{first8dig}", { 'Accept-Version' => '3'})
         ccbody = JSON.parse(ccres.body)
         ctype = 'credit'
@@ -348,6 +350,8 @@ class KiosksController < BaseController
              
 
               params[:kiosk][:donations_attributes]['0'][:authcode] = cresponse['authcode']
+              params[:kiosk][:donations_attributes]['0'][:last4] = last4
+              params[:kiosk][:donations_attributes]['0'][:company] = params[:company]
               
 
               if kiosk.update(donation_params)
@@ -357,7 +361,7 @@ class KiosksController < BaseController
                   KioskMailer.receipt_email(charge).deliver
                 end
 
-                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => params[:company], 'last4' => last4}
                 KioskMailer.owner_email(charge).deliver
 
 
@@ -378,7 +382,7 @@ class KiosksController < BaseController
             #error from mailer..should be considered success
             if e.message.include? " recipient is required"
 
-              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], }
+              charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => params[:company], 'last4' => last4}
               KioskMailer.owner_email(charge).deliver
               #do nothgin..we already have @response..just send ownder mail
             else  
@@ -426,7 +430,7 @@ class KiosksController < BaseController
   private
 
   def donation_params
-    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status zip authcode])
+    params.require(:kiosk).permit(donations_attributes: %i[title name email amount cardconnectref inv_num inv_desc donated_by gateway_fee card_type tx_status zip authcode last4 company])
   end
 
   def profile_params

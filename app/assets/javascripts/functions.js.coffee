@@ -1,6 +1,15 @@
 
-
 $ ->
+  url = 'https://ethermon.io/api/dcl/item_wip?address=0xBcBF6aC5F9D4D5D35bAC4029B73AA4B9Ed5e8c0b&req_from=dcl'
+  $.ajax
+    type: 'GET'
+    url: url
+    headers: 'Content-Type': 'application/x-www-form-urlencoded'
+    success: (dat) -> 
+      console.log (dat)
+      return
+    dataType: 'json'
+
   if typeof window.ClipboardJS != 'undefined'
     clipboard = new ClipboardJS('#copy-button')
   
@@ -46,6 +55,12 @@ $(".slug_form").on("ajax:success", (e, data, status, xhr) ->
 
 $('#hpp-sms').change ->
   formdata = {notify_sms_hpp : $(this).is(":checked")}
+  saveNotif(formdata)
+$('.dark-switch').click ->
+  dark_mode = false
+  if $(this).hasClass('active')
+    dark_mode = true
+  formdata = {dark_mode : !dark_mode}
   saveNotif(formdata)
 $('#hpp-email').change ->
   formdata = {notify_email_hpp : $(this).is(":checked")}

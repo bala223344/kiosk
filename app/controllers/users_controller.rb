@@ -65,6 +65,6 @@ class UsersController < ApplicationController
 
   def user_profile_params
     # NOTE: Using `strong_parameters` gem
-    params.require(:user).permit(:email, :fname, :lname, :phone, :tz, :notify_sms_hpp, :notify_email_hpp, :notify_email_daily, :notify_email_monthly)
+    params.require(:user).permit(:email, :fname, :lname, :phone, :tz, :notify_sms_hpp, :notify_email_hpp, :notify_email_daily, :notify_email_monthly, :dark_mode)
   end
 end
