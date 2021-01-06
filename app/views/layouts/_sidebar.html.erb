@@ -15,37 +15,39 @@
               <div class="nk-sidebar-content">
                   <div class="nk-sidebar-menu" data-simplebar>
                       <ul class="nk-menu">
-                          <li class="nk-menu-item">
-                              <a href="/" class="nk-menu-link">
+
+                          <li class="nk-menu-item <%=(request.path == "/")?"active":""%>">
+                              <a href="/" class="nk-menu-link  ">
                                   <span class="nk-menu-icon"><em class="icon ni ni-dashboard"></em></span>
-                                  <span class="nk-menu-text">Dashboard</span>
+                                  <span class="nk-menu-text"> 
+                                  Dashboard</span>
                               </a>
                           </li><!-- .nk-menu-item -->
-                          <li class="nk-menu-item">
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/online")?"active":""%>"">
                               <a data-no-turbolink='true'   href="/dashboard/online " class="nk-menu-link">
                                   <span class="nk-menu-icon"><em class="icon ni ni-layout-alt"></em></span>
                                   <span class="nk-menu-text">Online Payments</span>
                               </a>
                           </li><!-- .nk-menu-item -->
-                          <li class="nk-menu-item">
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/vt")?"active":""%>"">
                               <a  data-no-turbolink='true'  href="/dashboard/vt" class="nk-menu-link">
                                   <span class="nk-menu-icon"><em class="icon ni ni-cart"></em></span>
                                   <span class="nk-menu-text">Virtual Terminal</span>
                               </a>
                           </li><!-- .nk-menu-item -->
-                        <!--   <li class="nk-menu-item">
+                        <!--   <li class="nk-menu-item <%=(request.path == "/dashboard/reporting")?"active":""%>"">
                               <a href="html/contactless.html" class="nk-menu-link">
                                   <span class="nk-menu-icon"><em class="icon ni ni-qr"></em></span>
                                   <span class="nk-menu-text">Contactless</span>
                               </a>
                           </li> temp dan --><!-- .nk-menu-item -->
-                            <li class="nk-menu-item">
+                            <li class="nk-menu-item <%=(request.path == "/dashboard/reporting")?"active":""%>"">
                                 <a  href="/dashboard/reporting" class="nk-menu-link">
                                     <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>
                                     <span class="nk-menu-text">Reporting</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
-                          <li class="nk-menu-item">
+                          <li class="nk-menu-item <%=(request.path.include?  "/user/")?"active":""%>"">
 
                             <%= link_to edit_user_path(current_user), class: "nk-menu-link"  do %>
                                   <span
@@ -55,7 +57,7 @@
 
 
                           </li><!-- .nk-menu-item -->
-                          <li class="nk-menu-item">
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/online")?"active":""%>"">
 
                             <%= link_to destroy_user_session_path, class: "nk-menu-link" do %>
                             <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>

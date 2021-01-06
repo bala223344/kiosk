@@ -23,8 +23,10 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @donations = current_user.donations
-      @collection = @donations.where("tx_status = 'Queued for Capture'").or( @donations.where("tx_status = 'Approved'")).sum(:amount)
-      @gateway_fee = @donations.where("tx_status = 'Queued for Capture'").or( @donations.where("tx_status = 'Approved'")).sum(:gateway_fee)
+
+      @collection =  Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:amount)
+      @gateway_fee = Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:gateway_fee)
+
     else
       @kiosk = nil
     end

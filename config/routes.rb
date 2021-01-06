@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: { registrations: 'registrations' }
   # , omniauth_callbacks: 'omniauth_callbacks'
   # devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
 
   devise_scope :user do
-    root to: 'devise/registrations#edit'
+    root to: 'users/registrations#edit'
   end
 
 

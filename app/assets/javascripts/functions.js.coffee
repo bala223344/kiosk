@@ -71,7 +71,11 @@ $('#hpp-daily').change ->
 $('#hpp-monthly').change ->
   formdata = {notify_email_monthly : $(this).is(":checked")}
   saveNotif(formdata)
-$('#input_hpp_amt').inputmask({regex: "\\d*\\.\\d{0,2}"});
+
+
+$('#input_hpp_amt').inputmask('currency', {
+    rightAlign: true
+  });
 $('.phone-format').inputmask({regex: "\\d{10}"});
 
   

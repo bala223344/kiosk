@@ -111,25 +111,13 @@
     $(_link).each(function () {
       var self = $(this),
           _self_link = self.attr('href');
-          //    
-      //  switch (_self_link) {
-      //    case '/dashboard/vt':
-      //      console.log('what');
-      //     fileName = '/dashboard/vt'
-      //     break;
-
-      //  }
-
+         
        
       if (fileName.match(_self_link)) {
-        console.log(_self_link)
-        console.log(fileName)
 
-        self.closest("li").addClass('active current-page').parents().closest("li").addClass("active current-page");
         self.closest("li").children('.nk-menu-sub').css('display', 'block');
         self.parents().closest("li").children('.nk-menu-sub').css('display', 'block');
       } else {
-        self.closest("li").removeClass('active current-page').parents().closest("li:not(.current-page)").removeClass("active");
       }
     });
   }; // PasswordSwitch @v1.0

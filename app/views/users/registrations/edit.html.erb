@@ -20,7 +20,7 @@
                                           <div class="toggle-expand-content" data-content="pageMenu">
                                              <ul class="nk-block-tools g-3">
                                                 <li class="nk-block-tools-opt">
-                                                   <a href="<%=(resource.kiosk.slug)?slug_url(resource.kiosk):kiosk_url(resource.kiosk) %>" class="btn btn-warning" target="_blank">
+                                                   <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
                                                      <em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
                                                 </li>
                                              </ul>
@@ -147,6 +147,15 @@
                                       </a>
                                   </li><!-- .col -->
 
+                                  <li class="col-lg-3 col-6 col-sm-4">
+                     <h5>Total Collected : <%=number_to_currency(@collection.to_f)%> </h5> 
+
+<h5>Total Fee : <%=number_to_currency(@gateway_fee.to_f)%></h5>
+                 
+                    
+                  
+
+</li>
                               </ul><!-- .row -->
                           </div>
 
