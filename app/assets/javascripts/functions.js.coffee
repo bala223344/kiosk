@@ -5,14 +5,14 @@ $ ->
     type: 'GET'
     url: url
     headers: 'Content-Type': 'application/x-www-form-urlencoded'
-    success: (dat) -> 
+    success: (dat) ->
       console.log (dat)
       return
     dataType: 'json'
 
   if typeof window.ClipboardJS != 'undefined'
     clipboard = new ClipboardJS('#copy-button')
-  
+
     #disable onclick disable
   $(".refund_form").on("ajax:success", (e, data, status, xhr) ->
     $(this).find('.badge').addClass('.badge-success').html 'Processed.redirecting..'
@@ -22,7 +22,7 @@ $ ->
       return
     ), 3000
 
-    
+
 
 
 
@@ -74,7 +74,7 @@ $('#hpp-monthly').change ->
 $('#input_hpp_amt').inputmask({regex: "\\d*\\.\\d{0,2}"});
 $('.phone-format').inputmask({regex: "\\d{10}"});
 
-  
+
 
 
 $(".update_password").on("ajax:success", (e, data, status, xhr) ->
@@ -86,7 +86,7 @@ $(".update_password").on("ajax:success", (e, data, status, xhr) ->
       icon: 'success',
       confirmButtonText: 'Ok'
     })
-    
+
   ).on "ajax:error", (e, xhr, status, error) ->
       error = ''
       i = 0
@@ -107,12 +107,12 @@ $(".update_password").on("ajax:success", (e, data, status, xhr) ->
 
 
 
-    
-
-    
 
 
- 
+
+
+
+
 
 
 
@@ -123,12 +123,12 @@ $('#btnsend').click ->
     $('#online-modal').modal('hide');
     return
   ), 2000
-   
 
 
 
 
-   
+
+
 saveNotif = (formdata) ->
   $.ajax
     url: '/dashboard/update_notif_pref'
@@ -154,7 +154,7 @@ window.loading = (vis,txt='') ->
     })
   $("#loadingModal").modal(vis)
   $("#loadingContent").html(txt)
- 
+
 window.submitToCC = ->
   loading("show",' Your card will be charged now. Please wait.')
   $("#edit_kiosk").submit()
