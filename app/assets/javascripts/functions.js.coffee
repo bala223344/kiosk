@@ -1,15 +1,4 @@
-
 $ ->
-  url = 'https://ethermon.io/api/dcl/item_wip?address=0xBcBF6aC5F9D4D5D35bAC4029B73AA4B9Ed5e8c0b&req_from=dcl'
-  $.ajax
-    type: 'GET'
-    url: url
-    headers: 'Content-Type': 'application/x-www-form-urlencoded'
-    success: (dat) ->
-      console.log (dat)
-      return
-    dataType: 'json'
-
   if typeof window.ClipboardJS != 'undefined'
     clipboard = new ClipboardJS('#copy-button')
 
@@ -21,11 +10,6 @@ $ ->
       location.reload()
       return
     ), 3000
-
-
-
-
-
   ).on "ajax:error", (e, xhr, status, error) ->
     $(this).find('.badge').addClass('badge-danger').html error
 

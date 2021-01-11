@@ -20,15 +20,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
 
-     if(current_user.kiosk)
-      @collection =  Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:amount)
-      @gateway_fee = Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:gateway_fee)
+     if current_user
+      if(current_user.kiosk)
+        @collection =  Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:amount)
+        @gateway_fee = Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:gateway_fee)
+        super
+      end  
 
 
+
+    else
+      redirect_to "/users/sign_in"
 
     end
 
-    super
+    
     
 
 
