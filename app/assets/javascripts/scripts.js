@@ -430,6 +430,7 @@
       },
 
       onStepChanged: function onStepChanged(event, currentIndex, priorIndex) {
+
          //preview section
          if (currentIndex == 2) {
           loading("show")
@@ -757,8 +758,9 @@ function populate_amt() {
       if($percent > 0)
         $fee = 0
     }
+
     // no service fee if checkbox is disabled
-    if ($("#service_fee").val() == 0) {
+    if ($("#service_fee").is(":checked") == false) {
       $fee = 0
     }
 

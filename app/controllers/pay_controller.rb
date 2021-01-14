@@ -13,7 +13,6 @@ class PayController < NoAuthController
     end
 
     
-    p @kiosk.inspect
     render 'payment-form' 
 #    render :json => {:donations => "sdfsdf"}
 
@@ -64,6 +63,10 @@ class PayController < NoAuthController
     end 
 
     orig_amt = amount.to_f
+
+    if orig_amt < 0
+      raise 'Incorrect amount'
+    end  
     amount = amount.to_f + fee.to_f
 
    
@@ -127,10 +130,7 @@ class PayController < NoAuthController
 
               if kiosk.user.notify_sms_hpp && kiosk.user.phone
 
-                print "sedindding messge "
                 sms_number = "+1"+kiosk.user.phone
-                print "=======================================================================>>>>>>>"
-                print sms_number
                 collected = 'was'
                 if session[:formdata]["fee"] == 0
                   collected = 'was not'
