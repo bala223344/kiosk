@@ -1,11 +1,19 @@
-// Jquery Dependency
 
 $("input[data-type='currency']").on({
-    keyup: function() {
-      formatCurrency($(this));
-    },
+  keyup: function() {
+    formatCurrency($(this));
+    console.log('keyup');
+
+  },
+    focusin: function() {
+    formatCurrency($(this));
+    console.log('focus');
+
+  },
     blur: function() {
       formatCurrency($(this), "blur");
+      console.log('blur');
+
     }
 });
 

@@ -57,8 +57,10 @@ $('#hpp-monthly').change ->
   saveNotif(formdata)
 
 
-$('#input_hpp_amt').inputmask('currency', {
-    rightAlign: true
+$('#input_hpp_amt').inputmask('decimal', {
+    digits: 2,
+    digitsOptional: false,
+    rightAlign: false
   });
 $('.phone-format').inputmask({regex: "\\d{10}"});
 

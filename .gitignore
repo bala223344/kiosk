@@ -38,3 +38,5 @@ shared/log/*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/bin
+shared/pids/
