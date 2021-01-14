@@ -56,6 +56,7 @@ $('#hpp-monthly').change ->
   formdata = {notify_email_monthly : $(this).is(":checked")}
   saveNotif(formdata)
 
+  
 
 $('#input_hpp_amt').inputmask('decimal', {
     digits: 2,
@@ -93,16 +94,6 @@ $(".update_password").on("ajax:success", (e, data, status, xhr) ->
       #   error += '<p>'+xhr.responseJSON.error[i]+'</p>'
       #   i++
       $(this).find('#pwd-err').removeClass('d-none').html error
-
-
-
-
-
-
-
-
-
-
 
 
 

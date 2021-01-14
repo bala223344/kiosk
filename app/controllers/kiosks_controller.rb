@@ -23,7 +23,6 @@ class KiosksController < BaseController
     if (current_user && current_user.kiosk && current_user.kiosk.id)
       @kiosk = current_user.kiosk
       @donations = current_user.donations
-
       @collection =  Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:amount)
       @gateway_fee = Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:gateway_fee)
 
@@ -40,8 +39,9 @@ class KiosksController < BaseController
 
 
     if !params[:email].blank? && params[:email] != ''
-      url = params[:url]+"?inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}&amount=#{params[:amount]}"
-      charge = { 'email' => params[:email],  'amount' => params[:amount] , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc] }
+      amount = params[:amount].gsub!(/\$|\,/, "")
+      url = params[:url]+"?inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}&amount=#{amount}"
+      charge = { 'email' => params[:email],  'amount' => amount , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc] }
       KioskMailer.online_email(charge).deliver
     end
 
@@ -74,6 +74,7 @@ class KiosksController < BaseController
     temp["inv_desc"] = donation.inv_desc
     temp["company"] = donation.company
     temp["tx_status"] = donation.tx_status
+    temp["last4"] = donation.last4
 
 
 
@@ -297,6 +298,7 @@ class KiosksController < BaseController
           fee = 0
         end
 
+        
 
       amount = amount.to_f + fee.to_f
       if amount < 0
