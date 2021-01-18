@@ -39,7 +39,7 @@ class KiosksController < BaseController
 
 
     if !params[:email].blank? && params[:email] != ''
-      amount = params[:amount].gsub!(/\$|\,/, "")
+      amount = params[:amount].sub(',','')
       url = params[:url]+"?inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}&amount=#{amount}"
       charge = { 'email' => params[:email],  'amount' => amount , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc] }
       KioskMailer.online_email(charge).deliver
