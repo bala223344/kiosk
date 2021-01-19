@@ -17,7 +17,6 @@ class UsersController < ApplicationController
                               publishable_key: nil
                             })
     @user.save
-    #  logger.info "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     redirect_to root_path
   end
 

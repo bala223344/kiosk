@@ -52,7 +52,6 @@ gem 'bigdecimal', '1.4.2'
 gem 'gaffe'
 gem 'rqrcode'
 gem 'signalwire'
-
 gem 'kaminari'
 
 

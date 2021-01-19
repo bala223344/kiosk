@@ -238,7 +238,6 @@ class KiosksController < BaseController
       end
    end
 
-   
 
   end
 
@@ -294,6 +293,7 @@ class KiosksController < BaseController
             fee = 0
           end 
           ctype = 'debit'
+
         end 
 
         # no service fee if checkbox is disabled  
@@ -372,9 +372,7 @@ class KiosksController < BaseController
                 KioskMailer.owner_email(charge).deliver
 
 
-
-
-              
+             
 
 
 
@@ -411,6 +409,7 @@ class KiosksController < BaseController
 
     respond_to do |format|
       format.js {render json: @response }
+
     end
   end
 
