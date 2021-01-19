@@ -3,6 +3,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_action :authenticate_scope!, only: [:change_password]
 
+  layout :set_layout
+  def set_layout
+     if current_user
+       'dashboard'
+     else
+       'auth'
+     end
+  end
   # GET /resource/sign_up
   # def new
   #   super

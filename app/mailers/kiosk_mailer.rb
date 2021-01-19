@@ -17,6 +17,7 @@ class KioskMailer < ActionMailer::Base
 
 
   def modal_receipt_email(donation)
+    @donation = donation
     from = "#{donation.kiosk.title} <admin@paynow.io>"
     mail(from: from, to: donation['email'], subject: "Duplicate Payment Receipt for #{donation.kiosk.title} ")
   end

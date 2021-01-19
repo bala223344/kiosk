@@ -175,6 +175,9 @@ class KiosksController < BaseController
 
   def sendreceipt
     donation = Donation.find(params[:kiosk][:id])
+
+
+
     KioskMailer.modal_receipt_email(donation).deliver
 
   end
