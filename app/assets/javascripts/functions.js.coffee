@@ -1,43 +1,153 @@
-window.populate_amt = ->
-  formatter = new (Intl.NumberFormat)('en-US',
-  style: 'currency'
-  currency: 'USD')
-  $amt = parseFloat($('.payment-amt').val())
-  $amt += 0.00
-  $percent = parseFloat($("#scharge_percent").val())
-  $percent = ($percent / 100) 
-  $fee =  $amt * $percent
-  $fee = parseFloat($fee.toFixed(2))
-
-  $amtandfee =  $amt +  $fee
-  $amt = $amt.toFixed(3)
-
-  $('#amount').val($amt)
-  $('#fee_amt').val($fee)
-
-  $('#actual_amt').html(formatter.format($amt))
-  $('#display_amt').html(formatter.format($amtandfee))
-
-  $('#fee').html(formatter.format($fee))
-  return
 $ ->
   if typeof window.ClipboardJS != 'undefined'
     clipboard = new ClipboardJS('#copy-button')
 
-  $('a[data-toggle=modal]').on 'click', ->
-    $('.dropdown').removeClass('open')
-  # $('[data-target=#ajax-modal]').on 'click', (e)->
-  #    e.preventDefault()
-  #    e.stopPropagation();
-  #    $.rails.handleRemote( $(this) );
-  $(document).on 'click', '[data-dismiss=modal], .modal-scrollable', ->
-    $('.modal-body-content').empty()
-  $(document).on 'click', '#ajax-modal', (e) ->
-    e.stopPropagation();
-    #price change on wizard
+    #disable onclick disable
+  $(".refund_form").on("ajax:success", (e, data, status, xhr) ->
+    $(this).find('.badge').addClass('.badge-success').html 'Processed.redirecting..'
+
+    setTimeout (->
+      location.reload()
+      return
+    ), 3000
+  ).on "ajax:error", (e, xhr, status, error) ->
+    $(this).find('.badge').addClass('badge-danger').html error
+
+
+$(".receipt_form").on("ajax:success", (e, data, status, xhr) ->
+    $(this).find('.badge').addClass('badge-success').html 'Sent.'
+  ).on "ajax:error", (e, xhr, status, error) ->
+    $(this).find('.badge').addClass('badge-danger').html error
+
+
+$(".slug_form").on("ajax:success", (e, data, status, xhr) ->
+    Swal.fire({
+      title: 'Success!',
+      text: 'Updated successfully',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    })
+
+    setTimeout (->
+      location.reload()
+      return
+    ), 2000
+
+  ).on "ajax:error", (e, xhr, status, error) ->
+    alert error
+
+
+$('#hpp-sms').change ->
+  formdata = {notify_sms_hpp : $(this).is(":checked")}
+  saveNotif(formdata)
+$('.dark-switch').click ->
+  dark_mode = false
+  if $(this).hasClass('active')
+    dark_mode = true
+  formdata = {dark_mode : !dark_mode}
+  saveNotif(formdata)
+$('#hpp-email').change ->
+  formdata = {notify_email_hpp : $(this).is(":checked")}
+  saveNotif(formdata)
+$('#hpp-daily').change ->
+  formdata = {notify_email_daily : $(this).is(":checked")}
+  saveNotif(formdata)
+$('#hpp-monthly').change ->
+  formdata = {notify_email_monthly : $(this).is(":checked")}
+  saveNotif(formdata)
+
+
+$('#input_hpp_amt').inputmask('currency', {
+    rightAlign: false
+  });
+
+$('.phone-format').inputmask({regex: "\\d{10}"});
 
 
 
+
+$(".update_password").on("ajax:success", (e, data, status, xhr) ->
+    $('#profile-pwd').modal('hide')
+    #(this).find('.badge').addClass('badge-success').html 'Sent.'
+    Swal.fire({
+      title: 'Success!',
+      text: 'Updated successfully',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    })
+
+  ).on "ajax:error", (e, xhr, status, error) ->
+      error = ''
+      i = 0
+      field = ''
+      for key of xhr.responseJSON.error
+        if xhr.responseJSON.error.hasOwnProperty(key)
+          val = xhr.responseJSON.error[key]
+          field = key.replace("_", " ")
+          str =field + ' '+val
+          error += '<p>'+str+'</p>'
+          #'+ key +' ' + val +'
+
+      # while i < xhr.responseJSON.error.length
+      #   error += '<p>'+xhr.responseJSON.error[i]+'</p>'
+      #   i++
+      $(this).find('#pwd-err').removeClass('d-none').html error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$('#btnsend').click ->
+  setTimeout (->
+    $('#online-modal').modal('hide');
+    return
+  ), 2000
+
+
+
+
+
+
+saveNotif = (formdata) ->
+  $.ajax
+    url: '/dashboard/update_notif_pref'
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    data: user: formdata
+    success: (response) ->
+      Swal.fire({
+        title: 'Success!',
+        text: 'Updated successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+      return
+
+window.loading = (vis,txt='') ->
+  if vis == 'show'
+     $("#loadingModal").modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+  $("#loadingModal").modal(vis)
+  $("#loadingContent").html(txt)
+
+window.submitToCC = ->
+  loading("show",' Your card will be charged now. Please wait.')
+  $("#edit_kiosk").submit()
+  return
 
 
   $('.wysihtml5').each ->

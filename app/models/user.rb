@@ -3,28 +3,25 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :rememberable, :validatable
-  attr_accessor :login, :terms, :current_password
+  attr_accessor  :terms, :current_password
   before_create :build_default_kiosk
-  validates :username,
-            presence: true,
-            uniqueness: {
-              case_sensitive: false
-            }
+
 
 
  
 
 
   has_one :kiosk
+  has_many :donations, foreign_key: "donated_by"
   accepts_nested_attributes_for(:kiosk, update_only: true)
-  def self.find_for_database_authentication(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions.to_h).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
-    else
-      where(conditions.to_h).first
-    end
-      end
+  # def self.find_for_database_authentication(warden_conditions)
+  #   conditions = warden_conditions.dup
+  #   if login = conditions.delete(:login)
+  #     where(conditions.to_h).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
+  #   else
+  #     where(conditions.to_h).first
+  #   end
+  # end
 end
 
 private

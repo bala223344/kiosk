@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title><%= content_for?(:title) ? yield(:title) : "devPaynow.io" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Kiosk" %>">
+    <head profile="http://www.w3.org/2005/10/profile">
+    <link rel="icon" 
+      type="image/png" 
+      href="<%=asset_path("favicon.png") %>"
+      >
+      	    <meta name="keywords" content="">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <%= csrf_meta_tags %>
+      <%= yield(:header) %>
+   </head>
+  <body class="nk-body bg-lighter npc-general has-sidebar ui-shady">
+
+<div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+      
+        <!-- wrap @s -->
+            <div class="nk-wrap ">
+             
+
+         <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+
+
+      <%= yield %>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+
+
+  <%= render "layouts/footer0" %>
+
+
+    </div>
+      </div>
+      </div>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  </body>
+</html>

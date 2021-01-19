@@ -1,315 +1,236 @@
+<!-- content @s -->
+<div class="nk-content nk-content-fluid">
+   <div class="container-xl wide-xl">
+      <div class="nk-content-inner">
+         <div class="nk-content-body">
+            <div class="components-preview">
+               <div class="nk-block">
+                  <div class="nk-block-head nk-block-head-lg ">
+                     <div class="nk-block-head-content row">
+                        <div class="dash col-8">
+                           <h1 class="dash title">Hi <%=current_user.fname%>!</h1>
+                        </div>
+                        <div class="nk-block-head-content col-4">
+                           <div class="toggle-wrap nk-block-tools-toggle float-right">
+                              <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em
+                                 class="icon ni ni-more-v"></em></a>
+<!-- Hidden Mobile -->
+<ul class="nk-block-tools g-3 g-3 d-none d-sm-block">
+   <li class="nk-block-tools-opt">
+      <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
+      <em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
+   </li>
+<!-- Hidden Temp Dan
+   <li class="nk-block-tools-opt">
+     <a href="#online-modal" data-toggle="modal" class="btn btn-primary">
+       <em class="icon ni ni-send"></em><span>Request Payment</span></a>
+   </li>
+ -->
 
-<!-- START PAGE-CONTAINER -->
-<div class="page-container">
-  <!-- START PAGE HEADER WRAPPER -->
-  <!-- START HEADER -->
-  <div class="header hidden-xs">
-    <div class=" pull-left sm-table">
-      <div class="header-inner">
-
-        <h2 class="pull-left p-l-30"><strong>PayNow.io</strong></h2>
-
-
-
-
-        <div class="brand inline">
-          <!--
-<img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
-
--->
-        </div>
-
-      </div>
-    </div>
-      <!-- START User Info-->
-      <div class=" m-t-10">
-       
-        <div class=" pull-right hidden-sm">
-          <!-- START User Info-->
-          <div class=" m-t-10">
-            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-              <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
-            </div>
-
-
-        <div class="dropdown pull-right"><button class="profile-dropdown-toggle" type="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <span class="thumbnail-wrapper d32 circular inline m-t-5">
-              <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar_small2x.jpg" }) %>
-
-
-            </span>
-
-          </button>
-              </div>
-
-
-
-      </div>
-      <!-- END User Info-->
-    </div>
-    <!-- END HEADER -->
-  </div>
-  <!-- Modal -->
-  </div>
-
-
-  <!-- START PAGE CONTENT WRAPPER -->
-  <div class="page-content-wrapper">
-    <!-- START PAGE CONTENT -->
-
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-
-    <% end %>
-    <!-- START CONTAINER FLUID -->
-    <div class="container-fluid container-fixed-lg bg-white">
-
-
-
-
-
-      <!-- START PANEL -->
-      <div class="panel panel-transparent">
-        <div class="panel-heading">
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-sm-10">
-               <h3>Admin</h3> 
-                    <p>Welcome to your admin page. If you need any help, please kindly reach out to your merchant rep. <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
-                    </p>
-              <br>
-              <%= devise_error_messages! %>
-
-              <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
-
-
-              <%= f.fields_for :kiosk do |ff| %>
-       
-      
-
-                    <div class="form-group">
-                      <label for="fname" class="col-sm-3 control-label">Name of Business</label>
-                      <div class="col-sm-9">
-                        <%= ff.text_field :title, :placeholder => "Example: First Church Title", :class => "form-control", :maxlength => 250, :required => true%>
-                      </div>
-                    </div>
-
-
-       <div class="form-group">
-
-
-                <label for="amount" class="col-sm-3 control-label" >Quick Pay</label> 
-
-
-
-
-
-                    <% if (f.object.merchid)%>
-                <div class="col-sm-6 ">
-
-                  <p class="hint-text small"></p>
-                  <p class="m-t-10">
-                    <%= ff.text_field :amount, :placeholder => "Amount in USD", :class => "form-control"%>
-                  </p>
-
-
-                  <p class="hint-text small"></p>
-                  <p class="m-t-10">
-                    <%= ff.text_field :inv_num, :placeholder => "Invoice number", :class => "form-control"%>
-                  </p>
-
-
-                  <p class="hint-text small"></p>
-                  <p class="m-t-10">
-                    <%= ff.text_field :inv_desc, :placeholder => "Invoice description", :class => "form-control"%>
-                  </p>
-
-                  <%= f.submit "Update QR Code", :class => "btn btn-complete" %>
-                         <% if @share_url  %>
-                  <a id="copy-button"   class="btn btn-white" data-clipboard-text="<%=@share_url%>">
-                     <!-- Temp Hide <img width="13" src="assets/clippy.svg" alt="Copy share link to clipboard"> -->
-                      Copy Quick Pay Link
-                  </a>
-
-                </div>
-                <div class="col-sm-3 m-t-10">
-                 
-
-                 <%= @qr.html_safe if @qr %>
-
-
-                  <% end %>
-                      </div>
-
-
-              <% else %>
-
-                              <div class="col-sm-9 hint-text small">
-                              Please activate your merchant account to use Quick Pay.
-                               </div>
-
-              
-
-              <% end %>
-</div> 
-
-    <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Your payment link</label>
-                        <div class="col-sm-9">
-                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p> 
-
-                           <%= preview_link(resource) %>
-
-
-          
-
-                  </div>
-
-
+                           </div>
+                        </div>
+                        <div class="dash ">
+                           <p class="ml-3">Welcome to Version 2.0. We are so excited to show you what we have been working so hard on. There will be more updates to come, including some
+                              highly requested features. We can't wait to add them for you.
+                           </p>
                         </div>
 
-    <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Receive SMS for each time a successful payment is made?</label>
-
-                        <div class="col-sm-9">
-                        <%= ff.text_field :sms_number, :placeholder => "(000) 000-0000", :class => "form-control", :maxlength => 20%>
-
+                     </div>
 
                   </div>
-
-
+                  <div class="toggle-expand-content" data-content="pageMenu">
+                    <!-- Visible Mobile Only -->
+                     <ul class="nk-block-tools g-3 d-block d-sm-none">
+                        <li class="nk-block-tools-opt">
+                           <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
+                           <em class="icon ni ni-mobile"></em><span>HPP</span></a>
+                        </li>
+                        <!-- Hidden Temp Dan
+                        <li class="nk-block-tools-opt">
+                          <a href="#online-modal" data-toggle="modal" class="btn btn-primary">
+                            <em class="icon ni ni-send"></em><span>Request Payment</span></a>
+                        </li>
+                        -->
+                     </ul>
+                  </div>
+                  <!-- .nk-block-head -->
+                  <ul class="row g-gs preview-icon-svg">
+                     <li class="col-lg-3 col-6 col-sm-4">
+                        <%= link_to edit_user_path(current_user), class: "nk-menu-link"  do %>
+                        <div class="preview-icon-box card card-bordered ">
+                           <div class="preview-icon-wrap  ">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+                                 <rect x="5" y="8" width="70" height="50" rx="7" ry="7" fill="#e3e7fe" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <rect x="15" y="16" width="70" height="50" rx="7" ry="7" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <rect x="35" y="74" width="30" height="8" rx="1" ry="1" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="42" y1="66" x2="42" y2="74" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="58" y1="66" x2="58" y2="74" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <rect x="25" y="24" width="50" height="34" rx="3" ry="3" fill="#eff1ff" />
+                                 <line x1="63" y1="51" x2="63" y2="48" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="63" y1="41" x2="63" y2="31" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <circle cx="63" cy="45" r="3" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="54" y1="31" x2="54" y2="34" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="54" y1="41" x2="54" y2="51" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <circle cx="54" cy="37" r="3" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="44" y1="31" x2="44" y2="38" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="44" y1="44" x2="44" y2="51" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <circle cx="44" cy="41" r="3" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="34" y1="31" x2="34" y2="34" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <line x1="34" y1="41" x2="34" y2="51" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 <circle cx="34" cy="37" r="3" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                              </svg>
+                           </div>
+                           <span class="preview-icon-name">Account Settings</span>
                         </div>
-
-
-
-
-
-<!-- sl pay buttons
-
-
-<button class="btn btn-default"><i class="fa fa-qrcode"></i>  Request Payment</button>
-
-<a class="btn btn-info" role="button" aria-expanded="false" aria-controls="">
-              <i class="fa fa-qrcode"></i>
-            </a> 
-<a class="btn btn-warning" role="button" aria-expanded="false" aria-controls="">
-              <i class="fa fa-envelope-o"></i>
-            </a> 
-
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseQr" role="button" aria-expanded="false" aria-controls="collapseExample">
-              <i>Manually Request Payment</i>
-            </a> 
-
-            <div class="collapse" id="collapseQr">
-              <div class="">
-               
-	       Enter Amount : ______ <br />
-               Invoice # : ______ <br />
-               Invoice Description : ______ <br />
-
-              </div>
+                        <!-- .preview-icon-box -->
+                        <% end %>
+                     </li>
+                     <!-- .col -->
+                     <li class="col-lg-3 col-6 col-sm-4">
+                        <a href="/dashboard/online " class="nk-menu-link">
+                           <div class="preview-icon-box card card-bordered">
+                              <div class="preview-icon-wrap">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+                                    <rect x="12" y="5" width="55" height="68" rx="6" ry="6" fill="#e3e7fe" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <path d="M78,15.8l-5.72,6.33L66.7,16l-5.33,5.91-5.82-6.46L49.67,22,44.13,15.8l-5.49,6.09L33,15.62,27.27,22l-6.16-6.83L21,15V79c0,3.33,2.43,6,5.43,6H72.57c3,0,5.43-2.69,5.43-6V15.76S77.94,15.79,78,15.8Z" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <circle cx="49.5" cy="35.5" r="2.5" fill="#c4cefe" stroke="#c4cefe" stroke-miterlimit="10" stroke-width="2" />
+                                    <line x1="71" y1="50" x2="28" y2="49.86" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="71" y1="56" x2="28" y2="55.86" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="71" y1="61" x2="28" y2="60.86" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="28" y1="45" x2="38" y2="45" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="61" y1="45" x2="71" y2="45" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="28" y1="76" x2="41" y2="76" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="61" y1="76" x2="69" y2="76" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="59" y1="66" x2="69" y2="66" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                 </svg>
+                              </div>
+                              <span class="preview-icon-name">Request Payment</span>
+                           </div>
+                           <!-- .preview-icon-box -->
+                        </a>
+                     </li>
+                     <!-- .col -->
+                     <li class="col-lg-3 col-6 col-sm-4">
+                        <a  data-no-turbolink='true'  href="/dashboard/vt" class="nk-menu-link">
+                           <div class="preview-icon-box card card-bordered">
+                              <div class="preview-icon-wrap">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+                                    <rect x="9" y="21" width="55" height="39" rx="6" ry="6" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="17" y1="44" x2="25" y2="44" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="30" y1="44" x2="38" y2="44" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="42" y1="44" x2="50" y2="44" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="17" y1="50" x2="36" y2="50" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <rect x="16" y="31" width="15" height="8" rx="1" ry="1" fill="#c4cefe" />
+                                    <path d="M76.79,72.87,32.22,86.73a6,6,0,0,1-7.47-4L17,57.71A6,6,0,0,1,21,50.2L65.52,36.34a6,6,0,0,1,7.48,4l7.73,25.06A6,6,0,0,1,76.79,72.87Z" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <polygon points="75.27 47.3 19.28 64.71 17.14 57.76 73.12 40.35 75.27 47.3" fill="#6576ff" />
+                                    <path d="M30,77.65l-1.9-6.79a1,1,0,0,1,.69-1.23l4.59-1.3a1,1,0,0,1,1.23.7l1.9,6.78A1,1,0,0,1,35.84,77l-4.59,1.3A1,1,0,0,1,30,77.65Z" fill="#c4cefe" />
+                                    <path d="M41.23,74.48l-1.9-6.78A1,1,0,0,1,40,66.47l4.58-1.3a1,1,0,0,1,1.23.69l1.9,6.78A1,1,0,0,1,47,73.88l-4.58,1.29A1,1,0,0,1,41.23,74.48Z" fill="#c4cefe" />
+                                    <path d="M52.43,71.32l-1.9-6.79a1,1,0,0,1,.69-1.23L55.81,62A1,1,0,0,1,57,62.7l1.9,6.78a1,1,0,0,1-.69,1.23L53.66,72A1,1,0,0,1,52.43,71.32Z" fill="#c4cefe" />
+                                    <ellipse cx="55.46" cy="19.1" rx="16.04" ry="16.1" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <ellipse cx="55.46" cy="19.1" rx="12.11" ry="12.16" fill="#e3e7fe" />
+                                    <text transform="translate(50.7 23.72) scale(0.99 1)" font-size="16.12" fill="#6576ff" font-family="Nunito-Black, Nunito Black">$</text>
+                                 </svg>
+                              </div>
+                              <span class="preview-icon-name">Virtual Terminal</span>
+                           </div>
+                           <!-- .preview-icon-box -->
+                        </a>
+                     </li>
+                     <!-- .col -->
+                     <li class="col-lg-3 col-6 col-sm-4">
+                        <a onclick='$zoho.salesiq.floatwindow.visible("show");' class="nk-menu-link">
+                           <div class="preview-icon-box card card-bordered">
+                              <div class="preview-icon-wrap">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 118">
+                                    <path d="M8.916,94.745C-.318,79.153-2.164,58.569,2.382,40.578,7.155,21.69,19.045,9.451,35.162,4.32,46.609.676,58.716.331,70.456,1.845,84.683,3.68,99.57,8.694,108.892,21.408c10.03,13.679,12.071,34.71,10.747,52.054-1.173,15.359-7.441,27.489-19.231,34.494-10.689,6.351-22.92,8.733-34.715,10.331-16.181,2.192-34.195-.336-47.6-12.281A47.243,47.243,0,0,1,8.916,94.745Z" transform="translate(0 -1)" fill="#f6faff" />
+                                    <rect x="18" y="32" width="84" height="50" rx="4" ry="4" fill="#fff" />
+                                    <rect x="26" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                    <rect x="50" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                    <rect x="74" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                    <rect x="38" y="60" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                    <rect x="62" y="60" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                    <path d="M98,32H22a5.006,5.006,0,0,0-5,5V79a5.006,5.006,0,0,0,5,5H52v8H45a2,2,0,0,0-2,2v4a2,2,0,0,0,2,2H73a2,2,0,0,0,2-2V94a2,2,0,0,0-2-2H66V84H98a5.006,5.006,0,0,0,5-5V37A5.006,5.006,0,0,0,98,32ZM73,94v4H45V94Zm-9-2H54V84H64Zm37-13a3,3,0,0,1-3,3H22a3,3,0,0,1-3-3V37a3,3,0,0,1,3-3H98a3,3,0,0,1,3,3Z" transform="translate(0 -1)" fill="#798bff" />
+                                    <path d="M61.444,41H40.111L33,48.143V19.7A3.632,3.632,0,0,1,36.556,16H61.444A3.632,3.632,0,0,1,65,19.7V37.3A3.632,3.632,0,0,1,61.444,41Z" transform="translate(0 -1)" fill="#6576ff" />
+                                    <path d="M61.444,41H40.111L33,48.143V19.7A3.632,3.632,0,0,1,36.556,16H61.444A3.632,3.632,0,0,1,65,19.7V37.3A3.632,3.632,0,0,1,61.444,41Z" transform="translate(0 -1)" fill="none" stroke="#6576ff" stroke-miterlimit="10" stroke-width="2" />
+                                    <line x1="40" y1="22" x2="57" y2="22" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="40" y1="27" x2="57" y2="27" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="40" y1="32" x2="50" y2="32" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                    <line x1="30.5" y1="87.5" x2="30.5" y2="91.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="28.5" y1="89.5" x2="32.5" y2="89.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="79.5" y1="22.5" x2="79.5" y2="26.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="77.5" y1="24.5" x2="81.5" y2="24.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="90.5" cy="97.5" r="3" fill="none" stroke="#9cabff" stroke-miterlimit="10" />
+                                    <circle cx="24" cy="23" r="2.5" fill="none" stroke="#9cabff" stroke-miterlimit="10" />
+                                 </svg>
+                              </div>
+                              <span class="preview-icon-name">Live Support</span>
+                           </div>
+                           <!-- .preview-icon-box -->
+                        </a>
+                     </li>
+                     <!-- .col -->
+                     <!-- dan hidden <li class="col-lg-3 col-6 col-sm-4">
+                        <h5>Total Collected : <%=number_to_currency(@collection.to_f)%> </h5>
+                        <h5>Total Fee : <%=number_to_currency(@gateway_fee.to_f)%></h5>
+                     </li> -->
+                  </ul>
+                  <!-- .row -->
+               </div>
             </div>
--->
-
-
-
-
-
-
-
-
-
-            <div class="hide"></div>
-
-          
-
-
-
-
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Merchant Account</label>
-                <div class="col-sm-9 m-t-10">
-
-
-                    <% if (f.object.merchid)%>
-                    <b class="alert alert-success " data-toggle="collapse" href="#collapseExample" role="button"
-                      aria-expanded="false" aria-controls="collapseExample"> Connected</b>
-                   <br />
-                      <br />
-                      
-                  <div class="collapse" id="collapseExample">
-                    <div class="">
-                      Merchant Id : <%= f.object.merchid%> <br /><br />
-                      Username : <%= f.object.merchant_username%> <br /><br />
-                      Password : ***** <br /><br />
-
-                    </div>
-                  </div>
-
-
-                  <div class="hide"></div>
-                <% else %>
-
-                  <p> </p>
-                  <div class="row">
-                    <div class="col-sm-9">
-                    <p>Setting up a merchant account is fairly easy. PayNow.io is directly integrated into many different processors. If you do not have a processor, no problem, we will help get one setup for you.
-
-</p>
-
-                      <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
-                      <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
-
-                    </div>
-                  </div>
-                  <% end %>
-
-
-
-
-                </div>
-                  <% end %>
-              </div>
-
-              <br>
-              <div class="row col-sm-12">
-                <div class="col-sm-6">
-                  <%= f.submit "Save", :class => "btn btn-success" %>
-
-                  <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-grey" ) %>
-                </div>
-
-
-
-              </div>
-            </div>
-
-            <% end %>
-
-          </div>
-        </div>
+            <!-- .components-preview -->
+         </div>
       </div>
-    </div>
-    <!-- END PANEL -->
-  </div>
-  <!-- END CONTAINER FLUID -->
-<!-- END PAGE CONTENT -->
-
-
-
-
-<div id="product-modal" class="modal fade">
-
+   </div>
 </div>
+<!-- content @e -->
+<!-- Modal Default -->
+<div class="modal fade" tabindex="-1" id="online-modal">
+   <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+         <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+         <em class="icon ni ni-cross"></em>
+         </a>
+         <div class="modal-body modal-body-md">
 
-<!-- START FOOTER -->
-  <%= render "layouts/footer0" %>
-  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
 
-<!-- END FOOTER -->
+
+
+
+
+
+            <%= form_for(current_user, url: "/dashboard/online", method: "post", local: false) do %>
+            <div class="form-group">
+               <label class="form-label">Email</label>
+               <div class="form-control-wrap">
+                  <%= text_field_tag 'email', nil, :placeholder => "", :class => "form-control" %>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="form-label">Amount in USD</label>
+               <div class="form-control-wrap">
+                  <%= text_field_tag 'amount', nil, :placeholder => "15.00", :class => "form-control", :id => "input_hpp_amt" %>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="form-label">Invoice number</label>
+               <div class="form-control-wrap">
+                  <%= text_field_tag 'inv_num', nil, :placeholder => "", :class => "form-control" %>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="form-label"> Invoice description</label>
+               <div class="form-control-wrap">
+                  <%= text_field_tag :inv_desc, nil, :placeholder => "", :class => "form-control"%>
+                  <%= hidden_field_tag :url, kiosk_friendly_url(current_user.kiosk) %>
+                  <%= hidden_field_tag :kiosk_title, current_user.kiosk.title %>
+               </div>
+            </div>
+            <%= submit_tag "Send", :class => "btn btn-lg btn-primary", :id => "btnsend" %>
+            <% end%>
+         </div>
+         <!-- .modal-body -->
+      </div>
+      <!-- .modal-content -->
+   </div>
+   <!-- .modal-dialog -->
 </div>
-<!-- END PAGE CONTENT WRAPPER -->
-</div>
-<!-- END PAGE CONTAINER -->

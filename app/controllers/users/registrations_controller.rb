@@ -1,8 +1,16 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
-  prepend_before_filter :authenticate_scope!, only: [:change_password]
+  prepend_before_action :authenticate_scope!, only: [:change_password]
 
+  layout :set_layout
+  def set_layout
+     if current_user
+       'dashboard'
+     else
+       'auth'
+     end
+  end
   # GET /resource/sign_up
   # def new
   #   super
@@ -14,10 +22,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  #  def edit
-  #    super
+   def edit
 
-  # end
+     
+
+
+
+     if current_user
+      if(current_user.kiosk)
+        @collection =  Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:amount)
+        @gateway_fee = Donation.where(kiosk_id: current_user.kiosk.id).where("tx_status = 'Approved'").sum(:gateway_fee)
+        super
+      end  
+
+
+
+    else
+      redirect_to "/users/sign_in"
+
+    end
+
+    
+    
+
+
+  end
 
   # PUT /resource
   # def update

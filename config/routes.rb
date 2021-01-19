@@ -6,73 +6,50 @@ Rails.application.routes.draw do
   # , omniauth_callbacks: 'omniauth_callbacks'
   # devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 
   devise_scope :user do
-    root to: 'devise/registrations#edit'
+    root to: 'users/registrations#edit'
   end
+
+
 
   resource :user, only: [:edit] do
     collection do
       patch 'update_password'
+      patch 'update'
     end
   end
 
   # kiosk will be shown as donations while receiving donations..like http://paynow.io/donations/1001
-  resources :kiosks, path: :secure
+  resources :kiosks
+  
+  namespace :dashboard do
+    get 'vt', to: '/kiosks#vt'
+    get 'reporting', to: '/kiosks#reporting'
+    get 'donation_detail', to: '/kiosks#donation_detail'
+    get 'bin', to: '/kiosks#bin'
+    get 'online', to: '/kiosks#online'
+    post 'online', to: '/kiosks#submit_online'
+    post 'refund', to: '/kiosks#refund'
+    post 'update_kiosk_profile', to: '/kiosks#update_profile'
+    post 'sendreceipt', to: '/kiosks#sendreceipt'
+    post 'slugupdate', to: '/kiosks#slugupdate'
+    post 'ajx_charge_s1', to: '/pay#ajx_charge_s1'
+    post 'ajx_charge_s2', to: '/pay#ajx_charge_s2'
+    post 'update_notif_pref', to: '/users#update_notif_pref'
+    
+  end
   resources :activations
   resources :terms, only: [:index]
+
+
+  #need to find a way for /secure/
+  #resources :pay, path: :secure
+  get 'secure/:kid', to: 'pay#show'
+  resources :pay, path: '' do
+   
+  
+   end
 end

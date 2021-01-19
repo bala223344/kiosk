@@ -10,13 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-
-//= require pace
-//= require jquery
-//= require jquery_ujs
-//= require bootstrap
-//= require bootstrap-sprockets
+//= require bundle
+//= require jquery_ujs 
+//= require sweetalert2.all.min
+//= require jquery.inputmask.min
 //= require functions
-//= require form_wizard
-//= require_tree .
-//= require bootstrap-wysihtml5
+//= require scripts
+//= require chart-crypto
+//= require jqueryform
+

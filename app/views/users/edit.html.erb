@@ -1,0 +1,53 @@
+
+
+
+  <div class="nk-content nk-content-lg nk-content-fluid">
+                    <div class="container-xl wide-lg">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head">
+                                    <div class="nk-block-head-content">
+                                        <h2 class="nk-block-title fw-normal">Account Setting</h2>
+                                        <div class="nk-block-des">
+                                            <p>You have full control to manage your own account setting. <span class="text-primary"><em class="icon ni ni-info"></em></span></p>
+                                        </div>
+                                    </div>
+                                </div><!-- .nk-block-head -->
+                                <ul class="nk-nav nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#yourac"  data-toggle="tab">Your Account</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#yourbusiness" data-toggle="tab">Your Business</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#security" data-toggle="tab">Security</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#notifications" data-toggle="tab">Notifications</a>
+                                    </li>
+
+                                </ul><!-- .nav-tabs -->
+
+
+
+          <div class="tab-content">
+          <%= render "yourac" %>
+          <%= render "yourbusiness" %>
+          <%= render "security" %>
+          <%= render "notifications" %>
+          </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+   <%= render "youracmodal" %>
+  <%= render "yourbusinessmodal" %>
+

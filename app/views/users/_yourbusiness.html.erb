@@ -1,0 +1,89 @@
+                 <div class="tab-pane" id="yourbusiness">
+<div class="nk-block">
+                                    <div class="nk-block-head">
+                                        <div class="nk-block-head-content">
+                                            <h5 class="nk-block-title">Merchant Account</h5>
+                                            <div class="nk-block-des">
+                                                <p>To change your merchant settings, please contact us.</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block-head -->
+
+
+                                    <div class="card card-bordered">
+                                        <div class="nk-data data-list">
+                                            <div class="data-item">
+                                                <div class="data-col">
+                                                    <span class="data-label">Gateway</span>
+                                                    <span class="data-value text-soft">CardPointe</span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
+                                            </div>
+                                            <div class="data-item">
+                                                <div class="data-col">
+                                                    <span class="data-label">MID</span>
+                                                    <span class="data-value text-soft">
+                                                    
+                                                    <%=@user.merchid%>
+                                                    </span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
+                                            </div>
+                                        </div><!-- .nk-data -->
+                                    </div><!-- .card -->
+
+
+
+                                    <!-- Another Section -->
+                                    <div class="nk-block-head">
+                                        <div class="nk-block-head-content">
+                                            <h5 class="nk-block-title">Receipt Information</h5>
+                                            <div class="nk-block-des">
+                                                <p>This section may be visible on receipts or pages that you choose to make public.</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="card card-bordered">
+                                        <div class="nk-data data-list">
+                                          <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
+                                                <div class="data-col">
+                                                    <span class="data-label">Business Name</span>
+                                                    <span class="data-value"> <%=@user.kiosk.title%></span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                            </div>
+                                            <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
+                                                <div class="data-col">
+                                                    <span class="data-label">Slogan</span>
+                                                    <span class="data-value text-soft"><%=@user.kiosk.slogan%></span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                            </div>
+                                            <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
+                                                <div class="data-col">
+                                                    <span class="data-label">Phone Number</span>
+                                                    <span class="data-value"><%=@user.kiosk.sms_number%></span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                            </div>
+                                            <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#business1">
+                                                <div class="data-col">
+                                                    <span class="data-label">Website URL</span>
+                                                    <span class="data-value"><%=@user.kiosk.website%></span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                            </div>
+                                            <div class="data-item" data-toggle="modal" data-target="#business-edit" data-tab-target="#address">
+                                                <div class="data-col">
+                                                    <span class="data-label">Physical Address</span>
+                                                    <span class="data-value"><%=@user.kiosk.staddr%> <br><%=@user.kiosk.city%>, <%=@user.kiosk.state%> <%=@user.kiosk.zip%></span>
+                                                </div>
+                                                <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                            </div>
+                                        </div><!-- .nk-data -->
+                                    </div><!-- .card -->
+
+
+
+                                </div>
+                                </div>

@@ -1,0 +1,74 @@
+<!-- sidebar @s -->
+      <div class="nk-sidebar nk-sidebar-fixed is-theme " data-content="sidebarMenu">
+          <div class="nk-sidebar-element nk-sidebar-head">
+              <div class="nk-sidebar-brand">
+                  <a href="/" class="logo-link nk-sidebar-logo">
+                      <img class="logo-light logo-img" src="<%=asset_path("logo.png") %>" srcset="<%=asset_path("logo2x.png") %> 2x" alt="logo">
+                      <img class="logo-dark logo-img" src="<%=asset_path("logo-dark.png") %>" srcset="<%=asset_path("logo-dark2x.png") %> 2x" alt="logo-dark">
+                  </a>
+              </div>
+              <div class="nk-menu-trigger mr-n2">
+                  <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em class="icon ni ni-arrow-left"></em></a>
+              </div>
+          </div><!-- .nk-sidebar-element -->
+          <div class="nk-sidebar-element">
+              <div class="nk-sidebar-content">
+                  <div class="nk-sidebar-menu" data-simplebar>
+                      <ul class="nk-menu">
+
+                          <li class="nk-menu-item <%=(request.path == "/")?"active":""%>">
+                              <a href="/" class="nk-menu-link  ">
+                                  <span class="nk-menu-icon"><em class="icon ni ni-dashboard"></em></span>
+                                  <span class="nk-menu-text"> 
+                                  Dashboard</span>
+                              </a>
+                          </li><!-- .nk-menu-item -->
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/online")?"active":""%>"">
+                              <a data-no-turbolink='true'   href="/dashboard/online " class="nk-menu-link">
+                                  <span class="nk-menu-icon"><em class="icon ni ni-layout-alt"></em></span>
+                                  <span class="nk-menu-text">Online Payments</span>
+                              </a>
+                          </li><!-- .nk-menu-item -->
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/vt")?"active":""%>"">
+                              <a  data-no-turbolink='true'  href="/dashboard/vt" class="nk-menu-link">
+                                  <span class="nk-menu-icon"><em class="icon ni ni-cart"></em></span>
+                                  <span class="nk-menu-text">Virtual Terminal</span>
+                              </a>
+                          </li><!-- .nk-menu-item -->
+                        <!--   <li class="nk-menu-item <%=(request.path == "/dashboard/reporting")?"active":""%>"">
+                              <a href="html/contactless.html" class="nk-menu-link">
+                                  <span class="nk-menu-icon"><em class="icon ni ni-qr"></em></span>
+                                  <span class="nk-menu-text">Contactless</span>
+                              </a>
+                          </li> temp dan --><!-- .nk-menu-item -->
+                            <li class="nk-menu-item <%=(request.path == "/dashboard/reporting")?"active":""%>"">
+                                <a data-turbolinks="false" href="/dashboard/reporting" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>
+                                    <span class="nk-menu-text">Reporting</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                          <li class="nk-menu-item <%=(request.path.include?  "/user/")?"active":""%>"">
+
+                            <%= link_to edit_user_path(current_user), class: "nk-menu-link"  do %>
+                                  <span
+                                          class="nk-menu-icon"><em class="icon ni ni-account-setting-alt"></em></span>
+                                          <span class="nk-menu-text">Settings</span>
+                                  <% end %>
+
+
+                          </li><!-- .nk-menu-item -->
+                          <li class="nk-menu-item <%=(request.path == "/dashboard/online")?"active":""%>"">
+
+                            <%= link_to destroy_user_session_path, class: "nk-menu-link" do %>
+                            <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
+                                 <span class="nk-menu-text">Logout</span>
+                                  <% end %>
+
+
+                          </li><!-- .nk-menu-item -->
+                      </ul><!-- .nk-menu -->
+                  </div><!-- .nk-sidebar-menu -->
+              </div><!-- .nk-sidebar-content -->
+          </div><!-- .nk-sidebar-element -->
+      </div>
+      <!-- sidebar @e -->

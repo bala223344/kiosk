@@ -1,0 +1,139 @@
+
+                         <div class="tab-pane" id="security">
+                                   <div class="nk-block">
+                                    <div class="nk-block-head">
+                                        <div class="nk-block-head-content">
+                                            <h5 class="nk-block-title">Security Settings</h5>
+                                            <div class="nk-block-des">
+                                                <p>These settings are helps you keep your account secure.</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="card card-bordered">
+                                        <div class="card-inner-group">
+
+                                            <div class="card-inner">
+                                                <div class="between-center flex-wrap flex-md-nowrap g-3">
+                                                    <div class="nk-block-text">
+                                                        <h6>Change Password</h6>
+                                                        <p>Set a unique password to protect your account.</p>
+                                                    </div>
+                                                    <div class="nk-block-actions flex-shrink-sm-0">
+                                                        <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
+                                                            <li class="order-md-last">
+                                                                <a href="#"  class="btn btn-primary"  data-toggle="modal" data-target="#profile-pwd">Change Password</a>
+                                                            </li>
+                                                            <li>
+                                                                <em class="text-soft text-date fs-12px">Last changed: <span>
+                                                                <%=(@user.password_changed_at)?
+                                                                @user.password_changed_at.strftime("%^b %d, %Y %H:%M %p"): '-' %>
+
+                                                                </span></em>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card-inner -->
+
+                                        </div><!-- .card-inner-group -->
+                                    </div><!-- .card -->
+
+
+                                </div><!-- .nk-block -->
+
+                                </div>
+
+
+
+
+
+
+
+
+
+  <%= form_for(@user, :url => { :action => "update_password"  }, :remote => true, :html => {:class => "update_password"}, data: {type: 'json'} ) do |f| %>
+
+
+  <!-- @@ Profile Edit Modal @e -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="profile-pwd">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                            <div class="modal-body modal-body-lg">
+    
+
+                                <h5 class="title">Change Password</h5>
+                             
+
+                                                      <% if @user.errors.any? %>
+
+
+    <% @user.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger" role="alert"><%= msg %></div>
+    <% end %>
+
+<% end %>
+
+                                        <div class="row gy-4">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="language">Current Password</label>
+
+                                                     <%= f.password_field :current_password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
+                                                </div>
+                                            </div>
+                                            </div>
+                                             <div class="row gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+
+                                                    <label class="form-label" for="time-zone">New Password</label>
+                                                  
+                                                     <%= f.password_field :password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+
+                                                    <label class="form-label" for="time-zone">Confirm Password</label>
+                                                  
+                                                     <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                    <li>
+                                                          <%= f.submit "Save", :class => "btn btn-lg btn-primary" %>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" data-dismiss="modal" class="link link-light">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            
+ <div class="col-12 ">
+    <div class="alert alert-danger d-none text-capitalize"  id="pwd-err">
+    </div>
+ </div>
+                                        </div>
+                                  
+                            </div><!-- .modal-body -->
+                        </div><!-- .modal-content -->
+                    </div><!-- .modal-dialog -->
+                </div><!-- .modal -->
+
+<% end %>
+
+
+

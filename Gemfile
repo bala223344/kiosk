@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.1'
+gem 'rails', '5.2'
 
 # gem 'bundler', '1.17.1'
 
@@ -18,6 +18,8 @@ gem 'coffee-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+gem 'webpacker', '~> 4.x'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 # gem 'spring',        group: :development
@@ -50,6 +52,7 @@ gem 'bigdecimal', '1.4.2'
 gem 'gaffe'
 gem 'rqrcode'
 gem 'signalwire'
+gem 'kaminari'
 
 
 gem 'rest-client'

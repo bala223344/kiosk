@@ -1,99 +1,95 @@
- <!-- START PAGE-CONTAINER -->
-    <div class="login-wrapper ">
-      <!-- START Login Background Pic Wrapper-->
-      <div class="bg-pic">
-        <!-- START Background Pic-->
-        <%= image_tag("home.jpg", :class => "lazy" ) %>
+ 
 
-        <!-- END Background Pic-->
-        <!-- START Background Caption-->
-        <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
-          <h2 class="semi-bold text-white">
-					<!-- title -->  </h2>
-          <p class="small">
-            © 2020 PayNow.io.    &nbsp;&nbsp;&nbsp; <a target="_new" href="/terms">Terms of Use</a>
-          </p>
-        </div>
-        <!-- END Background Caption-->
-      </div>
-      <!-- END Login Background Pic Wrapper-->
-      <!-- START Login Right Container-->
-      <div class="login-container bg-white">
-        <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
-<!--           <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22"> -->
-<h2>Hosted Payment Pages</h2>
-<p class="hint-text small">Build a quick and easy payment page in 55 seconds. We utilize a compliant surcharging system or an optional a gateway fee model to eliminate most of your costs . <a target="blank" href="/secure/1000">Click here to see a working demo.</a> <p>
-          <p class="p-t-20">Sign into your PayNow.io account</p>
-          <!-- START Login Form -->
+          <div class="card card-bordered">
+                            <div class="card-inner card-inner-lg">
+                                <div class="nk-block-head">
+                                    <div class="nk-block-head-content">
+
+                                        <h4 class="nk-block-title">Sign-In</h4>
+                                        <div class="nk-block-des">
+                                            <p>Build a quick and easy payment page in 55 seconds. We utilize a compliant surcharging system or an optional a gateway fee model to eliminate most of your costs . <a target="blank" href="/secure/1000">Click here to see a working demo.</a></p>
+
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <%= form_for(resource, as: resource_name, url: session_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>
+                                    <div class="form-group">
+                                    
 
 
-           <%= form_for(resource, as: resource_name, url: session_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>
-            <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Login</label>
-              <div class="controls">
+                                        <div class="form-label-group">
+                                      
+                                            <label class="form-label" for="default-01">Email</label>
+                                        </div>
+                                        	<%= f.text_field :email, :placeholder => "Email", :class => "form-control form-control-lg", :required => true%>
 
-   				<%= f.text_field :login, :placeholder => "UserName", :class => "form-control", :required => true%></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="password">Password</label>
+                                                     <%= link_to "Forgot password?", new_password_path(resource_name),  :class => "link link-primary link-sm" %>
 
-              </div>
-            </div>
-            <!-- END Form Control-->
-            <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Password</label>
-              <div class="controls">
+                                        </div>
+                                        <div class="form-control-wrap">
+                                            <a href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
+                                                <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                                <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                            </a>
 
-		    <%= f.password_field :password, autocomplete: "off", :placeholder => "Credentials", :class => "form-control",:required => true %>
+                                              <%= f.password_field :password, autocomplete: "off", :placeholder => "Credentials", :class => "form-control",:required => true %>
 
-              </div>
-            </div>
-            <!-- START Form Control-->
-            <div class="row">
-              <div class="col-md-6 ">
-                <div class="checkbox pull-left">
-
-
-      			<%= f.check_box :remember_me, id:"checkbox1" %>
-                  <label for="checkbox1">Keep Me Signed in</label>
-                </div>
-              </div>
-
-              <div class="col-md-6 ">
-                <div class="checkbox pull-right">
-                <%= link_to "Forgot password?", new_password_path(resource_name) %><br />
-              </div>
-		</div>
-            </div>
-            <!-- END Form Control-->
-
-             <%= f.submit "Sign in", :class => "btn btn-primary btn-cons m-t-10 pull-left" %>
-             <%= link_to "Register", new_registration_path(resource_name),  :class => "btn btn-success btn-cons m-t-10 pull-right", :role => "button"%>
+                                            
+                                        </div>
+                                    </div>
 
 
-         <% end %>
-          <!--END Login Form-->
-          <div class="pull-bottom sm-pull-bottom">
-            <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
-<!--
-            <small><a href="privacy">Privacy Policy</a></small>
-			<small>© 2020 PayNow.io.</small>
--->
+   <div class="form-group">
+                                       
+
+                                        
+                                    <div class="custom-control custom-checkbox">
+    	<%= f.check_box :remember_me, :class => "custom-control-input",  id:"customCheck1" %>
+    <label class="custom-control-label" for="customCheck1">Keep Me Signed in</label>
+</div>
 
 
-              <!--
-<div class="col-sm-3 col-md-2 no-padding">
-                <img alt="" class="m-t-5" data-src="assets/img/demo/pages_icon.png" data-src-retina="assets/img/demo/pages_icon_2x.png" height="60" src="assets/img/demo/pages_icon.png" width="60">
-              </div>
-              <div class="col-sm-9 no-padding m-t-10">
-                <p><small>privacy policy</small>
-                </p>
-              </div>
--->
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- END Login Right Container-->
-    </div>
-    <!-- END PAGE CONTAINER -->
-    <%= render "layouts/chat" %>
+	
+
+
+                               
+
+                                    </div>
+
+
+
+
+
+                                    <div class="form-group">
+                                           <%= f.submit "Sign in", :class => "btn btn-lg btn-primary btn-block" %>
+
+                                    </div>
+
+   <% flash.each do |name, msg| %>
+                                    <% if msg.is_a?(String) && !msg.blank? %>
+                                      <%= content_tag :div, msg, :class => "alert  alert-danger flash_#{name}" %>
+                                    <% end %>
+                                  <% end %>
+                                 <% end %>
+
+
+                                <div class="form-note-s2 text-center pt-4"> New on our platform? 
+
+
+                                <%= link_to "Create an account", new_registration_path(resource_name)%>
+
+
+                                
+                                </div>
+                           
+                             
+                            </div>
+                        </div>
+
+ 
+ 
