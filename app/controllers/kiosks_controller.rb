@@ -188,6 +188,7 @@ class KiosksController < BaseController
     kiosk = Kiosk.find(params[:id])
     kiosk.slug = params[:slug]
     kiosk.save
+   
    # KioskMailer.modal_receipt_email(donation).deliver
 
   end

@@ -17,7 +17,7 @@
 <!-- Hidden Mobile -->
 <ul class="nk-block-tools g-3 g-3 d-none d-sm-block">
    <li class="nk-block-tools-opt">
-      <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
+      <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_friendly_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
       <em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
    </li>
 <!-- Hidden Temp Dan
@@ -42,7 +42,7 @@
                     <!-- Visible Mobile Only -->
                      <ul class="nk-block-tools g-3 d-block d-sm-none">
                         <li class="nk-block-tools-opt">
-                           <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
+                           <a href="<%=(current_user.kiosk.slug)?slug_url(current_user.kiosk):kiosk_friendly_url(current_user.kiosk) %>" class="btn btn-warning" target="_blank">
                            <em class="icon ni ni-mobile"></em><span>HPP</span></a>
                         </li>
                         <!-- Hidden Temp Dan

@@ -26,7 +26,7 @@
               <!-- Hidden on mobile only -->
                <ul class="nk-block-tools g-3 d-none d-sm-block">
                   <li class="nk-block-tools-opt">
-                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_url(@kiosk) %>" class="btn btn-warning" target="_blank">
+                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_friendly_url(@kiosk) %>" class="btn btn-warning" target="_blank">
                       <em class="icon ni ni-mobile"></em><span>Launch HPP</span></a>
                   </li>
                   <li class="nk-block-tools-opt">
@@ -41,7 +41,7 @@
 <!-- Visible on mobile only -->
                <div class="nk-block-tools g-3 d-block d-sm-none">
                   <div class="nk-block-tools-opt">
-                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_url(@kiosk) %>" class="btn btn-sm btn-warning" target="_blank">
+                    <a href="<%=(@kiosk.slug)?slug_url(@kiosk):kiosk_friendly_url(@kiosk) %>" class="btn btn-sm btn-warning" target="_blank">
                       <em class="icon ni ni-mobile"></em><span>Launch</span></a>
                   </div>
 
@@ -101,7 +101,7 @@
                   <div class="form-icon">
                      <em class="icon ni ni-link-alt"></em>
                   </div>
-                  <input type="text" class="form-control copy-text" id="refUrl" value="<%=kiosk_url(@kiosk) %>">
+                  <input type="text" class="form-control copy-text" id="refUrl" value="<%=kiosk_friendly_url(@kiosk) %>">
                </div>
                <% end %>
             </div>

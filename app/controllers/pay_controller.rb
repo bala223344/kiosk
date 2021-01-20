@@ -7,7 +7,7 @@ class PayController < NoAuthController
  
     #slug
     if params[:id]
-      @kiosk = Kiosk.find_by(slug: params[:id])
+      @kiosk = Kiosk.find_by("slug ILIKE ?", params[:id])
     elsif params[:kid]
       @kiosk = Kiosk.find(params[:kid])
     end
