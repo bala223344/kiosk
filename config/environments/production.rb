@@ -32,7 +32,7 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  config.action_mailer.default_url_options = { host: 'https://paynow.com' }
+  config.action_mailer.default_url_options = { host: 'https://paynow.io' }
   config.action_mailer.delivery_method = :sparkpost
 
   # config.action_mailer.delivery_method = :sendmail
