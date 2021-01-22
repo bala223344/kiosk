@@ -97,13 +97,17 @@ img {
 }
 
 body {
-	background: url(./bg1.png);
-	/* bg */
+	/* background: url(./bg1.png); DAN  bg */
+	background-color: #34495E;
 	background-size: cover
 }
 
 .soft {
 	color: #A9A9A9;
+}
+
+.disclaimer {
+	font-size: 12px;
 }
 
 .wrapper {
@@ -132,7 +136,7 @@ body {
 	background: #fff;
 	margin-right: 60px;
 	padding: 107px 75px 65px;
-	border-radius: 25px;
+	border-radius: 15px;
 	/* dan */
 	-webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, .5);
 	/* dan */

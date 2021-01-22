@@ -23,12 +23,12 @@
                                                             <li class="order-md-last">
                                                                 <a href="#"  class="btn btn-primary"  data-toggle="modal" data-target="#profile-pwd">Change Password</a>
                                                             </li>
-                                                            <li>
+                                                            <li><!-- Temp Hidden
                                                                 <em class="text-soft text-date fs-12px">Last changed: <span>
                                                                 <%=(@user.password_changed_at)?
                                                                 @user.password_changed_at.strftime("%^b %d, %Y %H:%M %p"): '-' %>
-
-                                                                </span></em>
+                                                              </span></em>
+                                                                -->
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -60,10 +60,10 @@
                         <div class="modal-content">
                             <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                             <div class="modal-body modal-body-lg">
-    
+
 
                                 <h5 class="title">Change Password</h5>
-                             
+
 
                                                       <% if @user.errors.any? %>
 
@@ -89,7 +89,7 @@
                                                 <div class="form-group">
 
                                                     <label class="form-label" for="time-zone">New Password</label>
-                                                  
+
                                                      <%= f.password_field :password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
 
 
@@ -101,7 +101,7 @@
                                                 <div class="form-group">
 
                                                     <label class="form-label" for="time-zone">Confirm Password</label>
-                                                  
+
                                                      <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
 
 
@@ -121,19 +121,16 @@
                                             </div>
 
 
-                                            
+
  <div class="col-12 ">
     <div class="alert alert-danger d-none text-capitalize"  id="pwd-err">
     </div>
  </div>
                                         </div>
-                                  
+
                             </div><!-- .modal-body -->
                         </div><!-- .modal-content -->
                     </div><!-- .modal-dialog -->
                 </div><!-- .modal -->
 
 <% end %>
-
-
-

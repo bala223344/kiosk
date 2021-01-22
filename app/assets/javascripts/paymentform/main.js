@@ -25,43 +25,49 @@ $(function () {
                 //ALLOW NEXT STEP
                 return true;
 			}
-			
-		
+
+
 
 			if (newIndex === 1) {
 
-				
-			
 
 
-				
-				
+
+
+
+
 				if (!$("#amount").val()) {
 					$("#amount").addClass('is-invalid')
 					return false
 				} else {
 
 				formatter = new (Intl.NumberFormat)('en-US',{style: 'currency', currency: 'USD'})
+				formatter2 = new (Intl.NumberFormat)('en-US',{style: 'percent', minimumFractionDigits:2}) // Dan
 				var res = $('#amount').val().replace(/\$|\,/gi, "");
 				$percent = parseFloat($("#scharge_percent").val())
-				scharge_percent		
+				scharge_percent
 				$amt = parseFloat(res)
 				$amt += 0.00
 				$percent = parseFloat($("#scharge_percent").val())
-				$percent = ($percent / 100) 
+				$percent = ($percent / 100)
 				$fee =  $amt * $percent
 				$amtandfee =  $amt +  $fee
 				$amt = $amt.toFixed(3)
+				$('#display_org').html(formatter.format($amt)) // Dan
+
+				$('#display_percent').html(formatter2.format($percent)) // Dan
+
 				$('#display_fee').html(formatter.format($fee))
 
 				$('#display_amt').html(formatter.format($amtandfee))
+				$('#display_amt2').html(formatter.format($amtandfee)) // Dan
 
 					$("#amount").removeClass('is-invalid')
-				
+
 					$('.steps ul').addClass('step-2');
 					return true;
 				}
-				
+
 				//		$('.container').removeClass('hidden'); // DAN
 
 			} else {
@@ -71,7 +77,7 @@ $(function () {
 
 				const form = document.querySelector('form');
 				formdata = Object.fromEntries(new FormData(form).entries());
-				
+
 				// if(!$("#mytoken").val()) {
 				// 	$("#step2-error").removeClass("d-none").html('Card gateway error! Cannot proceed')
 				// 	return false;
@@ -89,15 +95,15 @@ $(function () {
 					return false
 				}
 
-				
-				loading(true)			
+
+				loading(true)
 
 				$.ajax({ url: '/dashboard/ajx_charge_s1',
 				type: 'POST',
 				beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 				data: formdata,
 				success: function(response) {
-					
+
 					if(response.respstat == 'A') {
 						$("#step2-error").addClass("d-none")
 						formatter = new (Intl.NumberFormat)('en-US',{style: 'currency', currency: 'USD'})
@@ -123,8 +129,8 @@ $(function () {
 
 
 
-				
-				
+
+
 
 
 				$('.steps ul').addClass('step-3');
@@ -133,17 +139,17 @@ $(function () {
 			}
 			if (newIndex === 3) {
 
-				loading(true)	
+				loading(true)
 				$.ajax({ url: '/dashboard/ajx_charge_s2',
 				type: 'POST',
 				beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 				data: formdata,
 				success: function(response) {
-					
+
 					if(response.setlstat != 'Rejected') {
 						$("#step3-error").addClass("d-none")
 						$("#retref").html(retref)
-						loading(false)	
+						loading(false)
 						is_async_step =  true
 						$("#wizard").steps("next");
 						setTimeout(function () {
@@ -155,8 +161,8 @@ $(function () {
 						return false;
 					}
 
-					
-					
+
+
 
 				}
 				});
@@ -164,12 +170,12 @@ $(function () {
 
 				$('.steps ul').addClass('step-4');
 				$('.actions ul').addClass('step-last');
-			} 
-			
+			}
+
 			if (currentIndex === 4) {
 				$('.steps ul').removeClass('step-4');
 				$('.actions ul').removeClass('step-last');
-			
+
 			}
 			return false;
 		},
@@ -208,9 +214,9 @@ $(function () {
 // 	var mytoken = document.getElementById('mytoken');
 // 	mytoken.value = ""
 // 	document.getElementById('mytoken').value = JSON.parse(event.data);
-	
+
 // 	var token = JSON.parse(event.data);
-	
+
 // 	mytoken.value = token.message;
-	
+
 // }, false);

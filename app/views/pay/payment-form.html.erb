@@ -9,7 +9,7 @@
                <section>
                   <h3><%=@kiosk.title %></h3>
                   <p class="soft">
-                     Please complete the following to complete your payment:
+                     Please complete the following form to process your payment:
                   </p>
                   <br />
                   <div class="form-row form-group form-container">
@@ -99,9 +99,16 @@
                <h4></h4>
                <section>
                   <h3><span id="display_amt"></span> Will Be Charged</h3>
-                  <span class="soft">Includes a gateway fee of <span id="display_fee"></span> (gateway fees are automatically waived on the next page if paying with a debit card)</span>
-                  <br><br>
-                  <div class="form-row form-group form-container">
+                  <!-- Based on Fee Recovery Model DAN -->
+                  <% if @kiosk.user.cmodel == 'surcharge' %>
+                  <p>
+                  <span class="disclaimer">A <span id="display_percent"></span> gateway fee is applied to all transactions. Would you like to save <span id="display_fee"></span> today by paying with a debit card? If so, please use your debit card below your total will be only <span id="display_org"></span>.</span><br>
+
+                   <% else  %>
+                   <span class="disclaimer">A <span id="display_percent"></span> gateway fee is applied to all transactions. Would you like to save <span id="display_fee"></span> today by paying with cash or check? If so, please cancel this transaction and contact <%=@kiosk.title %> directly to arange an alternative payment.</span>
+                   <% end  %>
+                   </p>
+                  <div class="form-row form-group form-container" style="margin-top: 18px">
                      <div class="form-holder field-container">
                         <label for="name">
                         Name on Card *
@@ -195,7 +202,6 @@
 
 
                   </div>
-
                     <div class="alert alert-danger d-none" role="alert" id="step2-error">
                   </div>
                </section>
@@ -205,14 +211,14 @@
                      <br>
                      <div class="amount">
                         <span class="big final_amt" > </span>
-                        <p>Press "continue" <br>to send your payment</p>
+                        <p>Press "Continue" to<br>Confirm Your Payment</p>
                      </div>
-                     <p class="shipping">
-                        The gateway fee is automatically waived for cash, wire, ACH or check payments and is an “in-kind incentive” to incentivize alternative payment methods in compliance with section (2)(A) of the Durbin Amendment, a provision of United States Federal Law, 15 U.S.C & 169o-2.
-                     </p>
+
                       <div class="alert alert-danger d-none" role="alert" id="step3-error">
 
                   </div>
+                  </div><div class="dislaimer" style="margin-top: 18px">
+                  <p class="text-justify">The gateway fee is waived for cash, wire, ACH or check payments and is the equivalent to an “in-kind incentive”, to incentivize alternative payment methods in compliance with section (2)(A) of the Durbin Amendment, a provision of United States Federal Law, 15 U.S.C & 169o-2. Click "Continue" to agree and proceed with your payment. Or you may close this page to cancel the transaction. Any pending authoriztion charge will automatically fall off your card within 3-5 business days.</p>
                   </div>
                </section>
                <h4></h4>
