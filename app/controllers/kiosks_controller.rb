@@ -5,7 +5,7 @@ class KiosksController < BaseController
       @kiosk = current_user.kiosk
       @user = current_user
       page = (params[:page]?params[:page]:1)
-      @donations = current_user.donations.order('id desc').page(page).per(20)
+      @donations = current_user.kiosk.donations.order('id desc').page(page).per(20)
       @tz = current_user.tz
     else
       @kiosk = nil
@@ -53,7 +53,7 @@ class KiosksController < BaseController
 
 
   def donation_detail
-    donation = current_user.donations.find(params[:id])
+    donation = current_user.kiosk.donations.find(params[:id])
 
     temp = Hash.new
 
@@ -94,8 +94,8 @@ class KiosksController < BaseController
         }
         format.json {
           page = (params[:page]?params[:page]:1)
-
-          recs = current_user.donations
+          recs = current_user.kiosk.donations
+          #recs = Donations.where(kiosk_id: current_user.kiosk.id)
           q  = params[:q]
           sort_order = params[:sort_order]
           sort_field = params[:sort_field]
