@@ -104,7 +104,8 @@ class KiosksController < BaseController
 
          # donations = donations.where("tx_status = ?", "refunded")
          if q 
-          if q.to_s =~ /\A[-+]?\d*\.?\d+\z/ 
+            #don;t compare if it is too large..may be ref id
+          if q.to_s =~ /\A[-+]?\d*\.?\d+\z/ and q.length < 7
             #if an int include id as well
             if Integer(q ,  exception: false)
               recs = recs.where("amount = ? OR gateway_fee = ? OR id = ?", q, q, q)
@@ -114,7 +115,7 @@ class KiosksController < BaseController
             end
 
           else
-            recs = recs.where("tx_status LIKE ? OR email LIKE ? OR name LIKE ? OR card_type LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
+            recs = recs.where("tx_status LIKE ? OR email LIKE ? OR name LIKE ? OR card_type LIKE ? OR cardconnectref LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
           end
          end
 
