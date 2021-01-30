@@ -211,7 +211,21 @@
                      <br>
                      <div class="amount">
                         <span class="big final_amt" > </span>
+
+                        <% if params[:demo] == "1" %>
+                        <p>Would you like to leave a tip?</p>
+
+                        <div class="btn-group btn-group-justified" style="margin-top: 20px; margin-bottom: 20px">
+                          <a href="#" class="btn btn-default">10%</a>
+                          <a href="#" class="btn btn-default">15%</a>
+                          <a href="#" class="btn btn-default">20%</a>
+                          <a href="#" class="btn btn-default">No Tip</a>
+                        </div>
+
+                        <% else %>
                         <p>Press "Continue" to<br>Confirm Your Payment</p>
+                        <% end %>
+
                      </div>
 
                       <div class="alert alert-danger d-none" role="alert" id="step3-error">
