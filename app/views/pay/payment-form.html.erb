@@ -212,14 +212,14 @@
                      <div class="amount">
                         <span class="big final_amt" > </span>
 
-                        <% if params[:demo] == "1" %>
+                        <% if @kiosk.tips %>
                         <p>Would you like to leave a tip?</p>
 
                         <div class="btn-group btn-group-justified" style="margin-top: 20px; margin-bottom: 20px">
-                          <a href="#" class="btn btn-default">10%</a>
-                          <a href="#" class="btn btn-default">15%</a>
-                          <a href="#" class="btn btn-default">20%</a>
-                          <a href="#" class="btn btn-default">No Tip</a>
+                          <a data-val="10"  class="btn btn-default btn_tips">10%</a>
+                          <a data-val="15" class="btn btn-default btn_tips">15%</a>
+                          <a data-val="20" class="btn btn-default btn_tips">20%</a>
+                          <a data-val="0" class="btn btn-default btn_tips">No Tip</a>
                         </div>
 
                         <% else %>

@@ -426,6 +426,14 @@ class KiosksController < BaseController
   end
 
 
+  def update_kiosk_pref
+    @kiosk = current_user.kiosk
+    if @kiosk.update(profile_params)
+
+    end
+
+  end
+
   def update_profile
     @kiosk = current_user.kiosk
     if @kiosk.update(profile_params)
@@ -442,6 +450,6 @@ class KiosksController < BaseController
   end
 
   def profile_params
-    params.require(:kiosk).permit(:title, :sms_number, :city, :zip, :state, :staddr, :website, :slogan )
+    params.require(:kiosk).permit(:title, :sms_number, :city, :zip, :state, :staddr, :website, :slogan, :tips )
   end
 end

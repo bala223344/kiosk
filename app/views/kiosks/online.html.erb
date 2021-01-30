@@ -105,6 +105,28 @@
                </div>
                <% end %>
             </div>
+
+              <div class="nk-block-content">
+              <br />
+                                        <div class="gy-3">
+                                            <div class="g-item">
+                                                <div class="custom-control custom-switch">
+
+                                                  <% if @kiosk.tips %>
+                                                <input type="checkbox" class="custom-control-input" id="chk-tips"  checked>
+
+                                            <% else %>
+                                                <input type="checkbox" class="custom-control-input" id="chk-tips">
+                                            <% end %>
+
+
+                                                   
+                                                    <label class="custom-control-label" for="chk-tips">Add tips selection on your payment page?</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- .nk-block-content -->
          </div>
          <!-- .nk-refwg-invite -->
          <div class="nk-refwg-stats card-inner bg-lighter">
