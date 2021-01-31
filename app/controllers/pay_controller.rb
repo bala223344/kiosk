@@ -142,9 +142,6 @@ class PayController < NoAuthController
      #         params[:kiosk][:donations_attributes]['0'][:donated_by] = current_user.id
             
 
-     print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-    print cresponse
-    print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 
               setlstat = (cresponse['respstat'] == "A") ? "Approved" : cresponse['resptext']
 
@@ -189,11 +186,11 @@ class PayController < NoAuthController
                 if Donation.create( params )
 
                   if !email.blank? && email != ''
-                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
+                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"] }
                     KioskMailer.receipt_email(charge).deliver
                   end
 
-                  charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"]}
+                  charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"]}
                   KioskMailer.owner_email(charge).deliver
 
                 end
