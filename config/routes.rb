@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     post 'online', to: '/kiosks#submit_online'
     post 'refund', to: '/kiosks#refund'
     post 'update_kiosk_profile', to: '/kiosks#update_profile'
+    post 'update_kiosk_pref', to: '/kiosks#update_kiosk_pref'
     post 'sendreceipt', to: '/kiosks#sendreceipt'
     post 'slugupdate', to: '/kiosks#slugupdate'
     post 'ajx_charge_s1', to: '/pay#ajx_charge_s1'

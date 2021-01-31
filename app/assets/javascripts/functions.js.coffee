@@ -40,6 +40,9 @@ $(".slug_form").on("ajax:success", (e, data, status, xhr) ->
 $('#hpp-sms').change ->
   formdata = {notify_sms_hpp : $(this).is(":checked")}
   saveNotif(formdata)
+$('#chk-tips').change ->
+  formdata = {tips : $(this).is(":checked")}
+  saveKioskPref(formdata)
 $('.dark-switch').click ->
   dark_mode = false
   if $(this).hasClass('active')
@@ -118,6 +121,22 @@ $('#btnsend').click ->
 
 
 
+saveKioskPref = (formdata) ->
+  $.ajax
+    url: '/dashboard/update_kiosk_pref'
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    data: kiosk: formdata
+    success: (response) ->
+      Swal.fire({
+        title: 'Success!',
+        text: 'Updated successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+      return
 saveNotif = (formdata) ->
   $.ajax
     url: '/dashboard/update_notif_pref'

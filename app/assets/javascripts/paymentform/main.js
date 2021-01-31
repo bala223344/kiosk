@@ -8,9 +8,14 @@ function loading(vis) {
 }
 $(function () {
 	var retref = null
-	var final_amt = ""
+	var tip_amt = 0
 	var is_async_step = false;
 	var formdata = null
+	var tip_per = 0
+
+
+	
+
 
 	$("#wizard").steps({
 		headerTag: "h4",
@@ -20,6 +25,9 @@ $(function () {
 		transitionEffectSpeed: 500,
 		saveState: true,
 		onStepChanging: function (event, currentIndex, newIndex) {
+
+			
+
 			if (is_async_step) {
                 is_async_step = false;
                 //ALLOW NEXT STEP
@@ -78,10 +86,7 @@ $(function () {
 				const form = document.querySelector('form');
 				formdata = Object.fromEntries(new FormData(form).entries());
 
-				// if(!$("#mytoken").val()) {
-				// 	$("#step2-error").removeClass("d-none").html('Card gateway error! Cannot proceed')
-				// 	return false;
-				// }
+		
 
 				if (!$("#name").val()) {
 					$("#name").addClass('is-invalid')
@@ -104,14 +109,17 @@ $(function () {
 				data: formdata,
 				success: function(response) {
 
-					if(response.respstat == 'A') {
-						$("#step2-error").addClass("d-none")
-						formatter = new (Intl.NumberFormat)('en-US',{style: 'currency', currency: 'USD'})
-						amt = parseFloat(response.amount)
-						final_amt = formatter.format(amt)
-						$(".final_amt").html(formatter.format(amt))
-						retref = response.retref
-						formdata["retref"] = retref
+					if(response.amount ) {
+						// $("#step2-error").addClass("d-none")
+						// formatter = new (Intl.NumberFormat)('en-US',{style: 'currency', currency: 'USD'})
+						 amt = parseFloat(response.amount)
+						 final_amt = formatter.format(amt)
+						 $(".final_amt").html(formatter.format(amt))
+						// retref = response.retref
+						 formdata["orig_amt"] =  parseFloat(response.orig_amt)
+						 formdata["fee"] =  parseFloat(response.fee)
+
+
 						loading(false)
 						is_async_step =  true
 						$("#wizard").steps("next");
@@ -130,23 +138,23 @@ $(function () {
 
 
 
-
-
-
 				$('.steps ul').addClass('step-3');
 			} else {
 				$('.steps ul').removeClass('step-3');
 			}
 			if (newIndex === 3) {
 
+				formdata['tip_amt'] = tip_amt
+				formdata["tip_percent"] =  tip_per
 				loading(true)
+
 				$.ajax({ url: '/dashboard/ajx_charge_s2',
 				type: 'POST',
 				beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 				data: formdata,
 				success: function(response) {
 
-					if(response.setlstat != 'Rejected') {
+					if(response.setlstat == 'Approved') {
 						$("#step3-error").addClass("d-none")
 						$("#retref").html(retref)
 						loading(false)
@@ -201,8 +209,20 @@ $(function () {
 		$(this).addClass('active');
 	})
 
+	$(".btn_tips").click(function () {
+		tip_per =  parseInt($(this).data('val'))
+
+		amt = formdata['orig_amt']
+		fee = formdata['fee']
+		tip_amt = (tip_per / 100) * amt
+		final_amt = (amt + fee + tip_amt)
+		$(".final_amt").html(formatter.format(final_amt))
+		
+	})
 
 }(jQuery)); // Dan Added jQuery ending from };
+
+
 
 //}) // remove if using JQ
 
