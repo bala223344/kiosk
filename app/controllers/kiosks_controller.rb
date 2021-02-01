@@ -152,6 +152,7 @@ class KiosksController < BaseController
             temp["tx_status"] =  donation.tx_status
             temp["company"] =  donation.company
             temp["inv_num"] =  donation.inv_num
+            temp["tip_amt"] =  donation.tip_amt
            #
             donations.push(temp)
           end
