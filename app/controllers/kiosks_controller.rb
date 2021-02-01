@@ -75,6 +75,8 @@ class KiosksController < BaseController
     temp["company"] = donation.company
     temp["tx_status"] = donation.tx_status
     temp["last4"] = donation.last4
+    temp["tip_amt"] = ActiveSupport::NumberHelper.number_to_currency(donation.tip_amt)
+    temp["emp"] = donation.emp
 
 
 
@@ -148,6 +150,8 @@ class KiosksController < BaseController
             temp["card_type"] = donation.card_type
             temp["gateway_fee"] = ActiveSupport::NumberHelper.number_to_currency(donation.gateway_fee)
             temp["tx_status"] =  donation.tx_status
+            temp["company"] =  donation.company
+            temp["inv_num"] =  donation.inv_num
            #
             donations.push(temp)
           end

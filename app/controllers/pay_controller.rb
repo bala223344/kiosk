@@ -95,6 +95,7 @@ class PayController < NoAuthController
     name = params[:name]
     tip_amt = params[:tip_amt]
     tip_percent = params[:tip_percent]
+    emp = params[:emp]
     number = params[:cardnumber].sub(' ','').to_s
     exp = params[:exp].sub('/','').to_s
     cvc = params[:cvv]
@@ -137,9 +138,7 @@ class PayController < NoAuthController
  
 
 
-    #params[:kiosk][:donations_attributes]['0'][:cardconnectref] = retref
 
-     #         params[:kiosk][:donations_attributes]['0'][:donated_by] = current_user.id
             
 
 
@@ -176,21 +175,22 @@ class PayController < NoAuthController
 
 
 
-                params = {cardconnectref: cresponse['retref'], gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company, last4: session[:formdata]["last4"]}
+                params = {cardconnectref: cresponse['retref'], gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company, last4: session[:formdata]["last4"], tip_amt: tip_amt, emp: emp}
 
                 if current_user  
                   params["donated_by"] = current_user.id
                 end 
 
 
-                if Donation.create( params )
+                if donation = Donation.create( params )
+
 
                   if !email.blank? && email != ''
-                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"] }
+                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' => donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p") }
                     KioskMailer.receipt_email(charge).deliver
                   end
 
-                  charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"]}
+                  charge = { 'email' => kiosk.user.email, 'owner_name' => kiosk.user.fname,  'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"],  'emp' => emp}
                   KioskMailer.owner_email(charge).deliver
 
                 end

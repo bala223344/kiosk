@@ -113,9 +113,11 @@
 					</tr>
 
           <tr style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-          <td class="content-block" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0 0 20px;" valign="top"><h1 class="aligncenter" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; box-sizing: border-box; font-size: 32px; color: #000; line-height: 1.2em; font-weight: 500; margin: 40px 0 0;" align="center">
+          <td class="content-block" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0 0 20px;text-align:center;" valign="top"><h1 class="aligncenter" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; box-sizing: border-box; font-size: 32px; color: #000; line-height: 1.2em; font-weight: 500; margin: 40px 0 0;" align="center">
             <%= number_to_currency(@charge["amount"]) %> Paid
-          </h1></td>
+          </h1>
+           <%=@charge["created_at"]  %>
+          </td>
           </tr>
           <tr style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
             <td class="content-block" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0 0 20px;" valign="top"><h2 class="aligncenter" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; box-sizing: border-box; font-size: 24px; color: #000; line-height: 1.2em; font-weight: 400; margin: 40px 0 0;" align="center">
@@ -132,6 +134,8 @@
                       <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Your payment of <%= number_to_currency(@charge["amount"]) %>  to <%= @charge["kiosk_title"] %> has been received.
                       <br />
                       <small> <i> Base amount : <%= number_to_currency(@charge["orig_amt"])%> Fee : <%= number_to_currency(@charge["fee"])%> Tip amount : <%= number_to_currency(@charge["tip_amt"])%>  </small>  </i>
+                      <br />
+                     
                       </p>
                       <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Please save this receipt for your records. Your reference ID is <%= @charge["retref"] %>.</p>
 

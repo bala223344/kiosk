@@ -94,10 +94,10 @@
                                 v-on:click="sort('name')">Customer</span></div>
 
                         <div class="nk-tb-col tb-col-md sorting" :class="getclass('company')"><span role="button"
-                                v-on:click="sort('name')">Company</span></div>
+                                v-on:click="sort('company')">Company</span></div>
 
-                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('name')"><span role="button"
-                                v-on:click="sort('name')">Invoice</span></div>
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('inv_num')"><span role="button"
+                                v-on:click="sort('inv_num')">Invoice</span></div>
 
                         <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('amount')"><span role="button"
                                 v-on:click="sort('amount')">Amount</span></div>
@@ -127,7 +127,7 @@
                             <span class="tb-sub">{{row.company}}</span>
                         </div>
                         <div class="nk-tb-col tb-col-md">
-                            <span class="tb-sub">{{row.invoice}}</span>
+                            <span class="tb-sub">{{row.inv_num}}</span>
                         </div>
                         <div class="nk-tb-col">
                             <span class="tb-sub">{{row.amount}}</span>
@@ -344,6 +344,20 @@
                         <span class="sub-text">Company</span>
                         <span class="caption-text text-break">{{detail.company}}</span>
                     </div>
+                </div>
+
+                <div class="row gy-3" >
+
+
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Emp</span>
+                        <span class="caption-text text-break">{{detail.emp}}</span>
+                    </div>
+
+
+
+                   
+                    
                 </div>
 
 
