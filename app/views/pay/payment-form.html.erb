@@ -194,6 +194,9 @@
                      Email Address *
                      </label>
 
+                      <% if params[:emp] %>
+                     <input type="hidden" name="emp"  id="emp" value="<%=params[:emp]%>">
+                     <% end %>
                      <% if params[:demo] == "1" %>
                      <input type="text" name="email" class="form-control" id="email" value="demo_test@paynow.io">
                      <% else %>
