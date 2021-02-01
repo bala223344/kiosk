@@ -68,6 +68,7 @@
 
 
                         </ul>
+                        <!-- temp hidden dan
                         <ul class="card-tools-nav">
 
                             <li  v-bind:class="{active: ctype == 'credit'}"><a  role="button" v-on:click="ctype_filter('credit')"><span>Credit</span></a></li>
@@ -75,6 +76,7 @@
                             <li v-bind:class="{active: tx_status == 'refund'}"><a  role="button" v-on:click="tx_status_filter('refund')"><span>Refunds</span></a></li>
                             <li  v-bind:class="{active: (tx_status == null &&  ctype == null)}"  role="button"><a v-on:click="reset()"><span>All</span></a></li>
                         </ul>
+                        -->
                     </div>
                 </div>
             </div>
@@ -82,66 +84,69 @@
                 <div class="nk-tb-list nk-tb-orders">
 
                     <div class="nk-tb-item nk-tb-head">
-                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('id')"><span role="button"
-                                v-on:click="sort('id')">Trans #</span></div>
+                        <div class="nk-tb-col sorting" :class="getclass('id')"><span role="button"
+                                v-on:click="sort('id')">Tx</span></div>
 
-                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('created_at')"><span role="button"
+                        <div class="nk-tb-col sorting" :class="getclass('created_at')"><span role="button"
                                 v-on:click="sort('created_at')">Date</span></div>
 
-                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('name')"><span role="button"
+                        <div class="nk-tb-col sorting" :class="getclass('name')"><span role="button"
                                 v-on:click="sort('name')">Customer</span></div>
 
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('company')"><span role="button"
+                                v-on:click="sort('name')">Company</span></div>
+
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('name')"><span role="button"
+                                v-on:click="sort('name')">Invoice</span></div>
 
                         <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('amount')"><span role="button"
                                 v-on:click="sort('amount')">Amount</span></div>
 
-                        <div class="nk-tb-col tb-col-lg sorting" style="width: 10%" :class="getclass('card_type')"><span
-                                v-on:click="sort('card_type')">Type</span></div>
-
-
-                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('fee')"><span role="button"
+                        <div class="nk-tb-col tb-col-md sorting" style="width: 10%" :class="getclass('fee')"><span role="button"
                                 v-on:click="sort('fee')">Fee</span></div>
 
-                        <div class="nk-tb-col sorting" style="width: 10%" :class="getclass('tx_status')"><span role="button"
-                                v-on:click="sort('tx_status')">Status</span></div>
+                        <div class="nk-tb-col tb-col-md sorting" :class="getclass('tip')"><span role="button"
+                                v-on:click="sort('name')">Tip</span></div>
+
+                        <div class="nk-tb-col sorting" style="width: 5%" :class="getclass('tx_status')"><span role="button"
+                                v-on:click="sort('tx_status')" class="badge badge-dot badge-dot-xs badge-gray">&nbsp;</span></div>
                     </div>
 
 
                     <div class="nk-tb-item pointer" v-for="row of rows" v-on:click="getDetails(row.id)" role="button">
-                        <div class="nk-tb-col" style="width: 10%">
+                        <div class="nk-tb-col">
                             <span class="tb-sub">{{row.id}}</span>
                         </div>
-                        <div class="nk-tb-col tb-col-md">
+                        <div class="nk-tb-col">
                             <span class="tb-sub">{{row.date}}</span>
                         </div>
-                        <div class="nk-tb-col tb-col-md">
+                        <div class="nk-tb-col">
                             <span class="tb-sub">{{row.name}}</span>
                         </div>
-                        <div class="nk-tb-col" style="width: 10%">
+                        <div class="nk-tb-col tb-col-md">
+                            <span class="tb-sub">{{row.company}}</span>
+                        </div>
+                        <div class="nk-tb-col tb-col-md">
+                            <span class="tb-sub">{{row.invoice}}</span>
+                        </div>
+                        <div class="nk-tb-col">
                             <span class="tb-sub">{{row.amount}}</span>
                         </div>
-                        <div class="nk-tb-col tb-col-lg" style="width: 10%">
-                            <span class="tb-sub  text-capitalize">{{row.card_type}}</span>
+                        <div class="nk-tb-col tb-col-md" style="width: 10%">
+                            <span v-if="row.gateway_fee == '$0.00'" class="tb-sub">Not Collected</span>
+                            <span v-else class="tb-sub">Collected</span>
                         </div>
-                        <div class="nk-tb-col" style="width: 10%">
-                            <span class="tb-sub">{{row.gateway_fee}}</span>
+                        <div class="nk-tb-col tb-col-md" style="width: 10%">
+                            <span class="tb-sub">{{row.tip}}</span>
                         </div>
-                        <div class="nk-tb-col" style="width: 10%">
-
-
-
-
+                        <div class="nk-tb-col" style="width: 5%">
                             <span v-if="row.tx_status == 'Approved'"
                                 class="badge badge-dot badge-dot-xs badge-success text-capitalize">
                                 <!-- Approved temp hidden dan --> &nbsp;
                             </span>
-
-                            <span v-else class="badge badge-dot badge-dot-xs badge-warning text-capitalize">
+                            <span v-else class="badge badge-dot badge-dot-xs badge-danger text-capitalize">
                                 <!-- {{row.tx_status}} temp hidden dan --> &nbsp;
                             </span>
-
-
-
                         </div>
                     </div>
 
@@ -255,12 +260,16 @@
                         <span class="sub-text">Base Amount</span>
                         <span class="caption-text"> {{detail.amount}}</span>
                     </div>
+                    <div class="col-6 col-sm-3">
+                        <span class="sub-text">Gateway Fee</span>
+                        <span class="caption-text">{{detail.gateway_fee}}</span>
+                    </div>
 
                 </div><!-- .row -->
                 <div class="row gy-3">
                     <div class="col-6 col-sm-3">
-                        <span class="sub-text">Gateway Fee</span>
-                        <span class="caption-text">{{detail.gateway_fee}}</span>
+                        <span class="sub-text">Tip Added</span>
+                        <span class="caption-text">{{detail.tip_amt}}</span>
                     </div>
                     <div class="col-6 col-sm-3">
                         <span class="sub-text">BIN Type</span>

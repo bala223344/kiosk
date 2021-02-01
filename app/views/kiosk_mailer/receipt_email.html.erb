@@ -129,7 +129,7 @@
                   <tr>
                     <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                       <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi <%= @charge["name"] %>,</p>
-                      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Your payment of <%= number_to_currency(@charge["amount"]) %>  to <%= @charge["kiosk_title"] %> has been received. 
+                      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Your payment of <%= number_to_currency(@charge["amount"]) %>  to <%= @charge["kiosk_title"] %> has been received.
                       <br />
                       <small> <i> Base amount : <%= number_to_currency(@charge["orig_amt"])%> Fee : <%= number_to_currency(@charge["fee"])%> Tip amount : <%= number_to_currency(@charge["tip_amt"])%>  </small>  </i>
                       </p>
