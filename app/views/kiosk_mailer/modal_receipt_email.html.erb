@@ -325,7 +325,7 @@
    </head>
    <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" bgcolor="#E9EBEE" style="box-sizing:border-box;margin:0;padding:0;width:100%;word-break:break-word;-webkit-font-smoothing:antialiased;">
       <div lang="en" style="display:none;font-size:0;line-height:0;">
-         Your Payment to <%= @charge["kiosk_title"] %> Has Been Received.
+         Your Payment to <%= @donation.kiosk.title %> Has Been Received.
       </div>
       <!-- Section : Logo -->
       <table class="wrapper" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -410,7 +410,7 @@
                                     Payment <%= @donation.tx_status %>
                                  </h1>
                                  <p style="font-family: 'Karla', Arial, sans-serif;font-size: 14px;line-height: 21px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
-                                    Hi <%= @charge["name"] %>! You payment of <%= number_to_currency(@charge["amount"]) %> to <%= @charge["kiosk_title"] %><% if (@charge["inv_num"] != "" ) %>, for invoice #<%= @charge["inv_num"] %><% end %><% if (@charge["inv_desc"] != "" ) %> (<%= @charge["inv_desc"] %>)<% end %> has been <%= @donation.tx_status %>.
+                                    Hi <%= @donation.name %>! You payment of <%= number_to_currency(@donation.amount) %> to <%= @donation.kiosk.title %><% if (@donation.inv_num != "" ) %>, for invoice #<%= @donation.inv_num %><% end %><% if (@donation.inv_desc != "" ) %> (<%= @donation.inv_desc %>)<% end %> has been <%= @donation.tx_status %>.
                                  </p>
                               </td>
                            </tr>
@@ -455,11 +455,11 @@
                                        </td>
                                        <td class="col col-sm-8" width="170" style="padding-top:10px;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#292929; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%=@charge["created_at"]  %></span>
+                                             <span style="color: #292929;"><%=@created_at  %></span>
                                           </p>
                                        </td>
                                     </tr>
-                                    <% if (@charge["inv_num"] != "" ) %>
+                                    <% if (@donation.inv_num != "" ) %>
                                     <tr>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;">
                                           <p style="font-family: 'Karla', Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
@@ -468,7 +468,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#292929; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= @charge["inv_num"] %></span>
+                                             <span style="color: #292929;"><%= @donation.inv_num %></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -481,11 +481,11 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@charge["orig_amt"])%></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount-@donation.gateway_fee-@donation.tip_amt)%></span>
                                           </p>
                                        </td>
                                     </tr>
-                                    <% if (number_to_currency(@charge["tip_amt"]) != "$0.00" ) %>
+                                    <% if (number_to_currency(@donation.tip_amt) != "$0.00" ) %>
                                     <tr>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px ;">
                                           <p style="font-family: 'Karla', Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
@@ -494,7 +494,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@charge["tip_amt"])%></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.tip_amt)%></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -507,7 +507,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@charge["fee"])%></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.gateway_fee)%></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -519,7 +519,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#292929; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@charge["amount"]) %></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount) %></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -541,7 +541,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#292929; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= @charge["retref"] %></span>
+                                             <span style="color: #292929;"><%= @donation.cardconnectref %></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -594,7 +594,7 @@
                               <td class="col" width="400" align="left">
                                  <div class="spacer py-sm-10" style="line-height: 20px;">‌</div>
                                  <p style="font-family: 'Karla', Arial, sans-serif;font-size: 13px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
-                                    You’re receiving this email because you recently did a transaction with <%= @charge["kiosk_title"] %>. This is your digital receipt, please save this email for your own records.
+                                    You’re receiving this email because you recently did a transaction with <%= @donation.kiosk.title %>. This is your digital receipt, please save this email for your own records.
                                  </p>
                                  <div class="spacer py-sm-10" style="line-height: 20px;">‌</div>
                                  <div style="background: #d0d8de; height: 1px; line-height: 1px;">‌</div>
