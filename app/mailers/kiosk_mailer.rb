@@ -11,8 +11,8 @@ class KioskMailer < ActionMailer::Base
 
   def receipt_email(charge)
     @charge = charge
-    from = "#{charge['kiosk_name']} <admin@paynow.io>"
-    mail(from: from, to: charge['email'], subject: "Payment Receipt #{charge['kiosk_name']}")
+    from = "#{charge['kiosk_title']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: "Payment Receipt for #{charge['kiosk_title']}")
   end
 
 
@@ -24,7 +24,6 @@ class KioskMailer < ActionMailer::Base
 
   def owner_email(charge)
     @charge = charge
-
     from = "#{charge['kiosk_name']} <admin@paynow.io>"
     mail(from: from, to: charge['email'], subject: "Payment Received for #{charge['kiosk_name']}")
   end
