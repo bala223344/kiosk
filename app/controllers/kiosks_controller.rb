@@ -41,7 +41,7 @@ class KiosksController < BaseController
     if !params[:email].blank? && params[:email] != ''
       amount = params[:amount].sub(',','')
       url = params[:url]+"?inv_num=#{params[:inv_num]}&inv_desc=#{params[:inv_desc]}&amount=#{amount}"
-      charge = { 'email' => params[:email],  'amount' => amount , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc] }
+      charge = { 'email' => params[:email],  'amount' => amount , 'kiosk_title' => params[:kiosk_title], 'url' => url , 'inv_num' => params[:inv_num], 'inv_desc' => params[:inv_desc], 'created_at' => DateTime.now.in_time_zone(current_user.tz).strftime("%^b %d, %Y %I:%M %p") }
       KioskMailer.online_email(charge).deliver
     end
 
@@ -183,8 +183,8 @@ class KiosksController < BaseController
     donation = Donation.find(params[:kiosk][:id])
 
 
-
-    KioskMailer.modal_receipt_email(donation).deliver
+    created_at = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %I:%M %p")  
+    KioskMailer.modal_receipt_email(donation, created_at).deliver
 
   end
 

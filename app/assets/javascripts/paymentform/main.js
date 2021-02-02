@@ -115,7 +115,7 @@ $(function () {
 						 amt = parseFloat(response.amount)
 						 final_amt = formatter.format(amt)
 						 $(".final_amt").html(formatter.format(amt))
-						// retref = response.retref
+						// 
 						 formdata["orig_amt"] =  parseFloat(response.orig_amt)
 						 formdata["fee"] =  parseFloat(response.fee)
 
@@ -156,6 +156,7 @@ $(function () {
 
 					if(response.setlstat == 'Approved') {
 						$("#step3-error").addClass("d-none")
+						retref = response.retref
 						$("#retref").html(retref)
 						loading(false)
 						is_async_step =  true
