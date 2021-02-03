@@ -481,7 +481,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount-@donation.gateway_fee-@donation.tip_amt)%></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount)%></span>
                                           </p>
                                        </td>
                                     </tr>
@@ -519,7 +519,7 @@
                                        </td>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;vertical-align: bottom;" align="right">
                                           <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#292929; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount) %></span>
+                                             <span style="color: #292929;"><%= number_to_currency(@donation.amount + @donation.gateway_fee + @donation.tip_amt ) %></span>
                                           </p>
                                        </td>
                                     </tr>

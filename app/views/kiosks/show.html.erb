@@ -679,17 +679,25 @@
                                  <span class="sub-text">Base Amount</span>
                                  <span class="caption-text"><%= number_to_currency(donation.amount.to_f ) %></span>
                               </div>
-                           </div>
-                           <!-- .row -->
-                           <div class="row gy-3">
+
                               <div class="col-6 col-sm-3">
                                  <span class="sub-text">Gateway Fee</span>
                                  <span class="caption-text"><%=number_to_currency(donation.gateway_fee) %></span>
                               </div>
+
+                           </div>
+                           <!-- .row -->
+                           <div class="row gy-3">
+                              
+                                 <div class="col-6 col-sm-3">
+                        <span class="sub-text">Tip Added</span>
+                        <span class="caption-text"><%=number_to_currency(donation.tip_amt)%></span>
+                    </div>
                               <div class="col-6 col-sm-3">
                                  <span class="sub-text">BIN Type</span>
                                  <span class="caption-text"><%=donation.card_type %></span>
                               </div>
+                           
                            </div>
                            <!-- .row -->
                            <div class="nk-modal-head mt-sm-5 mt-4 mb-4">
