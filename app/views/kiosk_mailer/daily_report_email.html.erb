@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Daily Report</title>
+</head>
+<body>
+  <p>
+    1 - Owner First Name: <% code_here %> <br>
+    2 - Kiosk Title: <% code_here %> <br>
+    3 - Date: <% code_here %> <br>
+    4 - Month: <% code_here %> <br>
+    5 - Day of month: <% code_here %> <br>
+    6 - Total Sales Collected Today: <% code_here %> <br>
+    7 - Total Sales Collected This Month: <% code_here %> <br>
+    8 - Total Fees Collected Today: <% code_here %> <br>
+    9 - Total Fees Collected This Month: <% code_here %> <br>
+    10 - Total Tips Collected Today: <% code_here %> <br>
+    11 - Total Tips Collected Today for each Unique EMP today (Example if the EMP field has "John" in it on $100 worth of tips, it would have one line for John): <% code_here %> <br>
+    12 - Total tips assigned to each unique EMP value: <% code_here %> <br>
+    13 - Math (Finding unassigned tips) = [11] Total tips collected today with EMP fields - [10] Total tips collected Today: <% code_here %> <br>
+    14 - Math (Finding the monthly trend of sales) = ([7] Total sales collected this month / [5] day of month) * 30 : <% code_here %> <br>
+    15 - Math (Finding the monthly trend of fees) = ([9] Total fees collected this month / [5] day of month) * 30 : <% code_here %> <br>
+    16 - Math (Finding the annual trend of fees) = ([15] Monthly fees trend * 12) * 30 : <% code_here %> <br>
+  </p><br><br><br>
+
+
+
+
+
+<h3> Example </h3>
+  <p>
+    1 - Owner First Name: John<br>
+    2 - Kiosk Title: ABC Store LLC<br>
+    3 - Date: Feb 10, 2021<br>
+    4 - Month: February<br>
+    5 - Day of month: 10<br>
+    6 - Total Sales Collected Today: $100.00<br>
+    7 - Total Sales Collected This Month: $1,000.00<br>
+    8 - Total Fees Collected Today: $3.50<br>
+    9 - Total Fees Collected This Month: $35.00<br>
+    10 - Total Tips Collected Today: $15<br>
+    11 - Total Tips Collected Today for each Unique EMP today (Example if the EMP field has "John" in it on $100 worth of tips, it would have one line for John): John: $7<br>
+    12 - Total tips assigned to each unique EMP value: $7<br>
+    13 - Math (Finding unassigned tips) = [10] Total tips collected Today - [11] Total tips collected today with EMP fields: $8 <br>
+    14 - Math (Finding the monthly trend of sales) = ([7] Total sales collected this month / [5] day of month) * 30: $3,000<br>
+    15 - Math (Finding the monthly trend of fees) = ([9] Total fees collected this month / [5] day of month) * 30: $105<br>
+    16 - Math (Finding the annual trend of fees) = ([15] Monthly fees trend * 12) * 30: $1,260<br>
+  </p>
+</body>
+</html>
