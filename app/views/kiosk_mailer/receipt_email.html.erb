@@ -346,7 +346,7 @@
                                     <tr>
                                        <td>
                                           <h1 class="sm-hero-text" style="font-family: 'Quicksand', Helvetica, sans-serif ;font-size: 34px;line-height: 44px;font-weight: 500; color:#292929;margin: 0; margin-bottom: 15px;">
-                                             ABC Store LLC
+                                             <%= @charge["kiosk_title"] %>
                                           </h1>
                                        </td>
                                     </tr>
@@ -411,6 +411,7 @@
                                  </h1>
                                  <p style="font-family: 'Karla', Arial, sans-serif;font-size: 14px;line-height: 21px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
                                     Hi <%= @charge["name"] %>! You payment of <%= number_to_currency(@charge["amount"]) %> to <%= @charge["kiosk_title"] %><% if (@charge["inv_num"] != "" ) %>, for invoice #<%= @charge["inv_num"] %><% end %><% if (@charge["inv_desc"] != "" ) %> (<%= @charge["inv_desc"] %>)<% end %> has been received.
+                                    
                                  </p>
                               </td>
                            </tr>

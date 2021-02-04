@@ -502,6 +502,26 @@
                                        </td>
                                     </tr>
                                     <% end %>
+                                    <% if (number_to_currency(@charge["tip_amt"]) != "$0.00" ) %>
+                                    <tr>
+                                       <td class="col col-sm-6" width="170" style="padding-top:10px ;">
+                                          <p style="font-family: 'Karla', Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
+                                             Tip Payee:
+                                          </p>
+                                       </td>
+                                       <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
+                                          <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
+
+                                             <% if (@charge["emp"].present? ) %>
+                                             <span style="color: #292929;"><%= @charge["emp"] %></span> 
+                                             <% else %>
+                                             <span style="color: #292929;">N/A</span>
+                                             <% end %>
+
+                                          </p>
+                                       </td>
+                                    </tr>
+                                    <% end %>
                                     <tr>
                                        <td class="col col-sm-6" width="170" style="padding-top:10px;">
                                           <p style="font-family: 'Karla', Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
@@ -560,22 +580,7 @@
                                           </p>
                                        </td>
                                     </tr>
-                                    <% if (number_to_currency(@charge["tip_amt"]) != "$0.00" ) %>
-                                    <tr>
-                                       <td class="col col-sm-6" width="170" style="padding-top:10px ;">
-                                          <p style="font-family: 'Karla', Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 0px ;">
-                                             Tip Payee:
-                                          </p>
-                                       </td>
-                                       <td class="col col-sm-6" width="170" style="padding-top:10px ;vertical-align: bottom;" align="right">
-                                          <p style="font-family: 'Karla', right, Arial, sans-serif;font-size: 12px;line-height: 18px;font-weight: 400; color:#7E7E7E; margin: 0; margin-bottom: 5px ;">
-                                             <span style="color: #292929;">
-                                             <% if (@charge["emp"] != "" ) %><%= @charge["emp"] %> (<%= number_to_currency(@charge["tip_amt"])%>)<% else %>N/A<% end %>
-                                             </span>
-                                          </p>
-                                       </td>
-                                    </tr>
-                                    <% end %>
+
                                     <!-- button -->
                                     <table class="align-sm-center full-width-sm" cellpadding="0" cellspacing="0" role="presentation">
                                        <tr>
