@@ -61,4 +61,5 @@ gem 'rest-client'
 group :development do
   gem 'byebug'
   gem 'rails_layout'
+  gem "reline", "0.2.2"
 end

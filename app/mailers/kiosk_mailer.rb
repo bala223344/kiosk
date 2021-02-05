@@ -28,4 +28,11 @@ class KioskMailer < ActionMailer::Base
     from = "#{charge['kiosk_name']} <admin@paynow.io>"
     mail(from: from, to: charge['email'], subject: "Payment Received for #{charge['kiosk_name']}")
   end
+
+
+  def daily_report_email(charge)
+    @charge = charge
+    from = "#{charge['kiosk_name']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: "Daily report for  #{charge['kiosk_name']}")
+  end
 end
