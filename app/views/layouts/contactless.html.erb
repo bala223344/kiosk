@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title><%= content_for?(:title) ? yield(:title) : "Paynow.io" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Kiosk" %>">
+    <head profile="http://www.w3.org/2005/10/profile">
+    <link rel="icon"
+      type="image/png"
+      href="<%=asset_path("favicon.png") %>"
+      >
+      	    <meta name="keywords" content="">
+
+
+            <!-- Page Sence -->
+            <script src="https://cdn.pagesense.io/js/startgroup/b6bd5ea2b0ba4c97b5d354f405632301.js"></script>
+            <!-- End Page Sence -->
+
+
+
+            <!-- Google Tag Manager -->
+            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MJ8P2LD');</script>
+            <!-- End Google Tag Manager -->
+
+
+
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <%= csrf_meta_tags %>
+      <%= yield(:header) %>
+
+
+      <link rel="manifest" href="assets/_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
+
+
+   </head>
+   
+  <body class="nk-body bg-lighter npc-general has-sidebar ui-shady <%=(current_user.dark_mode)?"dark-mode":""%> ">
+
+
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJ8P2LD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+<div class="nk-app-root">
+
+
+
+
+
+        <!-- main @s -->
+        <div class="nk-main ">
+        <%= render 'layouts/sidebar' %>
+
+        <!-- wrap @s -->
+            <div class="nk-wrap ">
+              <%= render 'layouts/header' %>
+
+
+         <!-- content @s -->
+      <%= render 'layouts/messages' %>
+
+
+      <%= yield %>
+
+
+                <!-- content @e -->
+
+
+  <%= render "layouts/footer0" %>
+
+
+    </div>
+      </div>
+      </div>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track'=> true %>
+    <script type="text/javascript">
+    var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"33b96f4c559e097087876e6f790fcd4152cb3586f20dcf6c287ddf05ba303a86", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);d.write("<div id='zsiqwidget'></div>");
+    </script>
+
+
+  </body>
+</html>
