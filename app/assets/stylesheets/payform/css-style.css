@@ -180,7 +180,7 @@ body {
 
 .steps ul li.first a,
 .steps ul li.checked a {
-	background: #b099e7;
+	background: #34495E;
 	transition: all .5s ease;
 	outline: none;
 }
@@ -577,7 +577,7 @@ textarea.form-control {
 	border-radius: 15px;
 	/* dan */
 	padding: 10px;
-	background-color: #60AFFE;
+	background-color: #34495E;
 }
 
 .checkout .amount {
@@ -586,7 +586,7 @@ textarea.form-control {
 	border-radius: 15px;
 	/* dan */
 	padding: 10px;
-	background-color: #60AFFE;
+	background-color: #34495E;
 	text-align: center;
 	color: #fff;
 	font-size: 20px;
@@ -697,13 +697,12 @@ textarea.form-control {
 
 @media(max-width:1199px) {
 	.wrapper {
-		height: 100vh
+		height: 100vh;
 	}
 	#wizard {
-		margin-right: 40px;
-		min-height: 829px;
-		padding-left: 60px;
-		padding-right: 60px;
+		margin-right: 0;
+		padding-left: 40px;
+		padding-right: 40px
 	}
 }
 
