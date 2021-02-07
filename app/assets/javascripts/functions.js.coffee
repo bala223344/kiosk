@@ -60,6 +60,25 @@ $('#hpp-monthly').change ->
   saveNotif(formdata)
 
 
+
+
+clipboard = new ClipboardJS('#btnTerminalSetup', text: (trigger) ->
+  result = $("#cbtext").html()
+)
+
+
+$("#phone-no,#emp").change ->
+
+  phone = $("#phone-no").val()
+  emp = $("#emp").val()
+  kiosk_id = $("#hid-kiosk-id").val()
+  link = "https://mobile.paynow.io/?hpp="+kiosk_id+"&emp="+emp+"&sms="+phone
+  $("#cbtext").html(link)
+ 
+  #new ClipboardJS('#btnTerminalSetup', text: (trigger) ->
+  
+
+
 $('#input_hpp_amt').inputmask('currency', {
     rightAlign: false
   });
@@ -117,6 +136,48 @@ $('#btnsend').click ->
   ), 2000
 
 
+
+# clipboard = new ClipboardJS('#btnTerminalSetup');
+
+clipboard.on('success', (e) ->
+  sms = $('#com-sms').prop("checked") ? 1 : 0 ;
+  formdata = {emp : $("#emp").val(), phone: $("#phone-no").val(), sms : sms}
+  contactlessTerminalSetup (formdata)
+)
+
+#$('#btnTerminalSetup').click ->
+  
+  
+
+
+
+
+
+
+contactlessTerminalSetup = (formdata) ->
+  $.ajax
+    url: '/dashboard/terminalsetup'
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    data: formdata
+    success: (response) ->
+      if formdata.sms 
+        Swal.fire({
+          title: 'Success!',
+          text: 'Generated and shared successfully',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+      else
+         Swal.fire({
+          title: 'Success!',
+          text: 'Generated successfully',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        }) 
+      return
 
 
 

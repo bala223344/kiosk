@@ -15,6 +15,12 @@ class KioskMailer < ActionMailer::Base
     mail(from: from, to: charge['email'], subject: "Payment Receipt for #{charge['kiosk_title']}")
   end
 
+  def vt_receipt_email(charge)
+    @charge = charge
+    from = "#{charge['kiosk_title']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: "Payment Receipt for #{charge['kiosk_title']}")
+  end
+
 
   def modal_receipt_email(donation, created_at)
     @donation = donation
@@ -27,5 +33,12 @@ class KioskMailer < ActionMailer::Base
     @charge = charge
     from = "#{charge['kiosk_name']} <admin@paynow.io>"
     mail(from: from, to: charge['email'], subject: "Payment Received for #{charge['kiosk_name']}")
+  end
+
+
+  def daily_report_email(charge)
+    @charge = charge
+    from = "#{charge['kiosk_name']} <admin@paynow.io>"
+    mail(from: from, to: charge['email'], subject: "Daily report for  #{charge['kiosk_name']}")
   end
 end
