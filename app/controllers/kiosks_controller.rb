@@ -276,6 +276,7 @@ class KiosksController < BaseController
     exp_mn = params[:exp_mn].to_s
     exp_yr = params[:exp_yr].to_s
     amount = params[:kiosk][:donations_attributes]['0'][:amount]
+    orig_amt = 0
     fee = params[:kiosk][:donations_attributes]['0'][:fee_amt]
     service_fee = params[:kiosk][:donations_attributes]['0'][:service_fee]
 
@@ -309,7 +310,7 @@ class KiosksController < BaseController
         end
 
         
-
+      orig_amt = amount.to_f
       amount = amount.to_f + fee.to_f
       if amount < 0
         @response = { 'errors' => 'Invalid amount' }
@@ -371,8 +372,8 @@ class KiosksController < BaseController
               if kiosk.update(donation_params)
 
                 if !email.blank? && email != ''
-                  charge = { 'email' => email, 'name' => name, 'amount' => amount, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc }
-                  KioskMailer.receipt_email(charge).deliver
+                  charge = { 'email' => email, 'name' => name, 'amount' => amount, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'created_at' => DateTime.now.in_time_zone(current_user.tz).strftime("%^b %d, %Y %I:%M %p"),  'fee' => fee, 'orig_amt' => orig_amt }
+                  KioskMailer.vt_receipt_email(charge).deliver
                 end
 
                 charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => params[:company], 'last4' => last4}
