@@ -35,12 +35,15 @@
                                   <span class="nk-menu-text">Virtual Terminal</span>
                               </a>
                           </li><!-- .nk-menu-item -->
-                          <li class="nk-menu-item <%=(request.path == "")?"active":""%>"">
-                              <a  data-no-turbolink='true'  href="" class="nk-menu-link">
+
+                           <li class="nk-menu-item <%=(request.path == "/dashboard/contactless")?"active":""%>"">
+                              <a href="/dashboard/contactless" class="nk-menu-link">
                                   <span class="nk-menu-icon"><em class="icon ni ni-qr"></em></span>
                                   <span class="nk-menu-text">Contactless</span>
                               </a>
-                          </li> <!-- .nk-menu-item -->
+                          </li> 
+                          
+ 
                             <li class="nk-menu-item <%=(request.path == "/dashboard/reporting")?"active":""%>"">
                                 <a data-turbolinks="false" href="/dashboard/reporting" class="nk-menu-link">
                                     <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>
