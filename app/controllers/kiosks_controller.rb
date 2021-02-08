@@ -376,8 +376,8 @@ class KiosksController < BaseController
                   KioskMailer.vt_receipt_email(charge).deliver
                 end
 
-                charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => params[:company], 'last4' => last4}
-                KioskMailer.owner_email(charge).deliver
+               # charge = { 'email' => kiosk.user.email, 'name' => name, 'amount' => amount, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => params[:company], 'last4' => last4}
+              #  KioskMailer.owner_email(charge).deliver
 
 
              

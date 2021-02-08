@@ -84,6 +84,7 @@ class PayController < NoAuthController
 
 
   def ajx_charge_s2
+    sms_param_included = ""
     kiosk = Kiosk.find(params[:kid])
     cred_combo = "#{kiosk.user.merchant_username}:#{kiosk.user.merchant_password}"
     title = kiosk.title.nil? ? 'Kiosk' : kiosk.title
@@ -101,6 +102,14 @@ class PayController < NoAuthController
     cvc = params[:cvv]
     final_amt = session[:formdata]["amount"] + tip_amt.to_f
 
+    
+    
+    #speical case coming from mobile.paynow
+
+    uri = CGI.parse(URI.parse(request.referrer).query)
+    if uri
+      sms_param_included = uri["sms"][0].to_s
+    end
 
 
     cparams = { 'merchid' => kiosk.user.merchid, 'amount' => final_amt, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email, "userfields" =>  [
@@ -135,21 +144,16 @@ class PayController < NoAuthController
     cresponse = JSON.parse(cres.body)
     
 
- 
-
-
-
-            
-
-
               setlstat = (cresponse['respstat'] == "A") ? "Approved" : cresponse['resptext']
 
 
               if (cresponse['respstat'] == 'A') 
 
-                if kiosk.user.notify_sms_hpp && kiosk.user.phone
+                if ((kiosk.user.notify_sms_hpp && kiosk.user.phone) || sms_param_included.length > 8) 
 
-                  sms_number = "+1"+kiosk.user.phone
+                  sms_number = (sms_param_included.length > 8)? sms_param_included : kiosk.user.phone
+
+                  sms_number = "+1"+sms_number
                   collected = 'was'
                   if session[:formdata]["fee"] == 0
                     collected = 'was not'
@@ -158,6 +162,9 @@ class PayController < NoAuthController
 
                   body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(final_amt)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
 
+                  print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                  print body
+                  print sms_number
 
 
                   require 'signalwire/sdk'
