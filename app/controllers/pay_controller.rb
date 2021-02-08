@@ -162,9 +162,6 @@ class PayController < NoAuthController
 
                   body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(final_amt)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
 
-                  print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                  print body
-                  print sms_number
 
 
                   require 'signalwire/sdk'
