@@ -63,7 +63,7 @@ $('#hpp-monthly').change ->
 
 
 clipboard = new ClipboardJS('#btnTerminalSetup', text: (trigger) ->
-  result = $("#cbtext").html()
+  result = $("#cbtext").html().replace(/amp;/g, "")
 )
 
 
