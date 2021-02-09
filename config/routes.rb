@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     post 'ajx_charge_s1', to: '/pay#ajx_charge_s1'
     post 'ajx_charge_s2', to: '/pay#ajx_charge_s2'
     post 'update_notif_pref', to: '/users#update_notif_pref'
+
+    get 'capture' , to: '/pay#capture'
     
   end
   resources :activations
