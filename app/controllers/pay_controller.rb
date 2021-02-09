@@ -193,8 +193,17 @@ class PayController < NoAuthController
                 if donation = Donation.create( params )
 
 
+                  
+                  
                   if !email.blank? && email != ''
-                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' => donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p") }
+                    if current_user
+                      created_at = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
+                    else
+                      created_at = donation.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%^b %d, %Y %H:%M %p %z")
+                    end
+                      
+                      config.
+                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' =>  }
                     KioskMailer.receipt_email(charge).deliver
                   end
 
