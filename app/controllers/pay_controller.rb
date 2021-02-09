@@ -24,6 +24,30 @@ class PayController < NoAuthController
   end
 
 
+
+  def capture 
+    # url = "https://fts-uat.cardconnect.com"
+    # un = "testing"
+    # pw = "testing123"
+    # mid = "800000000843"
+    # retref = "037826104137"
+    # url = "https://fts.cardconnect.com"
+    # un = "passions"
+    # pw = "NJu2#UtLs@x9n!anV5T7"
+    # mid = "496377995881"
+    # retref = "033735234300"
+
+    cred_combo = "#{un}:#{pw}"
+
+
+    cparams = { 'merchid' => mid, 'retref' => retref}
+    # AUTH  & capture
+    cres = RestClient.post("#{url}/cardconnect/rest/capture", cparams.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
+
+    cresponse = JSON.parse(cres.body)
+    render :json =>  cresponse
+
+  end
   
   def ajx_charge_s1
 
@@ -116,7 +140,7 @@ class PayController < NoAuthController
     end  
 
 
-    cparams = { 'merchid' => kiosk.user.merchid, 'amount' => final_amt, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email, "userfields" =>  [
+    cparams = { 'merchid' => kiosk.user.merchid, 'amount' => final_amt, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email, 'capture' => 'Y', "userfields" =>  [
                   {
                       "zip" => zip,
                       "title" => title,
