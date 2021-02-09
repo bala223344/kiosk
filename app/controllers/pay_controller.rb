@@ -202,8 +202,7 @@ class PayController < NoAuthController
                       created_at = donation.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%^b %d, %Y %H:%M %p %z")
                     end
                       
-                      config.
-                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' =>  }
+                    charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' => created_at }
                     KioskMailer.receipt_email(charge).deliver
                   end
 
