@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Daily Report</title>
+</head>
+<body>
+  <p>
+    1 - Owner First Name: <%=@charge["fname"] %> <br>
+    2 - Kiosk Title: <%=@charge["kiosk_name"] %> <br>
+    3 - Date: <%=@charge["date"] %> <br>
+    4 - Month: <%=@charge["month"] %> <br>
+    5 - Day of month: <%=@charge["day"] %> <br>
+    6 - Total Sales Collected Today: <%= number_to_currency(@charge["sale_today"]) %> <br>
+    7 - Total Sales Collected This Month: <%=number_to_currency(@charge["month_total"]) %> <br>
+    8 - Total Fees Collected Today: <%=number_to_currency(@charge["fee_today"]) %> <br>
+    9 - Total Fees Collected This Month: <%=number_to_currency(@charge["month_fee"]) %> <br>
+    10 - Total Tips Collected Today: <%=number_to_currency(@charge["tip_today"]) %> <br>
+    11 - Total Tips Collected Today for each Unique EMP today: 
+    <br />
+
+
+    <% @charge["emp_tips_uniq"].each do |k,v| %>
+        <%=k%> : <%=number_to_currency(v)%>
+        <br />
+    <% end %>
+      
+    
+    
+     <br>
+
+    12 - Total tips assigned to each unique EMP value: ??
+    <br>
+    13 -Total tips collected Today: <%=number_to_currency(@charge["tip_today"]) %> <br>
+
+    14 - Math (Finding the monthly trend of sales) = <%= number_to_currency((@charge["month_total"]  / @charge["day"]) * 30)  %> <br>
+    15 - Math (Finding the monthly trend of fees) = <%= number_to_currency((@charge["month_fee"] / @charge["day"]) * 30)  %> <br>
+    16 - Math (Finding the annual trend of fees) = <%= number_to_currency((( (@charge["month_fee"] / @charge["day"]) * 30 ) * 12) * 30) %> <br>
+  </p><br><br><br>
+
+
+
+
+
+ 
+</body>
+</html>

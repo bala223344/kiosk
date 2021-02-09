@@ -106,10 +106,14 @@ class PayController < NoAuthController
     
     #speical case coming from mobile.paynow
 
-    uri = CGI.parse(URI.parse(request.referrer).query)
-    if uri
-      sms_param_included = uri["sms"][0].to_s
-    end
+    if request.referrer && URI.parse(request.referrer).query
+      uri = CGI.parse(URI.parse(request.referrer).query)
+      if uri
+        if uri["sms"]
+          sms_param_included = uri["sms"][0].to_s
+        end
+      end
+    end  
 
 
     cparams = { 'merchid' => kiosk.user.merchid, 'amount' => final_amt, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email, "userfields" =>  [
@@ -162,9 +166,6 @@ class PayController < NoAuthController
 
                   body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(final_amt)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
 
-                  print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                  print body
-                  print sms_number
 
 
                   require 'signalwire/sdk'
@@ -197,8 +198,10 @@ class PayController < NoAuthController
                     KioskMailer.receipt_email(charge).deliver
                   end
 
-                  charge = { 'email' => kiosk.user.email, 'owner_name' => kiosk.user.fname,  'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"],  'emp' => emp}
-                  KioskMailer.owner_email(charge).deliver
+                  if kiosk.user.notify_email_hpp
+                    charge = { 'email' => kiosk.user.email, 'owner_name' => kiosk.user.fname,  'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"],  'emp' => emp, 'created_at' => donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")}
+                    KioskMailer.owner_email(charge).deliver
+                  end
 
                 end
 
