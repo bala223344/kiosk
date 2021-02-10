@@ -231,7 +231,7 @@ class PayController < NoAuthController
                   end
 
                   if kiosk.user.notify_email_hpp
-                    charge = { 'email' => kiosk.user.email, 'owner_name' => kiosk.user.fname,  'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"],  'emp' => emp, 'created_at' => donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")}
+                    charge = { 'email' => kiosk.user.email, 'owner_name' => kiosk.user.fname,  'name' => name, 'amount' => final_amt, 'kiosk_name' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc, 'retref' => cresponse['retref'], 'company' => company, 'last4' => session[:formdata]["last4"], 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"],  'emp' => emp, 'created_at' => created_at}
                     KioskMailer.owner_email(charge).deliver
                   end
 
