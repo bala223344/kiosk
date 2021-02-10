@@ -56,6 +56,8 @@ gem 'kaminari'
 
 
 gem 'rest-client'
+gem 'whenever', require: false
+
 # gem 'openssl'
 
 group :development do
