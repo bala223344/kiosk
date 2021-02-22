@@ -59,6 +59,7 @@ gem 'rest-client'
 gem 'whenever', require: false
 
 # gem 'openssl'
+gem 'puma'
 
 group :development do
   gem 'byebug'
