@@ -14,7 +14,7 @@ $(function () {
 	var tip_per = 0
 
 
-	
+
 
 
 	$("#wizard").steps({
@@ -26,7 +26,7 @@ $(function () {
 		saveState: true,
 		onStepChanging: function (event, currentIndex, newIndex) {
 
-			
+
 
 			if (is_async_step) {
                 is_async_step = false;
@@ -86,7 +86,7 @@ $(function () {
 				const form = document.querySelector('form');
 				formdata = Object.fromEntries(new FormData(form).entries());
 
-		
+
 
 				if (!$("#name").val()) {
 					$("#name").addClass('is-invalid')
@@ -115,7 +115,7 @@ $(function () {
 						 amt = parseFloat(response.amount)
 						 final_amt = formatter.format(amt)
 						 $(".final_amt").html(formatter.format(amt))
-						// 
+						//
 						 formdata["orig_amt"] =  parseFloat(response.orig_amt)
 						 formdata["fee"] =  parseFloat(response.fee)
 
@@ -218,7 +218,7 @@ $(function () {
 		tip_amt = (tip_per / 100) * amt
 		final_amt = (amt + fee + tip_amt)
 		$(".final_amt").html(formatter.format(final_amt))
-		
+
 	})
 
 }(jQuery)); // Dan Added jQuery ending from };

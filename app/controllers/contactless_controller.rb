@@ -16,18 +16,31 @@ class ContactlessController < BaseController
   def terminalsetup
 
 
-    hpp = current_user.kiosk.id 
+    hpp = current_user.kiosk.id
     emp = params[:emp]
     phone = params[:phone]
     link = "https://mobile.paynow.io/?hpp=#{hpp}&emp=#{emp}&sms=#{phone}"
+#    your_hosted_yourls_address = mobilepay.link
+#    your_hosted_yourls_api_key = 75d4341c63
+
+
+
 
     if params[:sms] == "true"
 
+#      require 'yourls'
+
+#      yourls = Yourls.new(your_hosted_yourls_address, your_hosted_yourls_api_key)
+#      yourls.shorten('http://www.google.com')
+
       sms_number = "+1"+params[:phone]
 
-     
-      body = 'Paynow.io payment link received ' + link
 
+      body = 'Contactless Terminal Link: ' + link +'
+
+Reply STOP to unsubscribe'
+
+# line break option+enter
 
       require 'signalwire/sdk'
 
@@ -35,7 +48,7 @@ class ContactlessController < BaseController
 
 
       message = @client.messages.create(
-                                  from: '+14327296690',
+                                  from: '+18884390949',
                                   body: body,
                                   to:  sms_number
                                 )

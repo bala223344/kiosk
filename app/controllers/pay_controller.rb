@@ -1,10 +1,10 @@
 class PayController < NoAuthController
   layout "paylayout", only: [:show]
-  
+
 
   def show
 
- 
+
     #slug
     if params[:id]
       @kiosk = Kiosk.find_by("slug ILIKE ?", params[:id])
@@ -12,8 +12,8 @@ class PayController < NoAuthController
       @kiosk = Kiosk.find(params[:kid])
     end
 
-    
-    render 'payment-form' 
+
+    render 'payment-form'
 #    render :json => {:donations => "sdfsdf"}
 
     # @kiosk = Kiosk.find(params[:id])
@@ -25,7 +25,7 @@ class PayController < NoAuthController
 
 
 
-  def capture 
+  def capture
     # url = "https://fts-uat.cardconnect.com"
     # un = "testing"
     # pw = "testing123"
@@ -48,7 +48,7 @@ class PayController < NoAuthController
     render :json =>  cresponse
 
   end
-  
+
   def ajx_charge_s1
 
     #will be passed to s2
@@ -65,7 +65,7 @@ class PayController < NoAuthController
     email = params[:email]
 
     percent = kiosk.user.scharge_percent
-		percent = (percent / 100) 
+		percent = (percent / 100)
 		fee =  amount.to_f * percent
 
 
@@ -80,22 +80,22 @@ class PayController < NoAuthController
     if ccbody["type"] != "credit"
       if kiosk.user.cmodel == 'surcharge'
         fee = 0
-      end 
+      end
       ctype = 'debit'
-    end 
+    end
 
     orig_amt = amount.to_f
 
     if orig_amt < 0
       raise 'Incorrect amount'
-    end  
+    end
     amount = amount.to_f + fee.to_f
 
-   
-    # 
+
+    #
 
 
-  
+
     formdata = {:fee => fee.to_f, :ctype => ctype, :orig_amt => orig_amt, :amount => amount, :last4 => last4}
     session[:formdata] = formdata
     #response = JSON.parse(res.body)
@@ -126,8 +126,8 @@ class PayController < NoAuthController
     cvc = params[:cvv]
     final_amt = session[:formdata]["amount"] + tip_amt.to_f
 
-    
-    
+
+
     #speical case coming from mobile.paynow
 
     if request.referrer && URI.parse(request.referrer).query
@@ -137,7 +137,7 @@ class PayController < NoAuthController
           sms_param_included = uri["sms"][0].to_s
         end
       end
-    end  
+    end
 
 
     cparams = { 'merchid' => kiosk.user.merchid, 'amount' => final_amt, 'expiry' => exp, 'account' => number, 'currency' => 'USD', 'name' => name, 'ecomind' => 'E', 'cvv2' => cvc , 'postal' => zip,  'email' => email, 'capture' => 'Y', "userfields" =>  [
@@ -151,7 +151,7 @@ class PayController < NoAuthController
 
                   },]}
 
-   
+
     cred_combo = "#{kiosk.user.merchant_username}:#{kiosk.user.merchant_password}"
 
 
@@ -170,26 +170,31 @@ class PayController < NoAuthController
     #       }.to_json, { 'Authorization' => 'Basic ' + Base64.strict_encode64(cred_combo), :content_type => 'application/json' })
 
     cresponse = JSON.parse(cres.body)
-    
+
 
               setlstat = (cresponse['respstat'] == "A") ? "Approved" : cresponse['resptext']
 
 
-              if (cresponse['respstat'] == 'A') 
+              if (cresponse['respstat'] == 'A')
 
-                if ((kiosk.user.notify_sms_hpp && kiosk.user.phone) || sms_param_included.length > 8) 
+                if ((kiosk.user.notify_sms_hpp && kiosk.user.phone) || sms_param_included.length > 8)
 
                   sms_number = (sms_param_included.length > 8)? sms_param_included : kiosk.user.phone
 
                   sms_number = "+1"+sms_number
-                  collected = 'was'
+                  collected = ' + Fee' #was
                   if session[:formdata]["fee"] == 0
-                    collected = 'was not'
+                    collected = '' #was not
 
                   end
 
-                  body = 'You have received a payment from '+name+', for the amount of '+ActiveSupport::NumberHelper.number_to_currency(final_amt)+'. A gateway fee '+collected+' collected for this transaction. Thank you!'
+                  body = ActiveSupport::NumberHelper.number_to_currency(final_amt)+collected+' from '+name #+
+#                  '
+#
+#- Reply STOP to unsubscribe'
 
+#                 body = name+': '+ActiveSupport::NumberHelper.number_to_currency(final_amt)+'. A gateway fee '+collected+' collected. Thank you! Reply STOP to unsubscribe'
+# line break option+enter
 
 
                   require 'signalwire/sdk'
@@ -203,29 +208,29 @@ class PayController < NoAuthController
                                               to:  sms_number
                                             )
                 end
-
-
+#14327296690
+#18884390949
 
 
                 params = {cardconnectref: cresponse['retref'], gateway_fee: session[:formdata]["fee"], card_type: session[:formdata]["ctype"], tx_status: setlstat, authcode: cresponse['authcode'], inv_num: inv_num, inv_desc: inv_desc,kiosk_id: kiosk.id, email: email, name: name, amount: session[:formdata]["orig_amt"], company: company, last4: session[:formdata]["last4"], tip_amt: tip_amt, emp: emp}
 
-                if current_user  
+                if current_user
                   params["donated_by"] = current_user.id
-                end 
+                end
 
 
                 if donation = Donation.create( params )
 
 
-                  
-                  
+
+
                   if !email.blank? && email != ''
                     if current_user
                       created_at = donation.created_at.in_time_zone(current_user.tz).strftime("%^b %d, %Y %H:%M %p")
                     else
                       created_at = donation.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%^b %d, %Y %H:%M %p %z")
                     end
-                      
+
                     charge = { 'email' => email, 'name' => name, 'amount' => final_amt, 'retref' => cresponse['retref'], 'kiosk_title' => title, 'inv_num' => inv_num, 'inv_desc' => inv_desc , 'tip_amt' => tip_amt, 'fee' => session[:formdata]["fee"], 'orig_amt' => session[:formdata]["orig_amt"], 'created_at' => created_at }
                     KioskMailer.receipt_email(charge).deliver
                   end
@@ -242,15 +247,15 @@ class PayController < NoAuthController
 
 
 
-        response = { 'setlstat' => setlstat, 'retref' => cresponse['retref'] }      
-     
+        response = { 'setlstat' => setlstat, 'retref' => cresponse['retref'] }
+
     else
-      response = { 'setlstat' => setlstat}      
+      response = { 'setlstat' => setlstat}
     end
 
     render :json => response
 
-    
+
   end
 
 
